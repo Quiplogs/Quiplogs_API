@@ -1,1 +1,1 @@
-# travel_agency_api
+# Quiplogs API
