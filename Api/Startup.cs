@@ -19,11 +19,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using System;
 using System.Net;
 using System.Reflection;
@@ -51,6 +53,24 @@ namespace Api
 
             services.AddCors();
             services.AddControllers();
+
+            //Redis cache
+            var redisSettingsSection = Configuration.GetSection("RedisSettings");
+            var redisSettings = redisSettingsSection.Get<RedisSettings>();
+
+            services.AddDistributedMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.ConfigurationOptions = new ConfigurationOptions
+                {
+                    AllowAdmin = redisSettings.AllowAdmin,
+                    Ssl = redisSettings.Ssl,
+                    ConnectTimeout = redisSettings.ConnectTimeout,
+                    ConnectRetry = redisSettings.ConnectRetry,
+                    DefaultDatabase = redisSettings.Database,
+                    EndPoints = {{ redisSettings.Host, redisSettings.Port }}
+                };
+            });
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -126,7 +146,7 @@ namespace Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wep Api", Version = "v1" });
-            });            
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -140,12 +160,22 @@ namespace Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IHostApplicationLifetime lifetime, IDistributedCache cache)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                var currentTimeUTC = DateTime.UtcNow.ToString();
+                byte[] encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
+                var options = new DistributedCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(20));
+                cache.Set("cachedTimeUTC", encodedCurrentTimeUTC, options);
+            });
 
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
