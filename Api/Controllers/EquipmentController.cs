@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using Api.Core.Domain;
 using Api.Presenters;
 using Api.Serialization;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class EquipmentController : ControllerBase
     {
@@ -47,61 +47,13 @@ namespace Api.Controllers
             equipList.Add(new Equipment(new Guid(), "equip21", "description21", "walvis bay", 665, "KM", 0));
             equipList.Add(new Equipment(new Guid(), "equip22", "description22", "walvis bay", 665, "KM", 0));
 
-            var totalPages = Math.Ceiling((decimal)(equipList.Count/ pageSize));
-            var startIndex = (page * pageSize) - pageSize;
-            var endIndex = (page * pageSize) - 1;
-            var pager = new Pager(equipList.Count, page, pageSize, totalPages, 1, 5, startIndex, endIndex, new int[] { 1, 2, 3, 4, 5});
-            var items = new List<Equipment>(equipList.Skip((page - 1) * pageSize).Take(pageSize).ToList());
 
-            var pagedItems = new PagedResult<Equipment>();
-            pagedItems.Pager = pager;
-            pagedItems.PageOfItems = items;
+            var pagedItems = new PagedResult<Equipment>(equipList.Skip((page - 1) * pageSize).Take(pageSize).ToList(), equipList.Count, page, pageSize);
 
             ContentResult.StatusCode = (int)HttpStatusCode.OK;
             ContentResult.Content = JsonSerializer.SerializeObject(pagedItems);
             return ContentResult;
         }
-    }
-
-    public class Pager
-    {
-        public int TotalItems { get; }
-
-        public int CurrentPage { get; }
-
-        public int PageSize { get; }
-
-        public decimal TotalPages { get; }
-
-        public int StartPage { get; }
-
-        public int EndPage { get; }
-
-        public int StartIndex { get; }
-
-        public int EndIndex { get; }
-
-        public int[] Pages { get; }
-
-        public Pager(int totalItems, int currentPage, int pageSize, decimal totalPages, int startPage, int endPage, int startIndex, int endIndex, int[] pages)
-        {
-            TotalItems = totalItems;
-            CurrentPage = currentPage;
-            PageSize = pageSize;
-            TotalPages = totalPages;
-            StartPage = startPage;
-            EndPage = endPage;
-            StartIndex = startIndex;
-            EndIndex = endIndex;
-            Pages = pages;
-        }
-    }
-
-    public class PagedResult<T>
-    {
-        public Pager Pager { get; set; }
-
-        public List<T> PageOfItems { get; set; }
     }
 
     public class Equipment
