@@ -1,4 +1,5 @@
-﻿using Api.Core.Interfaces.Services;
+﻿using Api.Core.Helpers;
+using Api.Core.Interfaces.Services;
 using Api.Core.Services;
 using Autofac;
 
@@ -11,6 +12,8 @@ namespace Api.Core
             builder.RegisterType<RegisterService>().As<IRegisterService>().InstancePerLifetimeScope();
             builder.RegisterType<LoginService>().As<ILoginService>().InstancePerLifetimeScope();
             builder.RegisterType<RegisterCompanyService>().As<IRegisterCompanyService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<Caching>().As<ICaching>().InstancePerLifetimeScope();
         }
     }
 }
