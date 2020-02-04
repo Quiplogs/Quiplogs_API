@@ -31,7 +31,7 @@ namespace Api.Core.Services
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
                         // generate token
-                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id, user.UserName, user.Role), true));
+                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id, $"{user.FirstName} {user.LastName}", user.Role), true));
                         return true;
                     }
                 }
