@@ -19,7 +19,7 @@ namespace Api.Controllers
         [HttpGet]
         public ActionResult Get(int page)
         {
-            const int pageSize = 4;
+            const int pageSize = 5;
 
             var ContentResult = new JsonContentResult();
             List<Equipment> equipList = new List<Equipment>();

@@ -12,7 +12,7 @@ namespace Api.Core.Domain
         /// <summary>
         /// Gets a Paged List Result as needed by the Angular Pager
         /// </summary>
-        /// <param name="items">List of Items where Skip() and Take() has alreadsy been applied</param>
+        /// <param name="items">List of Items where Skip() and Take() has already been applied</param>
         /// <param name="totalItems">Total number of items in the DB</param>
         /// <param name="currentPage">Current pager from the pager</param>
         public PagedResult(List<T> items, int totalItems, int currentPage, int pageSize)
@@ -21,6 +21,7 @@ namespace Api.Core.Domain
             var startIndex = (currentPage * pageSize) - pageSize;
             var endIndex = (currentPage * pageSize) - 1;
 
+            //Keep the pager to only show 3 pages at a time e.g. << < 1 2 3 > >>
             int[] pages = new int[] { currentPage - 1, currentPage, currentPage + 1 };
             if (currentPage == 1)
             {

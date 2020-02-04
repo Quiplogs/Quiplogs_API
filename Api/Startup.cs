@@ -212,7 +212,7 @@ namespace Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web Api V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Quiplogs Api V1");
             });
 
             app.UseSwagger();
