@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Api.Core.Dto.Requests.User;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.UseCases.User;
 using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +10,10 @@ namespace Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ILoginService _loginService;
+        private readonly ILoginUseCase _loginService;
         private readonly LoginPresenter _loginPresenter;
 
-        public AuthController(ILoginService loginService, LoginPresenter loginPresenter)
+        public AuthController(ILoginUseCase loginService, LoginPresenter loginPresenter)
         {
             _loginService = loginService;
             _loginPresenter = loginPresenter;

@@ -1,9 +1,7 @@
 ﻿using Api.Core.Dto.Responses;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Api.Core.Dto.Repositories
+namespace Api.Core.Dto.Repositories.User
 {
     public class CreateUserResponse : BaseResponse
     {

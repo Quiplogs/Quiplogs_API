@@ -4,18 +4,18 @@ using Api.Core.Dto.Requests.Company;
 using Api.Core.Dto.Responses.Company;
 using Api.Core.Interfaces;
 using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.UseCases;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Core.Services
+namespace Api.Core.UseCases
 {
-    public class RegisterCompanyService : IRegisterCompanyService
+    public class RegisterCompanyUseCase : IRegisterCompanyUseCase
     {
         private readonly ICompanyRepository _companyRepository;
 
-        public RegisterCompanyService(ICompanyRepository companyRepository)
+        public RegisterCompanyUseCase(ICompanyRepository companyRepository)
         {
             _companyRepository = companyRepository;
         }
