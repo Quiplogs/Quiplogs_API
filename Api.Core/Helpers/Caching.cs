@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Api.Core.Helpers
 {
-    internal class Caching : ICaching
+    public class Caching : ICaching
     {
         private readonly IDistributedCache _cache;
 

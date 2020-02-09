@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api.Core.Domain
+namespace Api.Core.Domain.Entities
 {
     public class PagedResult<T>
     {

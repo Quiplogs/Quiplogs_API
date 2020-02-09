@@ -58,6 +58,7 @@ namespace Api.Infrastructure.Repositories
             AppUser mappedUser = _mapper.Map<AppUser>(user);
             return new GetUserResponse(mappedUser, true, null);
         }
+
         public async Task<UpdateUserResponse> Update(AppUser user)
         {
             var appUser = _mapper.Map<UserEntity>(user);
@@ -65,6 +66,7 @@ namespace Api.Infrastructure.Repositories
             AppUser mappedUser = _mapper.Map<AppUser>(user);
             return new UpdateUserResponse(mappedUser, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
         }
+
         public async Task<RemoveUserResponse> Remove(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

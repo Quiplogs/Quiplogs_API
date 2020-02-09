@@ -10,9 +10,10 @@ namespace Api.Infrastructure.Data.Mapping
         {
             CreateMap<AppUser, UserEntity>().ConstructUsing(u => new UserEntity { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, UserName = u.UserName, PasswordHash = u.PasswordHash, Role = u.Role });
             CreateMap<UserEntity, AppUser>().ConstructUsing(au => new AppUser(au.FirstName, au.LastName, au.Email, au.UserName, au.Role, au.Id, au.PasswordHash));
-
             CreateMap<Company, CompanyDto>();
             CreateMap<CompanyDto, Company>();
+            CreateMap<Equipment, EquipmentDto>();
+            CreateMap<EquipmentDto, Equipment>();
         }
     }
 }
