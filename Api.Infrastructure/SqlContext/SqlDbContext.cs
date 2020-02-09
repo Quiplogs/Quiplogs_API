@@ -15,12 +15,14 @@ namespace Api.Infrastructure.SqlContext
         public DbSet<EquipmentDto> Equipment { get; set; }
         public DbSet<LocationDto> Locations { get; set; }
         public DbSet<PartDto> Parts { get; set; }
-        public DbSet<PartStockDto> PartStock { get; set; }
-        public DbSet<PreconEquipmentDto> PreconEquipment { get; set; }
-        public DbSet<PreconPartDto> PreconParts { get; set; }
-        public DbSet<PreconServiceIntervalDto> PreconServiceIntervals { get; set; }
         public DbSet<ServiceDto> Services { get; set; }
         public DbSet<ServiceIntervalDto> ServiceIntervals { get; set; }
+        public DbSet<ServiceIntervalPartDto> ServiceIntervalParts { get; set; }
+        public DbSet<ServicePartDto> ServiceParts { get; set; }
+        public DbSet<TaskDto> Tasks { get; set; }
+        public DbSet<ServiceTaskDto> ServiceTasks { get; set; }
+        public DbSet<ServiceIntervalTaskDto> ServiceIntervalTasks { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,22 +37,6 @@ namespace Api.Infrastructure.SqlContext
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<ServiceDto>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<PreconServiceIntervalDto>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<PreconPartDto>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<PreconEquipmentDto>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<PartStockDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
@@ -70,17 +56,33 @@ namespace Api.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServicePart>()
+            modelBuilder.Entity<ServicePartDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceIntervalPart>()
+            modelBuilder.Entity<ServiceIntervalPartDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServicePart>().HasKey(sc => new { sc.PartId, sc.ServiceId });
+            modelBuilder.Entity<TaskDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceIntervalPart>().HasKey(sc => new { sc.PartId, sc.ServiceIntervalId });
+            modelBuilder.Entity<ServiceTaskDto>()
+              .Property(e => e.Id)
+              .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ServiceIntervalTaskDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ServicePartDto>().HasKey(sc => new { sc.PartId, sc.ServiceId });
+
+            modelBuilder.Entity<ServiceIntervalPartDto>().HasKey(sc => new { sc.PartId, sc.ServiceIntervalId });
+
+            modelBuilder.Entity<ServiceTaskDto>().HasKey(sc => new { sc.TaskId, sc.ServiceId });
+
+            modelBuilder.Entity<ServiceIntervalTaskDto>().HasKey(sc => new { sc.TaskId, sc.ServiceIntervalId });
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
