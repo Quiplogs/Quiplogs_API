@@ -11,10 +11,12 @@ namespace Api.Infrastructure.Data.Entities
         [ForeignKey("EquipmentId")]
         public EquipmentDto Equipment { get; set; }
 
+        public bool IsRecurring { get; set; }
+
         public decimal Interval { get; set; }
 
         public string UoM { get; set; }
 
-        public IList<ServiceIntervalPart> ServiceIntervalParts { get; set; }
+        public IList<ServiceIntervalPartDto> ServiceIntervalParts { get; set; }
     }
 }

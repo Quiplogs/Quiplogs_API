@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Infrastructure.Data.Entities
@@ -19,6 +18,8 @@ namespace Api.Infrastructure.Data.Entities
         public string UoM { get; set; }
 
         public decimal WorkDoneToday { get; set; }
+        
+        public string ImgUrl { get; set; }
 
         public string LocationId { get; set; }
 

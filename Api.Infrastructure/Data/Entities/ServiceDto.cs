@@ -8,14 +8,27 @@ namespace Api.Infrastructure.Data.Entities
     {
         public string ReferenceNumber { get; set; }
 
-        public DateTime? DateToBeServiced { get; set; }
-
         public DateTime? DateCompleted { get; set; }
 
-        public string UserId { get; set; }
+        public string FaultNotes { get; set; }
 
-        [ForeignKey("UserId")]
+        public string Notes { get; set; }
+
+        public decimal HoursWorked { get; set; }
+
+        public string MechanicId { get; set; }
+
+        [ForeignKey("MechanicId")]
+        public UserEntity Mechanic { get; set; }
+
+        public string MechanicName { get; set; }
+
+        public string ResponsableUserId { get; set; }
+
+        [ForeignKey("ResponsableUserId")]
         public UserEntity ResponsableUser { get; set; }
+
+        public string ResponsableUserName { get; set; }
 
         [ForeignKey("EquipmentId")]
         public string EquipmentId { get; set; }
@@ -27,6 +40,11 @@ namespace Api.Infrastructure.Data.Entities
         [ForeignKey("CompanyId")]
         public CompanyDto Company { get; set; }
 
-        public List<ServicePart> ServiceParts { get; set; }
+        public string LocationId { get; set; }
+
+        [ForeignKey("LocationId")]
+        public LocationDto Location { get; set; }
+
+        public List<ServicePartDto> ServiceParts { get; set; }
     }
 }
