@@ -11,5 +11,8 @@ namespace Api.Core
 
         //user
         public const string error_fetchUsersFailure = "fetchUsers_failure";
+
+        //equipment
+        public const string error_equipmentFailure = "equipment_failure";
     }
 }
