@@ -2,7 +2,7 @@
 using Api.Core.Dto;
 using System.Threading.Tasks;
 
-namespace Api.Core.Interfaces.Services
+namespace Api.Core.Interfaces.UseCases
 {
     public interface IJwtFactory
     {

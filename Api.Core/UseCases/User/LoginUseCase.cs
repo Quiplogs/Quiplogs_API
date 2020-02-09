@@ -2,18 +2,19 @@
 using Api.Core.Dto.Requests.User;
 using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.Repositories.User;
+using Api.Core.Interfaces.UseCases;
+using Api.Core.Interfaces.UseCases.User;
 using System.Threading.Tasks;
 
-namespace Api.Core.Services
+namespace Api.Core.UseCases.User
 {
-    public class LoginService : ILoginService
+    public class LoginUseCase : ILoginUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtFactory _jwtFactory;
 
-        public LoginService(IUserRepository userRepository, IJwtFactory jwtFactory)
+        public LoginUseCase(IUserRepository userRepository, IJwtFactory jwtFactory)
         {
             _userRepository = userRepository;
             _jwtFactory = jwtFactory;

@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Api.Core.Dto.Requests.Company;
 using Api.Core.Dto.Requests.User;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.UseCases;
+using Api.Core.Interfaces.UseCases.User;
 using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,12 @@ namespace Api.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        private readonly IRegisterService _registerService;
+        private readonly IRegisterUseCase _registerService;
         private readonly RegisterPresenter _registerUserPresenter;
-        private readonly IRegisterCompanyService _registerCompanyService;
+        private readonly IRegisterCompanyUseCase _registerCompanyService;
         private readonly RegisterCompanyPresenter _registerCompanyPresenter;
 
-        public RegisterController(IRegisterService registerService, RegisterPresenter registerUserPresenter, IRegisterCompanyService registerCompanyService, RegisterCompanyPresenter registerCompanyPresenter)
+        public RegisterController(IRegisterUseCase registerService, RegisterPresenter registerUserPresenter, IRegisterCompanyUseCase registerCompanyService, RegisterCompanyPresenter registerCompanyPresenter)
         {
             _registerService = registerService;
             _registerUserPresenter = registerUserPresenter;

@@ -8,5 +8,8 @@ namespace Api.Core
     {
         //errors
         public const string error_loginFailure = "login_failure";
+
+        //user
+        public const string error_fetchUsersFailure = "fetchUsers_failure";
     }
 }

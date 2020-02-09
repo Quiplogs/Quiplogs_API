@@ -3,18 +3,18 @@ using Api.Core.Domain.Entities;
 using Api.Core.Dto.Requests.User;
 using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.Repositories.User;
+using Api.Core.Interfaces.UseCases.User;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Core.Services
+namespace Api.Core.UseCases.User
 {
-    public class RegisterService : IRegisterService
+    public class RegisterUseCase : IRegisterUseCase
     {
         private readonly IUserRepository _userRepository;
 
-        public RegisterService(IUserRepository userRepository)
+        public RegisterUseCase(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

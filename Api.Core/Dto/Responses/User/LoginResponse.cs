@@ -1,7 +1,5 @@
 ﻿using Api.Core.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Api.Core.Dto.Responses.User
 {

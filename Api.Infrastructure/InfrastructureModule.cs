@@ -1,5 +1,6 @@
 ﻿using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.Repositories.User;
+using Api.Core.Interfaces.UseCases;
 using Api.Infrastructure.Auth;
 using Api.Infrastructure.Repositories;
 using Autofac;

@@ -1,5 +1,5 @@
 ﻿using Api.Core.Dto;
-using Api.Core.Interfaces.Services;
+using Api.Core.Interfaces.UseCases;
 using Microsoft.Extensions.Options;
 using System;
 using System.IdentityModel.Tokens.Jwt;
