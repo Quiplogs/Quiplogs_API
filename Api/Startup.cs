@@ -6,7 +6,6 @@ using Api.Infrastructure.Auth;
 using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.Data.Mapping;
 using Api.Infrastructure.SqlContext;
-using Api.Presenters;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -24,7 +23,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
 using System.Net;
@@ -68,7 +66,7 @@ namespace Api
                     ConnectTimeout = redisSettings.ConnectTimeout,
                     ConnectRetry = redisSettings.ConnectRetry,
                     DefaultDatabase = redisSettings.Database,
-                    EndPoints = {{ redisSettings.Host, redisSettings.Port }}
+                    EndPoints = { { redisSettings.Host, redisSettings.Port } }
                 };
             });
 
@@ -141,12 +139,15 @@ namespace Api
             services.AddSingleton(mapper);
 
             services.AddAutoMapper(typeof(Startup));
-
+            services.AddApiVersioning();
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
+            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wep Api", Version = "v1" });
-            });
+                Version = "V1",
+                Title = "Quiplogs V1 API",
+                Description = "Quiplogs API"
+            }));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -155,7 +156,6 @@ namespace Api
             builder.RegisterModule(new InfrastructureModule());
 
             // Presenters
-            builder.RegisterType<RegisterPresenter>().SingleInstance();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
         }
 
@@ -180,7 +180,6 @@ namespace Api
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseExceptionHandler(
@@ -210,12 +209,11 @@ namespace Api
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Quiplogs Api V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Quiplogs API");
             });
-
-            app.UseSwagger();
 
             app.UseEndpoints(endpoints =>
             {
