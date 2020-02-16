@@ -20,8 +20,8 @@ namespace Api.UseCases.User.Fetch
             _fetchUsersPresenter = fetchUsersPresenter;
         }
 
-        [HttpPost("Fetch")]
-        public async Task<ActionResult> Fetch([FromBody] FetchUsersRequest request)
+        [HttpGet("List")]
+        public async Task<ActionResult> List([FromBody] FetchUsersRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

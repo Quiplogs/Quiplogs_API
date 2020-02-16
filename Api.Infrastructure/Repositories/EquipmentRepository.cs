@@ -26,24 +26,6 @@ namespace Api.Infrastructure.Repositories
             _context = context;
             _cache = cache;
         }
-        public async Task<CreateEquipmentResponse> Create(Equipment equipment)
-        {
-            var equipmentMapped = _mapper.Map<EquipmentDto>(equipment);
-
-            try
-            {
-                await _context.AddAsync(equipmentMapped);
-                await _context.SaveChangesAsync();
-
-                await UpdateEquipmentTotal(equipment.CompanyId);
-
-                return new CreateEquipmentResponse(equipmentMapped.Id, true, null);
-            }
-            catch (SqlException ex)
-            {
-                return new CreateEquipmentResponse(equipmentMapped.Id, false, new[] { new Error(GlobalVariables.error_equipmentFailure, $"Error creating Equipment. {ex.Message}") });
-            }
-        }
 
         public async Task<FetchEquipmentResponse> GetAll(string companyId, string locationId, int pageNumber, int pageSize)
         {
@@ -79,13 +61,21 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<UpdateEquipmentResponse> Update(Equipment equipment)
+        public async Task<UpdateEquipmentResponse> Put(Equipment equipment)
         {
             try
             {
                 var equipmentMapped = _mapper.Map<EquipmentDto>(equipment);
 
-                _context.Equipment.Update(equipmentMapped);
+                if (string.IsNullOrEmpty(equipmentMapped.Id))
+                {
+                    _context.Equipment.Add(equipmentMapped);
+                }
+                else
+                {
+                    _context.Equipment.Update(equipmentMapped);
+                }
+                
                 await _context.SaveChangesAsync();
 
                 Equipment mappedEquipment = _mapper.Map<Equipment>(equipmentMapped);

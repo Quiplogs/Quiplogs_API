@@ -7,7 +7,7 @@ namespace Api.UseCases.User.Get
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
