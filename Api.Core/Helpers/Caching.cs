@@ -21,6 +21,12 @@ namespace Api.Core.Helpers
         public async Task<T> GetAsnyc<T>(string key)
         {
             var encodedCachedObject = await _cache.GetStringAsync(key);
+
+            if(encodedCachedObject == null)
+            {
+                return default;
+            }
+
             return JsonConvert.DeserializeObject<T>(encodedCachedObject);
         }
     }

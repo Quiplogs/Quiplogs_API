@@ -14,6 +14,8 @@ namespace Api.Infrastructure.Data.Mapping
             CreateMap<CompanyDto, Company>();
             CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
+            CreateMap<Location, LocationDto>();
+            CreateMap<LocationDto, Location>();
         }
     }
 }

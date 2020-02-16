@@ -21,8 +21,8 @@ namespace Api.UseCases.Equipment.Get
         }
 
 
-        [HttpPost("Get")]
-        public async Task<ActionResult> Get([FromBody] GetEquipmentRequest request)
+        [HttpGet("Get")]
+        public async Task<ActionResult> Get([FromQuery] GetEquipmentRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

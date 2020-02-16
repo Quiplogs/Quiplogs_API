@@ -18,9 +18,9 @@ namespace Api.Infrastructure.Repositories
     {
         private readonly IMapper _mapper;
         private readonly SqlDbContext _context;
-        private Caching _cache;
+        private ICaching _cache;
 
-        public EquipmentRepository(IMapper mapper, SqlDbContext context, Caching cache)
+        public EquipmentRepository(IMapper mapper, SqlDbContext context, ICaching cache)
         {
             _mapper = mapper;
             _context = context;
@@ -106,7 +106,7 @@ namespace Api.Infrastructure.Repositories
 
         public async Task<int> GetTotalRecords(string companyId)
         {
-            var _cacheKey = "Equipment-total";
+            var _cacheKey = $"Equipment-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
 
             if (cachedTotal == 0)
@@ -120,7 +120,7 @@ namespace Api.Infrastructure.Repositories
 
         private async Task UpdateEquipmentTotal(string companyId)
         {
-            var _cacheKey = "Equipment-total";
+            var _cacheKey = $"Equipment-total-{companyId}";
             var cachedTotal = _context.Equipment.Where(x => x.CompanyId == companyId).Count();
             await _cache.SetAsnyc(_cacheKey, cachedTotal);
         }
