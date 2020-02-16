@@ -2,10 +2,12 @@
 using Api.Core.Interfaces.UseCases;
 using Api.Core.Interfaces.UseCases.Equipment;
 using Api.Core.Interfaces.UseCases.Location;
+using Api.Core.Interfaces.UseCases.Part;
 using Api.Core.Interfaces.UseCases.User;
 using Api.Core.UseCases;
 using Api.Core.UseCases.Equipment;
 using Api.Core.UseCases.Location;
+using Api.Core.UseCases.Part;
 using Api.Core.UseCases.User;
 using Autofac;
 
@@ -36,6 +38,12 @@ namespace Api.Core
             builder.RegisterType<GetLocationUseCase>().As<IGetLocationUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<PutLocationUseCase>().As<IPutLocationUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<RemoveLocationUseCase>().As<IRemoveLocationUseCase>().InstancePerLifetimeScope();
+
+            //Part
+            builder.RegisterType<ListPartUseCase>().As<IListPartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<GetPartUseCase>().As<IGetPartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<PutPartUseCase>().As<IPutPartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePartUseCase>().As<IRemovePartUseCase>().InstancePerLifetimeScope();
 
             builder.RegisterType<Caching>().As<ICaching>().InstancePerLifetimeScope();
         }

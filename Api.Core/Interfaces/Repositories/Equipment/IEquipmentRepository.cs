@@ -1,7 +1,7 @@
 ﻿using Api.Core.Dto.Repositories.Equipment;
 using System.Threading.Tasks;
 
-namespace Api.Core.Interfaces.Repositories.Equipment
+namespace Api.Core.Interfaces.Repositories
 {
     public interface IEquipmentRepository
     {

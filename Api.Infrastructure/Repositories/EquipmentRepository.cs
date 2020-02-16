@@ -3,7 +3,7 @@ using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Dto.Repositories.Equipment;
 using Api.Core.Helpers;
-using Api.Core.Interfaces.Repositories.Equipment;
+using Api.Core.Interfaces.Repositories;
 using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;

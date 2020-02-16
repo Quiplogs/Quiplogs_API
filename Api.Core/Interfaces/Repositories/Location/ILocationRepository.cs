@@ -1,7 +1,7 @@
 ﻿using Api.Core.Dto.Repositories.Location;
 using System.Threading.Tasks;
 
-namespace Api.Core.Interfaces.Repositories.Location
+namespace Api.Core.Interfaces.Repositories
 {
     public interface ILocationRepository
     {

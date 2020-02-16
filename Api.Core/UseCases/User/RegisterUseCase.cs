@@ -3,7 +3,7 @@ using Api.Core.Domain.Entities;
 using Api.Core.Dto.Requests.User;
 using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories.User;
+using Api.Core.Interfaces.Repositories;
 using Api.Core.Interfaces.UseCases.User;
 using System.Linq;
 using System.Threading.Tasks;

@@ -13,5 +13,8 @@
 
         //location
         public const string error_locationFailure = "location_failure";
+
+        //part
+        public const string error_partFailure = "part_failure";
     }
 }

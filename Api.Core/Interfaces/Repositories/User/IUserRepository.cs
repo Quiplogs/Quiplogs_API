@@ -1,9 +1,8 @@
 ﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto.Repositories.User;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Api.Core.Interfaces.Repositories.User
+namespace Api.Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {
