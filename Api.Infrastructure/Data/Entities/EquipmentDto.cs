@@ -16,8 +16,6 @@ namespace Api.Infrastructure.Data.Entities
         public decimal CurrentWorkDone { get; set; }
 
         public string UoM { get; set; }
-
-        public decimal WorkDoneToday { get; set; }
         
         public string ImgUrl { get; set; }
 

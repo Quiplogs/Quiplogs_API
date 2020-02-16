@@ -1,11 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Infrastructure.Data.Entities
 {
     public class LocationDto : BaseEntity
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public long? Lat { get; set; }
 
