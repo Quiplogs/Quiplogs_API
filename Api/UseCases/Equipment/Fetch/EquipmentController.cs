@@ -7,7 +7,7 @@ namespace Api.UseCases.Equipment.Fetch
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class EquipmentController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Api.UseCases.Equipment.Fetch
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult> List([FromBody] FetchEquipmentRequest request)
+        public async Task<ActionResult> List([FromQuery] FetchEquipmentRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

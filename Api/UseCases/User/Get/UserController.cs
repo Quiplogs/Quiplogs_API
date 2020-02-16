@@ -21,8 +21,8 @@ namespace Api.UseCases.User.Get
         }
 
 
-        [HttpPost("Get")]
-        public async Task<ActionResult> Get([FromBody] GetUserRequest request)
+        [HttpGet("Get")]
+        public async Task<ActionResult> Get([FromQuery] GetUserRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

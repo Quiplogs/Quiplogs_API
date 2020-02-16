@@ -21,7 +21,7 @@ namespace Api.UseCases.User.Fetch
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult> List([FromBody] FetchUsersRequest request)
+        public async Task<ActionResult> List([FromQuery] FetchUsersRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

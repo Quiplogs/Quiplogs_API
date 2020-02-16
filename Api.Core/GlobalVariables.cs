@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.Core
+﻿namespace Api.Core
 {
     public static class GlobalVariables
     {
@@ -14,5 +10,8 @@ namespace Api.Core
 
         //equipment
         public const string error_equipmentFailure = "equipment_failure";
+
+        //location
+        public const string error_locationFailure = "location_failure";
     }
 }
