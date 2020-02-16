@@ -13,6 +13,8 @@ namespace Api.Infrastructure.SqlContext
 
         public DbSet<CompanyDto> Companies { get; set; }
         public DbSet<EquipmentDto> Equipment { get; set; }
+
+        public DbSet<EquipmentUsageDto> EquipmentUsage { get; set; }
         public DbSet<LocationDto> Locations { get; set; }
         public DbSet<PartDto> Parts { get; set; }
         public DbSet<ServiceDto> Services { get; set; }
@@ -53,6 +55,10 @@ namespace Api.Infrastructure.SqlContext
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<EquipmentDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<EquipmentUsageDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
