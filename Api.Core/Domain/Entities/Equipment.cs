@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.Core.Domain.Entities
+﻿namespace Api.Core.Domain.Entities
 {
     public class Equipment : BaseEntity
     {

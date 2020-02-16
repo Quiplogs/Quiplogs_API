@@ -20,8 +20,8 @@ namespace Api.UseCases.Equipment.Fetch
             _fetchEquipmentPresenter = fetchEquipmentPresenter;
         }
 
-        [HttpPost("Get")]
-        public async Task<ActionResult> Get([FromBody] FetchEquipmentRequest request)
+        [HttpGet("List")]
+        public async Task<ActionResult> List([FromBody] FetchEquipmentRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
