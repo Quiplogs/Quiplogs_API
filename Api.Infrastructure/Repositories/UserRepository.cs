@@ -1,7 +1,7 @@
 ﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Dto.Repositories.User;
-using Api.Core.Interfaces.Repositories.User;
+using Api.Core.Interfaces.Repositories;
 using Api.Infrastructure.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;

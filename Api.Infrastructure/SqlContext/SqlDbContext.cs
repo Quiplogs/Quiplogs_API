@@ -13,7 +13,6 @@ namespace Api.Infrastructure.SqlContext
 
         public DbSet<CompanyDto> Companies { get; set; }
         public DbSet<EquipmentDto> Equipment { get; set; }
-
         public DbSet<EquipmentUsageDto> EquipmentUsage { get; set; }
         public DbSet<LocationDto> Locations { get; set; }
         public DbSet<PartDto> Parts { get; set; }

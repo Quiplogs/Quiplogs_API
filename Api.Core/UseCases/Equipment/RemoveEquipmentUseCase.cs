@@ -2,7 +2,7 @@
 using Api.Core.Dto.Requests.Equipment;
 using Api.Core.Dto.Responses.Equipment;
 using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories.Equipment;
+using Api.Core.Interfaces.Repositories;
 using Api.Core.Interfaces.UseCases.Equipment;
 using System.Threading.Tasks;
 
