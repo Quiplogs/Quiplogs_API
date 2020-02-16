@@ -27,7 +27,7 @@ namespace Api.Core.UseCases.Location
             if (response.Success)
             {
                 var total = await _repository.GetTotalRecords(message.CompanyId);
-                var pagedResult = new PagedResult<Domain.Entities.Location>(response.Location, total, message.PageNumber, pageSize);
+                var pagedResult = new PagedResult<Domain.Entities.Location>(response.Locations, total, message.PageNumber, pageSize);
 
                 outputPort.Handle(new ListLocationResponse(pagedResult, true));
                 return true;
