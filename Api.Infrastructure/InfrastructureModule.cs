@@ -1,20 +1,16 @@
-﻿using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.UseCases;
+﻿using Api.Core.Interfaces.UseCases;
 using Api.Infrastructure.Auth;
-using Api.Infrastructure.Repositories;
 using Autofac;
+using System.Reflection;
 
 namespace Api.Infrastructure
 {
-    public class InfrastructureModule : Module
+    public class InfrastructureModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<EquipmentRepository>().As<IEquipmentRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<LocationRepository>().As<ILocationRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<PartRepository>().As<IPartRepository>().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope();
+
             builder.RegisterType<JwtFactory>().As<IJwtFactory>().SingleInstance();
         }
     }

@@ -1,49 +1,14 @@
 ﻿using Api.Core.Helpers;
-using Api.Core.Interfaces.UseCases;
-using Api.Core.Interfaces.UseCases.Equipment;
-using Api.Core.Interfaces.UseCases.Location;
-using Api.Core.Interfaces.UseCases.Part;
-using Api.Core.Interfaces.UseCases.User;
-using Api.Core.UseCases;
-using Api.Core.UseCases.Equipment;
-using Api.Core.UseCases.Location;
-using Api.Core.UseCases.Part;
-using Api.Core.UseCases.User;
 using Autofac;
+using System.Reflection;
 
 namespace Api.Core
 {
-    public class CoreModule : Module
+    public class CoreModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<RegisterUseCase>().As<IRegisterUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<LoginUseCase>().As<ILoginUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<RegisterCompanyUseCase>().As<IRegisterCompanyUseCase>().InstancePerLifetimeScope();
-
-            //Users
-            builder.RegisterType<FetchUsersUseCase>().As<IFetchUsersUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<GetUserUseCase>().As<IGetUserUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<UpdateUserUseCase>().As<IUpdateUserUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<RemoveUserUseCase>().As<IRemoveUserUseCase>().InstancePerLifetimeScope();
-
-            //Equipment
-            builder.RegisterType<FetchEquipmentUseCase>().As<IFetchEquipmentUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<GetEquipmentUseCase>().As<IGetEquipmentUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<PutEquipmentUseCase>().As<IPutEquipmentUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<RemoveEquipmentUseCase>().As<IRemoveEquipmentUseCase>().InstancePerLifetimeScope();
-
-            //Location
-            builder.RegisterType<ListLocationUseCase>().As<IListLocationUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<GetLocationUseCase>().As<IGetLocationUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<PutLocationUseCase>().As<IPutLocationUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<RemoveLocationUseCase>().As<IRemoveLocationUseCase>().InstancePerLifetimeScope();
-
-            //Part
-            builder.RegisterType<ListPartUseCase>().As<IListPartUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<GetPartUseCase>().As<IGetPartUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<PutPartUseCase>().As<IPutPartUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<RemovePartUseCase>().As<IRemovePartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<Caching>().As<ICaching>().InstancePerLifetimeScope();
         }
