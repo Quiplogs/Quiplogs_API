@@ -8,5 +8,6 @@
         public const string error_locationFailure = "location_failure";
         public const string error_partFailure = "part_failure";
         public const string error_serviceFailure = "service_failure";
+        public const string error_taskFailure = "task_failure";
     }
 }

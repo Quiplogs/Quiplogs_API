@@ -18,6 +18,8 @@ namespace Api.Infrastructure.Data.Mapping
             CreateMap<LocationDto, Location>();
             CreateMap<Service, ServiceDto>();
             CreateMap<ServiceDto, Service>();
+            CreateMap<TaskEntity, TaskDto>();
+            CreateMap<TaskDto, TaskEntity>();
         }
     }
 }
