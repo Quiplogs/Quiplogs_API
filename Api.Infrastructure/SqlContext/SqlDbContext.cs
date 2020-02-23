@@ -1,6 +1,10 @@
-﻿using Api.Infrastructure.Data.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Quiplogs.Assets.Data.Entities;
+using Quiplogs.Core.Data.Entities;
+using Quiplogs.Infrastructure.Data.Entities;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.WorkOrder.Data.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,17 +16,17 @@ namespace Api.Infrastructure.SqlContext
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options) { }
 
         public DbSet<CompanyDto> Companies { get; set; }
-        public DbSet<EquipmentDto> Equipment { get; set; }
-        public DbSet<EquipmentUsageDto> EquipmentUsage { get; set; }
+        public DbSet<AssetDto> Asset { get; set; }
+        public DbSet<AssetUsageDto> AssetUsage { get; set; }
         public DbSet<LocationDto> Locations { get; set; }
         public DbSet<PartDto> Parts { get; set; }
-        public DbSet<ServiceDto> Services { get; set; }
-        public DbSet<ServiceIntervalDto> ServiceIntervals { get; set; }
-        public DbSet<ServiceIntervalPartDto> ServiceIntervalParts { get; set; }
-        public DbSet<ServicePartDto> ServiceParts { get; set; }
+        public DbSet<WorkOrderDto> WorkOrders { get; set; }
+        public DbSet<PlannedMaintenanceDto> PlannedMaintenances { get; set; }
+        public DbSet<PlannedMaintenancePartDto> PlannedMaintenanceParts { get; set; }
+        public DbSet<WorkOrderPartDto> WorkOrderParts { get; set; }
         public DbSet<TaskDto> Tasks { get; set; }
-        public DbSet<ServiceTaskDto> ServiceTasks { get; set; }
-        public DbSet<ServiceIntervalTaskDto> ServiceIntervalTasks { get; set; }
+        public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
+        public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,11 +37,11 @@ namespace Api.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceIntervalDto>()
+            modelBuilder.Entity<PlannedMaintenanceDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceDto>()
+            modelBuilder.Entity<WorkOrderDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
@@ -53,19 +57,19 @@ namespace Api.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<EquipmentDto>()
+            modelBuilder.Entity<AssetDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<EquipmentUsageDto>()
+            modelBuilder.Entity<AssetUsageDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServicePartDto>()
+            modelBuilder.Entity<WorkOrderPartDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceIntervalPartDto>()
+            modelBuilder.Entity<PlannedMaintenancePartDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
@@ -73,21 +77,13 @@ namespace Api.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceTaskDto>()
+            modelBuilder.Entity<WorkOrderTaskDto>()
               .Property(e => e.Id)
               .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<ServiceIntervalTaskDto>()
+            modelBuilder.Entity<PlannedMaintenanceTaskDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<ServicePartDto>().HasKey(sc => new { sc.PartId, sc.ServiceId });
-
-            modelBuilder.Entity<ServiceIntervalPartDto>().HasKey(sc => new { sc.PartId, sc.ServiceIntervalId });
-
-            modelBuilder.Entity<ServiceTaskDto>().HasKey(sc => new { sc.TaskId, sc.ServiceId });
-
-            modelBuilder.Entity<ServiceIntervalTaskDto>().HasKey(sc => new { sc.TaskId, sc.ServiceIntervalId });
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

@@ -1,5 +1,5 @@
-﻿using Api.Core.Interfaces.UseCases.Part;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Inventory.Interfaces.UseCases.Part;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.List
@@ -26,7 +26,7 @@ namespace Api.UseCases.Part.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listPartUseCase.Handle(new Core.Dto.Requests.Part.ListPartRequest(request.CompanyId, request.PageNumber), _listPartPresenter);
+            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(request.CompanyId, request.PageNumber), _listPartPresenter);
             return _listPartPresenter.ContentResult;
         }
     }

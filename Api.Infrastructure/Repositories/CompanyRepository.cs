@@ -2,10 +2,10 @@
 using Api.Core.Dto;
 using Api.Core.Dto.Repositories;
 using Api.Core.Interfaces.Repositories;
-using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Quiplogs.Core.Data.Entities;
 using System.Linq;
 using System.Threading.Tasks;
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.User
 {
-    public class GetUserResponse : ServiceResponseMessage
+    public class GetUserResponse : WorkOrderResponseMessage
     {
         public AppUser User { get; }
         public IEnumerable<Error> Errors { get; }

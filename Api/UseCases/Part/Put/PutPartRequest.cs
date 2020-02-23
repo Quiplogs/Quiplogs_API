@@ -2,6 +2,6 @@
 {
     public class PutPartRequest
     {
-        public Core.Domain.Entities.Part Part { get; set; }
+        public Quiplogs.Inventory.Domain.Entities.Part Part { get; set; }
     }
 }

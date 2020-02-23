@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api.csproj", "{CC8ADC00-8B23-4B4C-B383-A0A491EA14EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api.csproj", "{CC8ADC00-8B23-4B4C-B383-A0A491EA14EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Core", "..\Api.Core\Api.Core.csproj", "{2E69039C-D00C-4689-8ED4-1ADB7623AE8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Core", "..\Api.Core\Quiplogs.Core.csproj", "{2E69039C-D00C-4689-8ED4-1ADB7623AE8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Infrastructure", "..\Api.Infrastructure\Api.Infrastructure.csproj", "{074243F2-75FF-4CAB-BDE6-99ACB6D9389E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Infrastructure", "..\Api.Infrastructure\Quiplogs.Infrastructure.csproj", "{074243F2-75FF-4CAB-BDE6-99ACB6D9389E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Assets", "..\Quiplogs.Assets\Quiplogs.Assets.csproj", "{49A38A12-2DCA-4076-9ABF-602A5964B246}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Inventory", "..\Quiplogs.Inventory\Quiplogs.Inventory.csproj", "{C6189958-7D77-4A16-B775-0EBCE85AB264}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.WorkOrder", "..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj", "{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{074243F2-75FF-4CAB-BDE6-99ACB6D9389E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{074243F2-75FF-4CAB-BDE6-99ACB6D9389E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{074243F2-75FF-4CAB-BDE6-99ACB6D9389E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A38A12-2DCA-4076-9ABF-602A5964B246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A38A12-2DCA-4076-9ABF-602A5964B246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A38A12-2DCA-4076-9ABF-602A5964B246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A38A12-2DCA-4076-9ABF-602A5964B246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6189958-7D77-4A16-B775-0EBCE85AB264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6189958-7D77-4A16-B775-0EBCE85AB264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6189958-7D77-4A16-B775-0EBCE85AB264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6189958-7D77-4A16-B775-0EBCE85AB264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

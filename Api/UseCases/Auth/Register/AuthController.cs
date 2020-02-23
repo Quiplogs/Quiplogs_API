@@ -9,12 +9,12 @@ namespace Api.UseCases.Auth.Register
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IRegisterUseCase _registerService;
+        private readonly IRegisterUseCase _registerWorkOrder;
         private readonly RegisterPresenter _registerUserPresenter;
 
-        public AuthController(IRegisterUseCase registerService, RegisterPresenter registerUserPresenter)
+        public AuthController(IRegisterUseCase registerWorkOrder, RegisterPresenter registerUserPresenter)
         {
-            _registerService = registerService;
+            _registerWorkOrder = registerWorkOrder;
             _registerUserPresenter = registerUserPresenter;
         }
 
@@ -26,7 +26,7 @@ namespace Api.UseCases.Auth.Register
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _registerService.Handle(new Core.Dto.Requests.User.RegisterRequest(request.FirstName, request.LastName, request.Email, request.UserName, request.Password), _registerUserPresenter);
+            await _registerWorkOrder.Handle(new Core.Dto.Requests.User.RegisterRequest(request.FirstName, request.LastName, request.Email, request.UserName, request.Password), _registerUserPresenter);
             return _registerUserPresenter.ContentResult;
         }
     }

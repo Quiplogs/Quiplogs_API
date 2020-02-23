@@ -9,12 +9,12 @@ namespace Api.UseCases.Company.Register
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly IRegisterCompanyUseCase _registerCompanyService;
+        private readonly IRegisterCompanyUseCase _registerCompanyWorkOrder;
         private readonly RegisterCompanyPresenter _registerCompanyPresenter;
 
-        public CompanyController(IRegisterCompanyUseCase registerCompanyService, RegisterCompanyPresenter registerCompanyPresenter)
+        public CompanyController(IRegisterCompanyUseCase registerCompanyWorkOrder, RegisterCompanyPresenter registerCompanyPresenter)
         {
-            _registerCompanyService = registerCompanyService;
+            _registerCompanyWorkOrder = registerCompanyWorkOrder;
             _registerCompanyPresenter = registerCompanyPresenter;
         }
 
@@ -45,7 +45,7 @@ namespace Api.UseCases.Company.Register
                 UserPassword = request.Password
             };
 
-            await _registerCompanyService.Handle(company, _registerCompanyPresenter);
+            await _registerCompanyWorkOrder.Handle(company, _registerCompanyPresenter);
             return _registerCompanyPresenter.ContentResult;
         }
     }

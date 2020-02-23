@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.Location
 {
-    public class RemoveLocationResponse : ServiceResponseMessage
+    public class RemoveLocationResponse : WorkOrderResponseMessage
     {
         public string Description { get; }
         public IEnumerable<Error> Errors { get; }

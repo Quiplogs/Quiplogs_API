@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.User
 {
-    public class RemoveUserResponse : ServiceResponseMessage
+    public class RemoveUserResponse : WorkOrderResponseMessage
     {
         public string Name { get; }
         public IEnumerable<Error> Errors { get; }

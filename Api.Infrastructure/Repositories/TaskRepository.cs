@@ -1,12 +1,12 @@
 ﻿using Api.Core;
 using Api.Core.Dto;
-using Api.Core.Dto.Repositories.Task;
 using Api.Core.Helpers;
-using Api.Core.Interfaces.Repositories;
-using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Dto.Repositories.Task;
+using Quiplogs.Inventory.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,8 +35,8 @@ namespace Api.Infrastructure.Repositories
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
-                List<Core.Domain.Entities.TaskEntity> mappedTask = _mapper.Map<List<Core.Domain.Entities.TaskEntity>>(TaskList);
-                return new ListTaskResponse(mappedTask, true, null);
+                var mappedTasks = _mapper.Map<List<Quiplogs.Inventory.Domain.Entities.TaskEntity>>(TaskList);
+                return new ListTaskResponse(mappedTasks, true, null);
             }
             catch (SqlException ex)
             {
@@ -50,7 +50,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var Task = _context.Tasks.FirstOrDefault(x => x.Id == id);
 
-                Core.Domain.Entities.TaskEntity mappedTask = _mapper.Map<Core.Domain.Entities.TaskEntity>(Task);
+                var mappedTask = _mapper.Map<Quiplogs.Inventory.Domain.Entities.TaskEntity>(Task);
                 return new GetTaskResponse(mappedTask, true, null);
             }
             catch (SqlException ex)
@@ -59,7 +59,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<PutTaskResponse> Put(Core.Domain.Entities.TaskEntity Task)
+        public async Task<PutTaskResponse> Put(Quiplogs.Inventory.Domain.Entities.TaskEntity Task)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Api.Infrastructure.Repositories
 
                 await _context.SaveChangesAsync();
 
-                Core.Domain.Entities.TaskEntity mappedTask = _mapper.Map<Core.Domain.Entities.TaskEntity>(TaskMapped);
+                var mappedTask = _mapper.Map<Quiplogs.Inventory.Domain.Entities.TaskEntity>(TaskMapped);
                 return new PutTaskResponse(mappedTask, true, null);
             }
             catch (SqlException ex)

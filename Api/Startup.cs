@@ -3,7 +3,6 @@ using Api.Extensions;
 using Api.Helpers;
 using Api.Infrastructure;
 using Api.Infrastructure.Auth;
-using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.Data.Mapping;
 using Api.Infrastructure.SqlContext;
 using Autofac;
@@ -23,6 +22,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Quiplogs.Assets;
+using Quiplogs.Core.Data.Entities;
+using Quiplogs.Inventory;
+using Quiplogs.WorkOrder;
 using StackExchange.Redis;
 using System;
 using System.Net;
@@ -42,7 +45,7 @@ namespace Api
 
         public ILifetimeScope AutofacContainer { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add Services to the container.
         [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
@@ -152,8 +155,11 @@ namespace Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new InfrastructureModule());
-            builder.RegisterModule(new CoreModule());            
+            builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new InfrastructureModule());            
+            builder.RegisterModule(new AssetsModule());
+            builder.RegisterModule(new InventoryModule());
+            builder.RegisterModule(new WorkOrderModule());
 
             // Presenters
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
