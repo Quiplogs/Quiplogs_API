@@ -1,7 +1,7 @@
-﻿using Api.Core.Dto.Responses.Part;
-using Api.Core.Interfaces;
+﻿using Api.Core.Interfaces;
 using Api.Presenters;
 using Api.Serialization;
+using Quiplogs.Inventory.Dto.Responses.Part;
 using System.Net;
 
 namespace Api.UseCases.Part.Get

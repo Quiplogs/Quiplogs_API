@@ -2,6 +2,6 @@
 {
     public class PutTaskRequest
     {
-        public Core.Domain.Entities.TaskEntity Task { get; set; }
+        public Quiplogs.Inventory.Domain.Entities.TaskEntity Task { get; set; }
     }
 }

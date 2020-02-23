@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Part;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Inventory.Interfaces.UseCases.Part;
 
 namespace Api.UseCases.Part.Put
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Part.Put
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putPartUseCase.Handle(new Core.Dto.Requests.Part.PutPartRequest(request.Part), _putPartPresenter);
+            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Part), _putPartPresenter);
             return _putPartPresenter.ContentResult;
         }
     }

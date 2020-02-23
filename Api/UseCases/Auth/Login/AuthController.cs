@@ -9,12 +9,12 @@ namespace Api.UseCases.Auth.Login
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ILoginUseCase _loginService;
+        private readonly ILoginUseCase _loginWorkOrder;
         private readonly LoginPresenter _loginPresenter;
 
-        public AuthController(ILoginUseCase loginService, LoginPresenter loginPresenter)
+        public AuthController(ILoginUseCase loginWorkOrder, LoginPresenter loginPresenter)
         {
-            _loginService = loginService;
+            _loginWorkOrder = loginWorkOrder;
             _loginPresenter = loginPresenter;
         }
 
@@ -26,7 +26,7 @@ namespace Api.UseCases.Auth.Login
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _loginService.Handle(new Core.Dto.Requests.User.LoginRequest(request.Email, request.Password), _loginPresenter);
+            await _loginWorkOrder.Handle(new Core.Dto.Requests.User.LoginRequest(request.Email, request.Password), _loginPresenter);
             return _loginPresenter.ContentResult;
         }
     }

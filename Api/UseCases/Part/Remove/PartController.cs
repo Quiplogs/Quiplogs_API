@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Part;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Inventory.Interfaces.UseCases.Part;
 
 namespace Api.UseCases.Part.Remove
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Part.Remove
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removePartUseCase.Handle(new Core.Dto.Requests.Part.RemovePartRequest(request.Id), _removePartPresenter);
+            await _removePartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.RemovePartRequest(request.Id), _removePartPresenter);
             return _removePartPresenter.ContentResult;
         }
     }

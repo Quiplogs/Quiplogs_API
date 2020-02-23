@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Task;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.List
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Task.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listTaskUseCase.Handle(new Core.Dto.Requests.Task.ListTaskRequest(request.CompanyId, request.PageNumber), _listTaskPresenter);
+            await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(request.CompanyId, request.PageNumber), _listTaskPresenter);
             return _listTaskPresenter.ContentResult;
         }
     }

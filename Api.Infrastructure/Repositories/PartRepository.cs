@@ -1,13 +1,13 @@
 ﻿using Api.Core;
-using Api.Core.Domain.Entities;
 using Api.Core.Dto;
-using Api.Core.Dto.Repositories.Part;
 using Api.Core.Helpers;
-using Api.Core.Interfaces.Repositories;
-using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Domain.Entities;
+using Quiplogs.Inventory.Dto.Repositories.Part;
+using Quiplogs.Inventory.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

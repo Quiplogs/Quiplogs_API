@@ -3,7 +3,6 @@ using Api.Extensions;
 using Api.Helpers;
 using Api.Infrastructure;
 using Api.Infrastructure.Auth;
-using Api.Infrastructure.Data.Entities;
 using Api.Infrastructure.Data.Mapping;
 using Api.Infrastructure.SqlContext;
 using Autofac;
@@ -23,6 +22,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Quiplogs.Assets;
+using Quiplogs.Core.Data.Entities;
+using Quiplogs.Inventory;
+using Quiplogs.WorkOrder;
 using StackExchange.Redis;
 using System;
 using System.Net;
@@ -42,22 +45,22 @@ namespace Api
 
         public ILifetimeScope AutofacContainer { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add WorkOrders to the container.
         [Obsolete]
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureWorkOrders(IServiceCollection WorkOrders)
         {
             // Add Entity framework Core.
-            services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
+            WorkOrders.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
 
-            services.AddCors();
-            services.AddControllers();
+            WorkOrders.AddCors();
+            WorkOrders.AddControllers();
 
             //Redis cache
             var redisSettingsSection = Configuration.GetSection("RedisSettings");
             var redisSettings = redisSettingsSection.Get<RedisSettings>();
 
-            services.AddDistributedMemoryCache();
-            services.AddStackExchangeRedisCache(options =>
+            WorkOrders.AddDistributedMemoryCache();
+            WorkOrders.AddStackExchangeRedisCache(options =>
             {
                 options.ConfigurationOptions = new ConfigurationOptions
                 {
@@ -72,14 +75,14 @@ namespace Api
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
+            WorkOrders.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            services.Configure<JwtIssuerOptions>(options =>
+            WorkOrders.Configure<JwtIssuerOptions>(options =>
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
@@ -102,7 +105,7 @@ namespace Api
                 ClockSkew = TimeSpan.Zero
             };
 
-            services.AddAuthentication(x =>
+            WorkOrders.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -114,7 +117,7 @@ namespace Api
             });
 
             // add identity
-            var identityBuilder = services.AddIdentityCore<UserEntity>(o =>
+            var identityBuilder = WorkOrders.AddIdentityCore<UserEntity>(o =>
             {
                 // configure identity options
                 o.Password.RequireDigit = false;
@@ -127,7 +130,7 @@ namespace Api
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<SqlDbContext>().AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            WorkOrders.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -136,12 +139,12 @@ namespace Api
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            WorkOrders.AddSingleton(mapper);
 
-            services.AddAutoMapper(typeof(Startup));
-            services.AddApiVersioning();
+            WorkOrders.AddAutoMapper(typeof(Startup));
+            WorkOrders.AddApiVersioning();
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(options =>
+            WorkOrders.AddSwaggerGen(options =>
             options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
                 Version = "V1",
@@ -153,7 +156,10 @@ namespace Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new InfrastructureModule());
-            builder.RegisterModule(new CoreModule());            
+            builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new AssetsModule());
+            builder.RegisterModule(new InventoryModule());
+            builder.RegisterModule(new WorkOrderModule());
 
             // Presenters
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();

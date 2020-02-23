@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.User
 {
-    public class LoginResponse : ServiceResponseMessage
+    public class LoginResponse : WorkOrderResponseMessage
     {
         public Token Token { get; }
         public IEnumerable<Error> Errors { get; }

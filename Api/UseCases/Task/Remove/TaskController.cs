@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Task;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.Remove
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Task.Remove
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removeTaskUseCase.Handle(new Core.Dto.Requests.Task.RemoveTaskRequest(request.Id), _removeTaskPresenter);
+            await _removeTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.RemoveTaskRequest(request.Id), _removeTaskPresenter);
             return _removeTaskPresenter.ContentResult;
         }
     }

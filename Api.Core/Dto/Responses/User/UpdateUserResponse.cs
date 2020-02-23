@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Api.Core.Dto.Responses.User
 {
-    public class UpdateUserResponse : ServiceResponseMessage
+    public class UpdateUserResponse : WorkOrderResponseMessage
     {
         public AppUser User { get; }
         public IEnumerable<Error> Errors { get; }
