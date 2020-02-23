@@ -45,22 +45,22 @@ namespace Api
 
         public ILifetimeScope AutofacContainer { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add WorkOrders to the container.
+        // This method gets called by the runtime. Use this method to add Services to the container.
         [Obsolete]
-        public void ConfigureWorkOrders(IServiceCollection WorkOrders)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Add Entity framework Core.
-            WorkOrders.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
+            services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
 
-            WorkOrders.AddCors();
-            WorkOrders.AddControllers();
+            services.AddCors();
+            services.AddControllers();
 
             //Redis cache
             var redisSettingsSection = Configuration.GetSection("RedisSettings");
             var redisSettings = redisSettingsSection.Get<RedisSettings>();
 
-            WorkOrders.AddDistributedMemoryCache();
-            WorkOrders.AddStackExchangeRedisCache(options =>
+            services.AddDistributedMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
             {
                 options.ConfigurationOptions = new ConfigurationOptions
                 {
@@ -75,14 +75,14 @@ namespace Api
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
-            WorkOrders.Configure<AppSettings>(appSettingsSection);
+            services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            WorkOrders.Configure<JwtIssuerOptions>(options =>
+            services.Configure<JwtIssuerOptions>(options =>
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
@@ -105,7 +105,7 @@ namespace Api
                 ClockSkew = TimeSpan.Zero
             };
 
-            WorkOrders.AddAuthentication(x =>
+            services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -117,7 +117,7 @@ namespace Api
             });
 
             // add identity
-            var identityBuilder = WorkOrders.AddIdentityCore<UserEntity>(o =>
+            var identityBuilder = services.AddIdentityCore<UserEntity>(o =>
             {
                 // configure identity options
                 o.Password.RequireDigit = false;
@@ -130,7 +130,7 @@ namespace Api
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<SqlDbContext>().AddDefaultTokenProviders();
 
-            WorkOrders.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -139,12 +139,12 @@ namespace Api
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            WorkOrders.AddSingleton(mapper);
+            services.AddSingleton(mapper);
 
-            WorkOrders.AddAutoMapper(typeof(Startup));
-            WorkOrders.AddApiVersioning();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddApiVersioning();
             // Register the Swagger generator, defining 1 or more Swagger documents
-            WorkOrders.AddSwaggerGen(options =>
+            services.AddSwaggerGen(options =>
             options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
                 Version = "V1",
@@ -155,8 +155,8 @@ namespace Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new InfrastructureModule());
             builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new InfrastructureModule());            
             builder.RegisterModule(new AssetsModule());
             builder.RegisterModule(new InventoryModule());
             builder.RegisterModule(new WorkOrderModule());
