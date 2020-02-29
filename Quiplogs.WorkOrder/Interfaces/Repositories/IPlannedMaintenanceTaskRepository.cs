@@ -5,8 +5,8 @@ namespace Quiplogs.WorkOrder.Interfaces.Repositories
 {
     public interface IPlannedMaintenanceTaskRepository
     {
-        Task<ListPlannedMaintenanceTaskResponse> List(string companyId, string locationId, string plannedMaintenanceId, string assetId, int pageNumber);
-        Task<int> GetTotalRecords(string companyId);
+        Task<ListPlannedMaintenanceTaskResponse> List(string plannedMaintenanceId, int pageNumber, int pageSize);
+        int GetTotalRecords(string plannedMaintenanceId);
         Task<PutPlannedMaintenanceTaskResponse> Put(Domain.Entities.PlannedMaintenanceTask PlannedMaintenanceTask);
         Task<RemovePlannedMaintenanceTaskResponse> Remove(string id);
     }

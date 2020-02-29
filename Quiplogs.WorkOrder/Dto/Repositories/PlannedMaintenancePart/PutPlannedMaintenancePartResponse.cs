@@ -6,11 +6,11 @@ namespace Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenancePart
 {
     public class PutPlannedMaintenancePartResponse : BaseResponse
     {
-        public string UpdateMessage { get; set; }
+        public Domain.Entities.PlannedMaintenancePart PlannedMaintenancePart { get; set; }
 
-        public PutPlannedMaintenancePartResponse(string updateMessage, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
+        public PutPlannedMaintenancePartResponse(Domain.Entities.PlannedMaintenancePart plannedMaintenancePart, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
         {
-            UpdateMessage = updateMessage;
+            PlannedMaintenancePart = plannedMaintenancePart;
         }
     }
 }

@@ -6,11 +6,12 @@ namespace Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenanceTask
 {
     public class PutPlannedMaintenanceTaskResponse : BaseResponse
     {
-        public string UpdateMessage { get; set; }
+        public Domain.Entities.PlannedMaintenanceTask PlannedMaintenanceTask { get; set; }
 
-        public PutPlannedMaintenanceTaskResponse(string updateMessage, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
+        public PutPlannedMaintenanceTaskResponse(Domain.Entities.PlannedMaintenanceTask plannedMaintenanceTask, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
         {
-            UpdateMessage = updateMessage;
+            PlannedMaintenanceTask = plannedMaintenanceTask;
         }
     }
+
 }
