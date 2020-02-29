@@ -6,19 +6,27 @@ namespace Quiplogs.Assets.Data.Entities
 {
     public class AssetDto : BaseEntity
     {
-        public string Code { get; set; }
+        public string Name { get; set; }
 
         public string Make { get; set; }
 
         public string Model { get; set; }
 
-        public int BuildYear { get; set; }
+        public string SerialNumber { get; set; }
+
+        public int ManufacuredYear { get; set; }
+
+        public int PurchasedYear { get; set; }
 
         public decimal CurrentWorkDone { get; set; }
 
         public string UoM { get; set; }
         
         public string ImgUrl { get; set; }
+
+        public string WarrantyUrl { get; set; }
+
+        public string InstructionManualUrl { get; set; }
 
         public string LocationId { get; set; }
 

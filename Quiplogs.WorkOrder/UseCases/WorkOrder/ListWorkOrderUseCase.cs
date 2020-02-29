@@ -28,7 +28,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
             if (response.Success)
             {
                 var total = await _repository.GetTotalRecords(message.CompanyId);
-                var pagedResult = new PagedResult<Domain.Entities.WorkOrder>(response.WorkOrders, total, message.PageNumber, pageSize);
+                var pagedResult = new PagedResult<Domain.Entities.WorkOrderEntity>(response.WorkOrders, total, message.PageNumber, pageSize);
 
                 outputPort.Handle(new ListWorkOrderResponse(pagedResult, true));
                 return true;

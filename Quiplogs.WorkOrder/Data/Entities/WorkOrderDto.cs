@@ -4,26 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Quiplogs.Infrastructure.Data.Entities
+namespace Quiplogs.WorkOrder.Data.Entities
 {
     public class WorkOrderDto : BaseEntity
     {
         public string ReferenceNumber { get; set; }
 
-        public DateTime? DateCompleted { get; set; }
+        public DateTime? DueDate { get; set; }
 
-        public string FaultNotes { get; set; }
+        public DateTime? DateCompleted { get; set; }
 
         public string Notes { get; set; }
 
         public decimal HoursWorked { get; set; }
 
-        public string MechanicId { get; set; }
+        public decimal MintuesWorked { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public string TechnicianId { get; set; }
 
         [ForeignKey("MechanicId")]
-        public UserEntity Mechanic { get; set; }
+        public UserEntity Technician { get; set; }
 
-        public string MechanicName { get; set; }
+        public string TechnicianName { get; set; }
 
         public string ResponsableUserId { get; set; }
 
@@ -48,5 +52,7 @@ namespace Quiplogs.Infrastructure.Data.Entities
         public LocationDto Location { get; set; }
 
         public List<WorkOrderPartDto> WorkOrderParts { get; set; }
+
+        public List<WorkOrderTaskDto> WorkOrderTasks { get; set; }
     }
 }

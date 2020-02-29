@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Quiplogs.Infrastructure.Data.Entities;
+using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.WorkOrder.Domain.Entities;
 
 namespace Quiplogs.WorkOrder.Data.Mapping
 {
@@ -7,8 +8,19 @@ namespace Quiplogs.WorkOrder.Data.Mapping
     {
         public DataProfile()
         {
-            CreateMap<Domain.Entities.WorkOrder, WorkOrderDto>();
-            CreateMap<WorkOrderDto, Domain.Entities.WorkOrder>();
+            CreateMap<WorkOrderEntity, WorkOrderDto>();
+            CreateMap<WorkOrderDto, WorkOrderEntity>();
+            CreateMap<WorkOrderPart, WorkOrderPartDto>();
+            CreateMap<WorkOrderPartDto, WorkOrderPart>();
+            CreateMap<WorkOrderTask, WorkOrderTaskDto>();
+            CreateMap<WorkOrderTaskDto, WorkOrderTask>();
+
+            CreateMap<PlannedMaintenance, PlannedMaintenanceDto>();
+            CreateMap<PlannedMaintenanceDto, PlannedMaintenance>();
+            CreateMap<PlannedMaintenancePart, PlannedMaintenancePartDto>();
+            CreateMap<PlannedMaintenancePartDto, PlannedMaintenancePart>();
+            CreateMap<PlannedMaintenanceTask, PlannedMaintenanceTaskDto>();
+            CreateMap<PlannedMaintenanceTaskDto, PlannedMaintenanceTask>();
         }
     }
 }

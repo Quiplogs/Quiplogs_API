@@ -1,30 +1,31 @@
 ﻿using Api.Core.Domain.Entities;
 using Quiplogs.Assets.Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Domain.Entities
 {
-    public class WorkOrder : BaseEntity
+    public class WorkOrderEntity : BaseEntity
     {
         public string ReferenceNumber { get; set; }
 
         public DateTime? DateCompleted { get; set; }
 
-        public string FaultNotes { get; set; }
-
         public string Notes { get; set; }
 
         public decimal HoursWorked { get; set; }
 
-        public string MechanicId { get; set; }
+        public decimal MintuesWorked { get; set; }
 
-        //public UserEntity Mechanic { get; set; }
+        public string TechnicianId { get; set; }
 
-        public string MechanicName { get; set; }
+        public AppUser Technician { get; set; }
+
+        public string TechnicianName { get; set; }
 
         public string ResponsableUserId { get; set; }
 
-        //public UserEntity ResponsableUser { get; set; }
+        public AppUser ResponsableUser { get; set; }
 
         public string ResponsableUserName { get; set; }
 
@@ -40,6 +41,8 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 
         public Location Location { get; set; }
 
-        //public List<WorkOrderPartDto> WorkOrderParts { get; set; }
+        public List<WorkOrderPart> WorkOrderParts { get; set; }
+
+        public List<WorkOrderTask> WorkOrderTasks { get; set; }
     }
 }

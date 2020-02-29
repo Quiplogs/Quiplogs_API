@@ -8,7 +8,7 @@ namespace Quiplogs.WorkOrder.Interfaces.Repositories
         Task<ListWorkOrderResponse> List(string companyId, string locationId, int pageNumber, int pageSize);
         Task<int> GetTotalRecords(string companyId);
         Task<GetWorkOrderResponse> Get(string id);
-        Task<PutWorkOrderResponse> Put(Domain.Entities.WorkOrder WorkOrder);
+        Task<PutWorkOrderResponse> Put(Domain.Entities.WorkOrderEntity WorkOrder);
         Task<RemoveWorkOrderResponse> Remove(string id);
     }
 }

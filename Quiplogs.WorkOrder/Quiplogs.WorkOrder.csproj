@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Quiplogs.Inventory\Quiplogs.Inventory.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\PlannedMaintenance\" />
+  </ItemGroup>
+
 </Project>
