@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Responses.WorkOrder
 {
-    public class ListWorkOrderResponse : WorkOrderResponseMessage
+    public class ListWorkOrderResponse : ServiceResponseMessage
     {
         public PagedResult<Domain.Entities.WorkOrderEntity> PagedResult { get; }
         public IEnumerable<Error> Errors { get; }

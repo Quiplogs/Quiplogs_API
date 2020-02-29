@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Responses.WorkOrder
 {
-    public class PutWorkOrderResponse : WorkOrderResponseMessage
+    public class PutWorkOrderResponse : ServiceResponseMessage
     {
         public Domain.Entities.WorkOrderEntity WorkOrder { get; }
         public IEnumerable<Error> Errors { get; }

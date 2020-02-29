@@ -2,7 +2,7 @@
 using Api.Core.Dto.Responses;
 using System.Collections.Generic;
 
-namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrder
+namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderTask
 {
     public class RemoveWorkOrderTaskResponse : BaseResponse
     {

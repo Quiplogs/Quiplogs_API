@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.Location
 {
-    public class ListLocationResponse : WorkOrderResponseMessage
+    public class ListLocationResponse : ServiceResponseMessage
     {
         public PagedResult<Domain.Entities.Location> PagedResult { get; }
         public IEnumerable<Error> Errors { get; }

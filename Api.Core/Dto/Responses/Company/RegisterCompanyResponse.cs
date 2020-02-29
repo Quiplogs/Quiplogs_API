@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Api.Core.Dto.Responses.Company
 {
-    public class RegisterCompanyResponse : WorkOrderResponseMessage
+    public class RegisterCompanyResponse : ServiceResponseMessage
     {
         public string Id { get; }
         public IEnumerable<string> Errors { get; }

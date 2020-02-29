@@ -2,7 +2,7 @@
 using Api.Core.Dto.Responses;
 using System.Collections.Generic;
 
-namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderPart
+namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderTask
 {
     public class ListWorkOrderTaskResponse : BaseResponse
     {
