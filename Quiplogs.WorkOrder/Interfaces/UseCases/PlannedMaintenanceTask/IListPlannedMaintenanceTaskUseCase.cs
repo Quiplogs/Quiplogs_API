@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Api.Core.Interfaces;
+using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;
+using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenanceTask;
 
 namespace Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenanceTask
 {
-    class IListPlannedMaintenanceTaskUseCase
+    public interface IListPlannedMaintenanceTaskUseCase : IRequestHandler<ListPlannedMaintenanceTaskRequest, ListPlannedMaintenanceTaskResponse>
     {
     }
 }

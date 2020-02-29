@@ -5,8 +5,8 @@ namespace Quiplogs.WorkOrder.Interfaces.Repositories
 {
     public interface IWorkOrderPartRepository
     {
-        Task<ListWorkOrderPartResponse> List(string companyId, string locationId, string workOrderId, string assetId, int pageNumber);
-        Task<int> GetTotalRecords(string companyId);
+        Task<ListWorkOrderPartResponse> List(string workOrderId, int pageNumber, int pageSize);
+        int GetTotalRecords(string workOrderId);
         Task<PutWorkOrderPartResponse> Put(Domain.Entities.WorkOrderPart WorkOrderPart);
         Task<RemoveWorkOrderPartResponse> Remove(string id);
     }

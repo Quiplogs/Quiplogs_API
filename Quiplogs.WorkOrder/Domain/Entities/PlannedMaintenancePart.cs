@@ -6,7 +6,7 @@ namespace Quiplogs.WorkOrder.Domain.Entities
     public class PlannedMaintenancePart : BaseEntity
     {
         public string PlannedMaintenanceId { get; set; }
-        public PlannedMaintenance PlannedMaintenance { get; set; }
+        public PlannedMaintenanceEntity PlannedMaintenance { get; set; }
         public string PartId { get; set; }
         public Part Part { get; set; }
         public decimal Quantity { get; set; }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Api.Core.Interfaces;
+using Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask;
+using Quiplogs.WorkOrder.Dto.Responses.WorkOrderTask;
 
 namespace Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderTask
 {
-    class IRemoveListWorkOrderTaskUseCase
+    public interface IRemoveWorkOrderTaskUseCase : IRequestHandler<RemoveWorkOrderTaskRequest, RemoveWorkOrderTaskResponse>
     {
     }
 }

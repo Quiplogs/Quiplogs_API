@@ -6,7 +6,7 @@ namespace Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance
 {
     public class PutPlannedMaintenanceResponse : ServiceResponseMessage
     {
-        public Domain.Entities.PlannedMaintenance PlannedMaintenance { get; }
+        public Domain.Entities.PlannedMaintenanceEntity PlannedMaintenance { get; }
         public IEnumerable<Error> Errors { get; }
 
         public PutPlannedMaintenanceResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
@@ -14,7 +14,7 @@ namespace Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance
             Errors = errors;
         }
 
-        public PutPlannedMaintenanceResponse(Domain.Entities.PlannedMaintenance plannedMaintenance, bool success = false, string message = null) : base(success, message)
+        public PutPlannedMaintenanceResponse(Domain.Entities.PlannedMaintenanceEntity plannedMaintenance, bool success = false, string message = null) : base(success, message)
         {
             PlannedMaintenance = plannedMaintenance;
         }

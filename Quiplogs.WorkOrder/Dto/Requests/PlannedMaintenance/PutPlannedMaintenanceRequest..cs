@@ -1,12 +1,12 @@
 ﻿using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
+using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 {
-    public class PutPlannedMaintenanceRequest : IRequest<PutWorkOrderResponse>
+    public class PutPlannedMaintenanceRequest : IRequest<PutPlannedMaintenanceResponse>
     {
-        public Domain.Entities.PlannedMaintenance PlannedMaintenance { get; }
-        public PutPlannedMaintenanceRequest(Domain.Entities.PlannedMaintenance plannedMaintenance)
+        public Domain.Entities.PlannedMaintenanceEntity PlannedMaintenance { get; }
+        public PutPlannedMaintenanceRequest(Domain.Entities.PlannedMaintenanceEntity plannedMaintenance)
         {
             PlannedMaintenance = plannedMaintenance;
         }

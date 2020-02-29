@@ -2,6 +2,6 @@
 {
     public class PutWorkOrderRequest
     {
-        public Quiplogs.WorkOrder.Domain.Entities.WorkOrder WorkOrder { get; set; }
+        public Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity WorkOrder { get; set; }
     }
 }

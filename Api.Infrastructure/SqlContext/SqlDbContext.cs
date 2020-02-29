@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
-using Quiplogs.Infrastructure.Data.Entities;
 using Quiplogs.Inventory.Data.Entities;
 using Quiplogs.WorkOrder.Data.Entities;
 using System;

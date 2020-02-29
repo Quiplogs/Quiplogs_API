@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Api.Core.Interfaces;
+using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance;
+using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance;
 
-namespace Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance
+namespace Quiplogs.PlannedMaintenance.Interfaces.UseCases.PlannedMaintenance
 {
-    class IRemovePlannedMaintenanceUseCase
+    public interface IRemovePlannedMaintenanceUseCase : IRequestHandler<RemovePlannedMaintenanceRequest, RemovePlannedMaintenanceResponse>
     {
     }
 }

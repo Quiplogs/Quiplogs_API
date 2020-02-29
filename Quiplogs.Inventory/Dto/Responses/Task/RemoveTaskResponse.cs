@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Responses.Task
 {
-    public class RemoveTaskResponse : WorkOrderResponseMessage
+    public class RemoveTaskResponse : ServiceResponseMessage
     {
         public string Description { get; }
         public IEnumerable<Error> Errors { get; }

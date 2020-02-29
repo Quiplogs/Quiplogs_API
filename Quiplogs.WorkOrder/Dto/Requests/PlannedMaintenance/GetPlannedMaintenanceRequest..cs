@@ -1,11 +1,14 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance;
 
-public class GetPlannedMaintenanceRequest : IRequest<GetPlannedMaintenanceResponse>
+namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 {
-    public string Id { get; }
-    public GetPlannedMaintenanceRequest(string id)
+    public class GetPlannedMaintenanceRequest : IRequest<GetPlannedMaintenanceResponse>
     {
-        Id = id;
+        public string Id { get; }
+        public GetPlannedMaintenanceRequest(string id)
+        {
+            Id = id;
+        }
     }
 }

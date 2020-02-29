@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Responses.Asset
 {
-    public class RemoveAssetResponse : WorkOrderResponseMessage
+    public class RemoveAssetResponse : ServiceResponseMessage
     {
         public string Description { get; }
         public IEnumerable<Error> Errors { get; }

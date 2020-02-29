@@ -4,11 +4,19 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Domain.Entities
 {
-    public class PlannedMaintenance : BaseEntity
+    public class PlannedMaintenanceEntity : BaseEntity
     {
         public string AssetId { get; set; }
 
         public Asset Asset { get; set; }
+
+        public string CompanyId { get; set; }
+
+        public Company Company { get; set; }
+
+        public string LocationId { get; set; }
+
+        public Location Location { get; set; }
 
         public decimal Interval { get; set; }
 

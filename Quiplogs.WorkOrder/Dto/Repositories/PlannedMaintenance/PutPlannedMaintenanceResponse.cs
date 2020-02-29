@@ -6,9 +6,9 @@ namespace Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenance
 {
     public class PutPlannedMaintenanceResponse : BaseResponse
     {
-        public Domain.Entities.PlannedMaintenance PlannedMaintenance { get; set; }
+        public Domain.Entities.PlannedMaintenanceEntity PlannedMaintenance { get; set; }
 
-        public PutPlannedMaintenanceResponse(Domain.Entities.PlannedMaintenance plannedMaintenance, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
+        public PutPlannedMaintenanceResponse(Domain.Entities.PlannedMaintenanceEntity plannedMaintenance, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
         {
             PlannedMaintenance = plannedMaintenance;
         }

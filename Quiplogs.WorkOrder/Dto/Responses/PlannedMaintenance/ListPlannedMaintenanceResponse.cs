@@ -7,7 +7,7 @@ namespace Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance
 {
     public class ListPlannedMaintenanceResponse : ServiceResponseMessage
     {
-        public PagedResult<Domain.Entities.PlannedMaintenance> PagedResult { get; }
+        public PagedResult<Domain.Entities.PlannedMaintenanceEntity> PagedResult { get; }
         public IEnumerable<Error> Errors { get; }
 
         public ListPlannedMaintenanceResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
@@ -15,7 +15,7 @@ namespace Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance
             Errors = errors;
         }
 
-        public ListPlannedMaintenanceResponse(PagedResult<Domain.Entities.PlannedMaintenance> pagedResult, bool success = false, string message = null) : base(success, message)
+        public ListPlannedMaintenanceResponse(PagedResult<Domain.Entities.PlannedMaintenanceEntity> pagedResult, bool success = false, string message = null) : base(success, message)
         {
             PagedResult = pagedResult;
         }
