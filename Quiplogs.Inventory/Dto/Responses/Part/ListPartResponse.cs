@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Responses.Part
 {
-    public class ListPartResponse : WorkOrderResponseMessage
+    public class ListPartResponse : ServiceResponseMessage
     {
         public PagedResult<Domain.Entities.Part> PagedResult { get; }
         public IEnumerable<Error> Errors { get; }

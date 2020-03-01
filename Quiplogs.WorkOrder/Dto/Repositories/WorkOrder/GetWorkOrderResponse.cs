@@ -6,9 +6,9 @@ namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrder
 {
     public class GetWorkOrderResponse : BaseResponse
     {
-        public Domain.Entities.WorkOrder WorkOrder { get; set; }
+        public Domain.Entities.WorkOrderEntity WorkOrder { get; set; }
 
-        public GetWorkOrderResponse(Domain.Entities.WorkOrder workOrder, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
+        public GetWorkOrderResponse(Domain.Entities.WorkOrderEntity workOrder, bool success = false, IEnumerable<Error> errors = null) : base(success, errors)
         {
             WorkOrder = workOrder;
         }

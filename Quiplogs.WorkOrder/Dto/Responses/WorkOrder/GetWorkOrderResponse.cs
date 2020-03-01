@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Responses.WorkOrder
 {
-    public class GetWorkOrderResponse : WorkOrderResponseMessage
+    public class GetWorkOrderResponse : ServiceResponseMessage
     {
-        public Domain.Entities.WorkOrder WorkOrder { get; }
+        public Domain.Entities.WorkOrderEntity WorkOrder { get; }
         public IEnumerable<Error> Errors { get; }
 
         public GetWorkOrderResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
@@ -14,7 +14,7 @@ namespace Quiplogs.WorkOrder.Dto.Responses.WorkOrder
             Errors = errors;
         }
 
-        public GetWorkOrderResponse(Domain.Entities.WorkOrder workOrder, bool success = false, string message = null) : base(success, message)
+        public GetWorkOrderResponse(Domain.Entities.WorkOrderEntity workOrder, bool success = false, string message = null) : base(success, message)
         {
             WorkOrder = workOrder;
         }

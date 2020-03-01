@@ -11,5 +11,6 @@ namespace Quiplogs.WorkOrder.Data.Entities
         public PartDto Part { get; set; }
         public decimal Quantity { get; set; }
         public string UoM { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

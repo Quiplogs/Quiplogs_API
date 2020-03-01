@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Api.Core.Dto.Responses.User
 {
-    public class RegisterResponse : WorkOrderResponseMessage
+    public class RegisterResponse : ServiceResponseMessage
     {
         public string Id { get; }
         public IEnumerable<string> Errors { get; }

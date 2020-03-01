@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Responses.Asset
 {
-    public class FetchAssetResponse : WorkOrderResponseMessage
+    public class FetchAssetResponse : ServiceResponseMessage
     {
         public PagedResult<Domain.Entities.Asset> PagedResult { get; }
         public IEnumerable<Error> Errors { get; }

@@ -4,7 +4,7 @@ using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
-using Quiplogs.Infrastructure.Data.Entities;
+using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.WorkOrder;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
@@ -37,7 +37,7 @@ namespace Api.Infrastructure.Repositories
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
-                var mappedWorkOrder = _mapper.Map<List<WorkOrder>>(WorkOrderList);
+                var mappedWorkOrder = _mapper.Map<List<WorkOrderEntity>>(WorkOrderList);
                 return new ListWorkOrderResponse(mappedWorkOrder, true, null);
             }
             catch (SqlException ex)
@@ -52,7 +52,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var WorkOrder = _context.WorkOrders.FirstOrDefault(x => x.Id == id);
 
-                WorkOrder mappedWorkOrder = _mapper.Map<WorkOrder>(WorkOrder);
+                var mappedWorkOrder = _mapper.Map<WorkOrderEntity>(WorkOrder);
                 return new GetWorkOrderResponse(mappedWorkOrder, true, null);
             }
             catch (SqlException ex)
@@ -61,7 +61,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<PutWorkOrderResponse> Put(WorkOrder WorkOrder)
+        public async Task<PutWorkOrderResponse> Put(WorkOrderEntity WorkOrder)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace Api.Infrastructure.Repositories
 
                 await _context.SaveChangesAsync();
 
-                WorkOrder mappedWorkOrder = _mapper.Map<WorkOrder>(WorkOrderMapped);
+                var mappedWorkOrder = _mapper.Map<WorkOrderEntity>(WorkOrderMapped);
                 return new PutWorkOrderResponse(mappedWorkOrder, true, null);
             }
             catch (SqlException ex)

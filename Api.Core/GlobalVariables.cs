@@ -9,5 +9,10 @@
         public const string error_partFailure = "part_failure";
         public const string error_workOrderFailure = "workOrder_failure";
         public const string error_taskFailure = "task_failure";
+        public const string error_workOrderPartFailure = "workOrderPart_failure";
+        public const string error_workOrderTaskFailure = "workOrderTask_failure"; 
+        public const string error_plannedMaintenanceFailure = "plannedMaintenanceFailure_failure";
+        public const string error_plannedMaintenancePartFailure = "plannedMaintenancePartFailure_failure";
+        public const string error_plannedMaintenanceTaskFailure = "plannedMaintenanceTaskFailure_failure";
     }
 }
