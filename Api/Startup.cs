@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Quiplogs.Assets;
+using Quiplogs.BlobStorage;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Inventory;
 using Quiplogs.WorkOrder;
@@ -156,6 +157,7 @@ namespace Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new BlobStorageModule());
             builder.RegisterModule(new InfrastructureModule());            
             builder.RegisterModule(new AssetsModule());
             builder.RegisterModule(new InventoryModule());
