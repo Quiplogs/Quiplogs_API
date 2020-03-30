@@ -4,11 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.UseCases.Location.List
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class LocationController : ControllerBase
+    public class LocationController : BaseApiController
     {
         private readonly IListLocationUseCase _listLocationUseCase;
         private readonly ListLocationPresenter _listLocationPresenter;
@@ -26,7 +22,14 @@ namespace Api.UseCases.Location.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listLocationUseCase.Handle(new Core.Dto.Requests.Location.ListLocationRequest(request.CompanyId, request.PageNumber), _listLocationPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _listLocationUseCase.Handle(new Core.Dto.Requests.Location.ListLocationRequest(companyId, request.PageNumber), _listLocationPresenter);
             return _listLocationPresenter.ContentResult;
         }
     }

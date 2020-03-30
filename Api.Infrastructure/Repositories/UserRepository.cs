@@ -33,7 +33,7 @@ namespace Api.Infrastructure.Repositories
 
         public async Task<AppUser> FindByName(string userName)
         {
-            return _mapper.Map<AppUser>(await _userManager.FindByNameAsync(userName));
+            return _mapper.Map<AppUser>(await _userManager.FindByEmailAsync(userName));
         }
 
         public async Task<bool> CheckPassword(AppUser user, string password)

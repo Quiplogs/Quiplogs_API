@@ -3,8 +3,9 @@ using Api.Core.Dto.Requests.User;
 using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
 using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.UseCases;
 using Api.Core.Interfaces.UseCases.User;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 using System.Threading.Tasks;
 
 namespace Api.Core.UseCases.User
@@ -31,8 +32,16 @@ namespace Api.Core.UseCases.User
                     // validate password
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
-                        // generate token
-                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id, $"{user.FirstName} {user.LastName}", user.Role), true));
+                        var jwtRequest = new GenerateJwtTokenRequest()
+                        {
+                            Id = user.Id,
+                            UserName = $"{user.FirstName} {user.LastName}",
+                            Role = user.Role,
+                            CompanyId = user.CompanyId,
+                            LocationId = user.LocationId
+                        };
+
+                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(jwtRequest), true));
                         return true;
                     }
                 }

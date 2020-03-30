@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces.UseCases;
-using Api.Infrastructure.Auth;
-using Autofac;
+﻿using Autofac;
+using Quiplogs.Core.Interfaces;
+using Quiplogs.Infrastructure.Auth;
 using System.Reflection;
 
 namespace Api.Infrastructure

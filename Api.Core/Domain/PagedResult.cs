@@ -30,15 +30,25 @@ namespace Api.Core.Domain.Entities
                 {
                     pages = new int[] { 1, 2 };
                 }
-                if(totalPages > 2)
+                if (totalPages > 2)
                 {
                     pages = new int[] { 1, 2, 3 };
                 }
             }
 
-            if(currentPage == totalPages)
+            if (currentPage == totalPages)
             {
                 pages = new int[] { currentPage - 2, currentPage - 1, currentPage };
+            }
+
+            if (totalPages == 1)
+            {
+                pages = new int[] { 1 };
+            }
+
+            if (totalPages == 2)
+            {
+                pages = new int[] { 1, 2 };
             }
 
             Pager = new Pager(totalItems, currentPage, pageSize, totalPages, startIndex, endIndex, pages);

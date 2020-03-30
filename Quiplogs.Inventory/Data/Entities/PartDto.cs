@@ -9,6 +9,10 @@ namespace Quiplogs.Inventory.Data.Entities
 
         public string Description { get; set; }
 
+        public string ImgFileName { get; set; }
+
+        public string ImgUrl { get; set; }
+
         public string CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]

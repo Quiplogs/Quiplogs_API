@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Api.Core.Interfaces.UseCases.Location;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,8 @@ namespace Api.UseCases.Location.Put
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putLocationUseCase.Handle(new Core.Dto.Requests.Location.PutLocationRequest(request.Location), _putLocationPresenter);
+
+            await _putLocationUseCase.Handle(new Core.Dto.Requests.Location.PutLocationRequest(request.Name, request.City, request.Country, request.UserId, request.CompanyId, request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat, request.Long), _putLocationPresenter);
             return _putLocationPresenter.ContentResult;
         }
     }

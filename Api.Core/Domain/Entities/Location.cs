@@ -2,7 +2,7 @@
 {
     public class Location : BaseEntity
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public long? Lat { get; set; }
 
@@ -14,10 +14,10 @@
 
         public string UserId { get; set; }
 
-        public AppUser ResponsableUser { get; set; }
+        public string ImgFileName { get; set; }
 
+        public string ImgUrl { get; set; }
+        
         public string CompanyId { get; set; }
-
-        //public CompanyDto Company { get; set; }
     }
 }

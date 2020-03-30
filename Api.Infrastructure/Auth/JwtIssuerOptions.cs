@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Api.Infrastructure.Auth
+namespace Quiplogs.Infrastructure.Auth
 {
     public class JwtIssuerOptions
     {

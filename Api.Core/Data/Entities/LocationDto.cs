@@ -16,6 +16,10 @@ namespace Quiplogs.Core.Data.Entities
 
         public string UserId { get; set; }
 
+        public string ImgFileName { get; set; }
+
+        public string ImgUrl { get; set; }
+
         [ForeignKey("UserId")]
         public UserEntity ResponsableUser { get; set; }
 

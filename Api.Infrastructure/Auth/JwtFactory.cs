@@ -1,6 +1,6 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces.UseCases;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace Api.Infrastructure.Auth
+namespace Quiplogs.Infrastructure.Auth
 {
     public class JwtFactory : IJwtFactory
     {
@@ -20,17 +20,18 @@ namespace Api.Infrastructure.Auth
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<Token> GenerateEncodedToken(string id, string userName, string role)
+        public async Task<Token> GenerateEncodedToken(GenerateJwtTokenRequest request)
         {
-            var identity = GenerateClaimsIdentity(id, userName, role);
+            var identity = GenerateClaimsIdentity(request);
 
             var claims = new[]
             {
-                 new Claim(JwtRegisteredClaimNames.Sub, userName),
+                 new Claim(JwtRegisteredClaimNames.Sub, request.UserName),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst("rol"),
-                 identity.FindFirst("id")
+                 identity.FindFirst("id"),
+                 identity.FindFirst("comId")
              };
 
             // Create the JWT security token and encode it.
@@ -43,15 +44,28 @@ namespace Api.Infrastructure.Auth
                 _jwtOptions.SigningCredentials);
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return new Token(identity.Claims.Single(c => c.Type == "id").Value, encodedJwt, (int)_jwtOptions.ValidFor.TotalSeconds);
+            return new Token()
+            {
+                Id = identity.Claims.Single(c => c.Type == "id").Value,
+                AuthToken = encodedJwt,
+                ExpiresIn = (int)_jwtOptions.ValidFor.TotalSeconds
+            };
         }
 
-        private static ClaimsIdentity GenerateClaimsIdentity(string id, string userName, string role)
+        private static ClaimsIdentity GenerateClaimsIdentity(GenerateJwtTokenRequest request)
         {
-            return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            if (request.CompanyId == null)
+                request.CompanyId = string.Empty;
+
+            if (request.LocationId == null)
+                request.LocationId = string.Empty;
+
+            return new ClaimsIdentity(new GenericIdentity(request.UserName, "Token"), new[]
             {
-                new Claim("id", id),
-                new Claim("rol", role)
+                new Claim("id", request.Id),
+                new Claim("rol", request.Role.ToLower()),
+                new Claim("comId", request.CompanyId),
+                new Claim("locId", request.LocationId)
             });
         }
 

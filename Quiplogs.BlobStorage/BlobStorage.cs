@@ -23,20 +23,20 @@ namespace Quiplogs.BlobStorage
             CloudBlobClient = CloudStorageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<SavedFile> UploadImageAsync(string container, string subContainter, string fileName, byte[] fileData, string mimeType)
+        public async Task<SaveFileResponse> UploadImageAsync(SaveFileRequest request)
         {
-            return await UploadFileAsync(container, subContainter, fileName, fileData, mimeType, "images");
+            return await UploadFileAsync(request, "images");
         }
 
-        public async Task<SavedFile> UploadDocumentAsync(string container, string subContainter, string fileName, byte[] fileData, string mimeType)
+        public async Task<SaveFileResponse> UploadDocumentAsync(SaveFileRequest request)
         {
-            return await UploadFileAsync(container, subContainter, fileName, fileData, mimeType, "document");
+            return await UploadFileAsync(request, "document");
         }
 
 
-        private async Task<SavedFile> UploadFileAsync(string container, string subContainter, string fileName, byte[] fileData, string mimeType, string documentType)
+        private async Task<SaveFileResponse> UploadFileAsync(SaveFileRequest request, string documentType)
         {
-            var result = new SavedFile();
+            var result = new SaveFileResponse();
 
             var cloudBlobContainer = CloudBlobClient.GetContainerReference($"{documentType}");
             if (await cloudBlobContainer.CreateIfNotExistsAsync())
@@ -46,12 +46,15 @@ namespace Quiplogs.BlobStorage
 
             try
             {
-                if (fileData != null)
+                if (!string.IsNullOrEmpty(request.FileBase64))
                 {
-                    string generatedFileName = this.GenerateFileName(container, subContainter, fileName);
+                    string[] splitBase64 = request.FileBase64.Split(",");
+                    var byteArray = Convert.FromBase64String(splitBase64[1]);
+
+                    string generatedFileName = this.GenerateFileName(request.Container, request.SubContainer, request.FileName);
                     var cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(generatedFileName);
-                    cloudBlockBlob.Properties.ContentType = mimeType;
-                    await cloudBlockBlob.UploadFromByteArrayAsync(fileData, 0, fileData.Length);
+                    cloudBlockBlob.Properties.ContentType = request.MimeType;
+                    await cloudBlockBlob.UploadFromByteArrayAsync(byteArray, 0, byteArray.Length);
 
                     result.FileName = generatedFileName;
                     result.FileUrl = cloudBlockBlob.Uri.AbsoluteUri;
@@ -65,23 +68,23 @@ namespace Quiplogs.BlobStorage
             return result;
         }
 
-        public async void DeleteBlobImage(string container, string subContainter, string fileName)
+        public async void DeleteBlobImage(DeleteFileRequest request)
         {
-            DeleteBlobData("images", container, subContainter, fileName);
+            await DeleteBlobData(request, "images");
         }
 
-        public async void DeleteBlobDocument(string container, string subContainter, string fileName)
+        public async void DeleteBlobDocument(DeleteFileRequest request)
         {
-            DeleteBlobData("documents", container, subContainter, fileName);
+            await DeleteBlobData(request, "documents");
         }
 
-        private async void DeleteBlobData(string documentType, string container, string subContainter, string fileName)
+        private async Task DeleteBlobData(DeleteFileRequest request, string documentType)
         {
             try
             {
                 var cloudBlobContainer = CloudBlobClient.GetContainerReference(documentType);
-                var blobDirectory = cloudBlobContainer.GetDirectoryReference($"{container}/{subContainter}");
-                var blockBlob = blobDirectory.GetBlockBlobReference(fileName);
+                var blobDirectory = cloudBlobContainer.GetDirectoryReference($"{request.Container}/{request.SubContainer}");
+                var blockBlob = blobDirectory.GetBlockBlobReference(request.FileName);
                 await blockBlob.DeleteAsync();
             }
             catch (Exception ex)
