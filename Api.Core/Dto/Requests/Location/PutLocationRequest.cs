@@ -5,11 +5,13 @@ namespace Api.Core.Dto.Requests.Location
 {
     public class PutLocationRequest : IRequest<PutLocationResponse>
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
-        public long? Lat { get; set; }
+        public string Lat { get; set; }
 
-        public long? Long { get; set; }
+        public string Long { get; set; }
 
         public string City { get; set; }
 
@@ -25,8 +27,9 @@ namespace Api.Core.Dto.Requests.Location
 
         public string ImageMimeType { get; set; }
 
-        public PutLocationRequest(string name, string city, string country, string userId, string companyId, string imageFileName, string imageBase64, string imageMimeType, long? lat, long? longitude)
+        public PutLocationRequest(string id, string name, string city, string country, string userId, string companyId, string imageFileName, string imageBase64, string imageMimeType, string lat, string longitude)
         {
+            Id = id;
             Name = name;
             Lat = lat;
             Long = longitude;

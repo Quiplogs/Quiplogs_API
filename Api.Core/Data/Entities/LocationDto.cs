@@ -6,9 +6,11 @@ namespace Quiplogs.Core.Data.Entities
     {
         public string Name { get; set; }
 
-        public long? Lat { get; set; }
+        [Column(TypeName = "decimal(18, 6)")]
+        public decimal? Lat { get; set; }
 
-        public long? Long { get; set; }
+        [Column(TypeName = "decimal(18, 6)")]
+        public decimal? Long { get; set; }
 
         public string City { get; set; }
 

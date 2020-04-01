@@ -2,11 +2,13 @@
 {
     public class PutLocationRequest
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
-        public long? Lat { get; set; }
+        public object Lat { get; set; }
 
-        public long? Long { get; set; }
+        public object Long { get; set; }
 
         public string City { get; set; }
 

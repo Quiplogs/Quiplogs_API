@@ -10,5 +10,6 @@ namespace Api.Core.Interfaces.Repositories
         Task<GetLocationResponse> Get(string id);
         Task<PutLocationResponse> Put(Domain.Entities.Location Location);
         Task<RemoveLocationResponse> Remove(string id);
+        Task RemoveImage(string id);
     }
 }

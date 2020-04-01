@@ -14,5 +14,6 @@
         public const string error_plannedMaintenanceFailure = "plannedMaintenanceFailure_failure";
         public const string error_plannedMaintenancePartFailure = "plannedMaintenancePartFailure_failure";
         public const string error_plannedMaintenanceTaskFailure = "plannedMaintenanceTaskFailure_failure";
+        public const string error_removeFileFailure = "removeFile_failure";
     }
 }

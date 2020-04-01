@@ -4,9 +4,9 @@
     {
         public string Name { get; set; }
 
-        public long? Lat { get; set; }
+        public decimal? Lat { get; set; }
 
-        public long? Long { get; set; }
+        public decimal? Long { get; set; }
 
         public string City { get; set; }
 
