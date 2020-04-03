@@ -28,12 +28,13 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListLocationResponse> List(string companyId, int pageNumber, int pageSize)
+        public async Task<ListLocationResponse> List(string companyId, int pageNumber, string filterName, int pageSize)
         {
             try
             {
                 var LocationList = _context.Locations.Where(x =>
-                    x.CompanyId == companyId)
+                    x.CompanyId == companyId
+                    && (filterName == null || x.Name.Contains(filterName)))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
@@ -79,16 +80,17 @@ namespace Api.Infrastructure.Repositories
         {
             try
             {
+                var existingLocation = _context.Locations.Find(location.Id);
                 var LocationMapped = _mapper.Map<LocationDto>(location);
 
-                if (string.IsNullOrEmpty(LocationMapped.Id))
+                if (existingLocation == null)
                 {
                     _context.Locations.Add(LocationMapped);
                     await UpdateTotalItems(location.CompanyId);
                 }
                 else
                 {
-                    _context.Locations.Update(LocationMapped);
+                    _context.Entry(existingLocation).CurrentValues.SetValues(LocationMapped);
                 }
 
                 await _context.SaveChangesAsync();

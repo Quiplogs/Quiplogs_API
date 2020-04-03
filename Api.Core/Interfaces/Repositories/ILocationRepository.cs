@@ -5,7 +5,7 @@ namespace Api.Core.Interfaces.Repositories
 {
     public interface ILocationRepository
     {
-        Task<ListLocationResponse> List(string companyId, int pageNumber, int pageSize);
+        Task<ListLocationResponse> List(string companyId, int pageNumber, string filterName, int pageSize);
         Task<int> GetTotalRecords(string companyId);
         Task<GetLocationResponse> Get(string id);
         Task<PutLocationResponse> Put(Domain.Entities.Location Location);
