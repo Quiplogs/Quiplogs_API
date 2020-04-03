@@ -2,11 +2,7 @@
 using Api.Core.Interfaces;
 using Api.Presenters;
 using Api.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Api.UseCases.Location.Put
 {

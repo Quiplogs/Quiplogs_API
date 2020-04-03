@@ -1,15 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Api.Core.Interfaces.UseCases.User;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.UseCases.User.Fetch
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly IFetchUsersUseCase _fetchUsersUseCase;
         private readonly FetchUsersPresenter _fetchUsersPresenter;  
@@ -27,7 +22,14 @@ namespace Api.UseCases.User.Fetch
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _fetchUsersUseCase.Handle(new Core.Dto.Requests.User.FetchUsersRequest(request.CompanyId, request.LocationId), _fetchUsersPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _fetchUsersUseCase.Handle(new Core.Dto.Requests.User.FetchUsersRequest(companyId, request.LocationId), _fetchUsersPresenter);
             return _fetchUsersPresenter.ContentResult;
         }        
     }

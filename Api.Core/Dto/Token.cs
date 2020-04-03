@@ -1,16 +1,9 @@
-﻿namespace Api.Core.Dto
+﻿namespace Quiplogs.Core.Dto
 {
     public class Token
     {
-        public string Id { get; }
-        public string AuthToken { get; }
-        public int ExpiresIn { get; }
-
-        public Token(string id, string authToken, int expiresIn)
-        {
-            Id = id;
-            AuthToken = authToken;
-            ExpiresIn = expiresIn;
-        }
+        public string Id { get; set; }
+        public string AuthToken { get; set; }
+        public int ExpiresIn { get; set; }
     }
 }

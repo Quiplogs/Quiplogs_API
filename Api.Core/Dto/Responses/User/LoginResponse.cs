@@ -1,4 +1,5 @@
 ﻿using Api.Core.Interfaces;
+using Quiplogs.Core.Dto;
 using System.Collections.Generic;
 
 namespace Api.Core.Dto.Responses.User

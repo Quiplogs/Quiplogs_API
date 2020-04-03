@@ -6,15 +6,21 @@ namespace Quiplogs.Core.Data.Entities
     {
         public string Name { get; set; }
 
-        public long? Lat { get; set; }
+        [Column(TypeName = "decimal(18, 6)")]
+        public decimal? Lat { get; set; }
 
-        public long? Long { get; set; }
+        [Column(TypeName = "decimal(18, 6)")]
+        public decimal? Long { get; set; }
 
         public string City { get; set; }
 
         public string Country { get; set; }
 
         public string UserId { get; set; }
+
+        public string ImgFileName { get; set; }
+
+        public string ImgUrl { get; set; }
 
         [ForeignKey("UserId")]
         public UserEntity ResponsableUser { get; set; }

@@ -26,7 +26,7 @@ namespace Api.UseCases.Auth.Register
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _registerWorkOrder.Handle(new Core.Dto.Requests.User.RegisterRequest(request.FirstName, request.LastName, request.Email, request.UserName, request.Password), _registerUserPresenter);
+            await _registerWorkOrder.Handle(new Core.Dto.Requests.User.RegisterRequest(request.FirstName, request.LastName, request.Email, request.UserName, request.Password, request.CompanyId), _registerUserPresenter);
             return _registerUserPresenter.ContentResult;
         }
     }

@@ -4,14 +4,16 @@ using Api.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200322100406_AddImageProperties")]
+    partial class AddImageProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,11 +333,11 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Lat")
-                        .HasColumnType("decimal(2, 6)");
+                    b.Property<long?>("Lat")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal?>("Long")
-                        .HasColumnType("decimal(2, 6)");
+                    b.Property<long?>("Long")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

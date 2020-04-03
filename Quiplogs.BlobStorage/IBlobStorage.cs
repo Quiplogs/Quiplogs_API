@@ -5,12 +5,12 @@ namespace Quiplogs.BlobStorage
 {
     public interface IBlobStorage
     {
-        Task<SavedFile> UploadImageAsync(string container, string subContainter, string fileName, byte[] fileData, string mimeType);
+        Task<SaveFileResponse> UploadImageAsync(SaveFileRequest request);
 
-        Task<SavedFile> UploadDocumentAsync(string container, string subContainter, string fileName, byte[] fileData, string mimeType);
+        Task<SaveFileResponse> UploadDocumentAsync(SaveFileRequest request);
 
-        void DeleteBlobImage(string container, string subContainter, string fileName);
+        void DeleteBlobImage(DeleteFileRequest request);
 
-        void DeleteBlobDocument(string container, string subContainter, string fileName);
+        void DeleteBlobDocument(DeleteFileRequest request);
     }
 }

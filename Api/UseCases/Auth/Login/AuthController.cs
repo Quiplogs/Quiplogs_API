@@ -16,7 +16,6 @@ namespace Api.UseCases.Auth.Login
         {
             _loginWorkOrder = loginWorkOrder;
             _loginPresenter = loginPresenter;
-            _blobStorage = blobStorage;
         }
 
         // POST api/auth/login

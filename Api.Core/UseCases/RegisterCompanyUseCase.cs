@@ -23,7 +23,7 @@ namespace Api.Core.UseCases
         public async Task<bool> Handle(RegisterCompanyRequest message, IOutputPort<RegisterCompanyResponse> outputPort)
         {
             var users = new List<AppUser>();
-            users.Add(new AppUser(message.UserName, message.LastName, message.Email, message.UserName, Role.Admin));
+            users.Add(new AppUser(message.UserName, message.LastName, message.Email, message.UserName, Role.Admin, "", ""));
 
             var company = new Company
             {

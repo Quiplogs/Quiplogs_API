@@ -7,6 +7,7 @@ using Api.Core.Interfaces.Repositories;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace Api.Infrastructure.Repositories
         {
             try
             {
-                var Location = _context.Locations.FirstOrDefault(x => x.Id == id);
+                var Location = _context.Locations.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
                 Location mappedLocation = _mapper.Map<Location>(Location);
                 return new GetLocationResponse(mappedLocation, true, null);
@@ -57,6 +58,20 @@ namespace Api.Infrastructure.Repositories
             catch (SqlException ex)
             {
                 return new GetLocationResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error fetching Location. {ex.Message}") });
+            }
+        }
+
+        public async Task RemoveImage(string id)
+        {
+            var _location = _context.Locations.AsNoTracking().FirstOrDefault(x => x.Id == id);
+
+            if (_location != null)
+            {
+                _location.ImgFileName = "";
+                _location.ImgUrl = "";
+
+                _context.Locations.Update(_location);
+                await _context.SaveChangesAsync();
             }
         }
 

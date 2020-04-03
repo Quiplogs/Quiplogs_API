@@ -9,7 +9,9 @@
         public string UserName { get; }
         public string PasswordHash { get;}
         public string Role { get;}
-        public AppUser(string firstName, string lastName, string email, string userName, string role, string id = null, string passwordHash = null)
+        public string CompanyId { get; }
+        public string LocationId { get; }
+        public AppUser(string firstName, string lastName, string email, string userName, string role, string companyId, string locationId, string id = null, string passwordHash = null)
         {
             Id = id;
             FirstName = firstName;
@@ -18,6 +20,8 @@
             UserName = userName;
             PasswordHash = passwordHash;
             Role = role;
+            CompanyId = companyId;
+            LocationId = locationId;
         }
     }
 }
