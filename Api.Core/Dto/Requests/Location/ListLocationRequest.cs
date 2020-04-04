@@ -7,10 +7,12 @@ namespace Api.Core.Dto.Requests.Location
     {
         public string CompanyId { get; }
         public int PageNumber { get; }
-        public ListLocationRequest(string companyId, int pageNumber)
+        public string FilterName { get; }
+        public ListLocationRequest(string companyId, int pageNumber, string filterName)
         {
             CompanyId = companyId;
             PageNumber = pageNumber;
+            FilterName = filterName;
         }
     }
 }

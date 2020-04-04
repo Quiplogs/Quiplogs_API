@@ -19,8 +19,8 @@ namespace Api.UseCases.Location.Remove
             _removeLocationPresenter = removeLocationPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemoveLocationRequest request)
+        [HttpDelete()]
+        public async Task<ActionResult> Remove([FromQuery] RemoveLocationRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

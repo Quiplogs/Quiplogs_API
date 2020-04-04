@@ -71,10 +71,10 @@ namespace Api.Core.UseCases.Location
                     MimeType = message.ImageMimeType
                 });
 
-                location.ImgFileName = savedImage.FileName;
-                location.ImgUrl = savedImage.FileUrl;
+                response.Location.ImgFileName = savedImage.FileName;
+                response.Location.ImgUrl = savedImage.FileUrl;
 
-                response = await _repository.Put(location);
+                await _repository.Put(response.Location);
             }
 
             if (response.Success)

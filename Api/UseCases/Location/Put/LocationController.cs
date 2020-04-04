@@ -15,7 +15,7 @@ namespace Api.UseCases.Location.Put
             _putLocationPresenter = putLocationPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutLocationRequest request)
         {
             if (!ModelState.IsValid)

@@ -18,7 +18,7 @@ namespace Api.UseCases.Location.Get
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetLocationRequest request)
         {
             if (!ModelState.IsValid)
