@@ -7,10 +7,12 @@ namespace Quiplogs.Inventory.Dto.Requests.Task
     {
         public string CompanyId { get; }
         public int PageNumber { get; }
-        public ListTaskRequest(string companyId, int pageNumber)
+        public string FilterName { get; set; }
+        public ListTaskRequest(string companyId, int pageNumber, string filterName)
         {
             CompanyId = companyId;
             PageNumber = pageNumber;
+            FilterName = filterName;
         }
     }
 }

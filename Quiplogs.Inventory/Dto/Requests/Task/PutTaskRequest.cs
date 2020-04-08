@@ -5,10 +5,19 @@ namespace Quiplogs.Inventory.Dto.Requests.Task
 {
     public class PutTaskRequest : IRequest<PutTaskResponse>
     {
-        public Domain.Entities.TaskEntity Task { get; }
-        public PutTaskRequest(Domain.Entities.TaskEntity task)
+        public string Id { get; set; }
+        public string Code { get; set; }
+
+        public string Description { get; set; }
+
+        public string CompanyId { get; set; }
+
+        public PutTaskRequest(string id, string code, string description, string companyId)
         {
-            Task = task;
+            Id = id;
+            Code = code;
+            Description = description;
+            CompanyId = companyId;
         }
     }
 }

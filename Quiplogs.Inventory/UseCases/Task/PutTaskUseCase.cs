@@ -20,7 +20,15 @@ namespace Quiplogs.Inventory.UseCases.Task
 
         public async Task<bool> Handle(PutTaskRequest message, IOutputPort<PutTaskResponse> outputPort)
         {
-            var response = await _repository.Put(message.Task);
+            var task = new Domain.Entities.TaskEntity()
+            {
+                Id = message.Id,
+                Code = message.Code,
+                Description = message.Description,
+                CompanyId = message.CompanyId
+            };
+
+            var response = await _repository.Put(task);
             if (response.Success)
             {
                 outputPort.Handle(new PutTaskResponse(response.Task, true));

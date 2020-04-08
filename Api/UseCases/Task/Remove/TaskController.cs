@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class TaskController : ControllerBase
+    public class TaskController : BaseApiController
     {
         private readonly IRemoveTaskUseCase _removeTaskUseCase;
         private readonly RemoveTaskPresenter _removeTaskPresenter;
@@ -19,8 +15,8 @@ namespace Api.UseCases.Task.Remove
             _removeTaskPresenter = removeTaskPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemoveTaskRequest request)
+        [HttpDelete()]
+        public async Task<ActionResult> Remove([FromQuery] RemoveTaskRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
