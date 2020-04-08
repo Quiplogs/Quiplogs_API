@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class TaskController : ControllerBase
+    public class TaskController : BaseApiController
     {
         private readonly IPutTaskUseCase _putTaskUseCase;
         private readonly PutTaskPresenter _putTaskPresenter;
@@ -19,14 +15,26 @@ namespace Api.UseCases.Task.Put
             _putTaskPresenter = putTaskPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutTaskRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.PutTaskRequest(request.Task), _putTaskPresenter);
+
+            if(request == null)
+            {
+                return BadRequest();
+            }
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _putTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.PutTaskRequest(request.Id, request.Name, request.Description, companyId), _putTaskPresenter);
             return _putTaskPresenter.ContentResult;
         }
     }

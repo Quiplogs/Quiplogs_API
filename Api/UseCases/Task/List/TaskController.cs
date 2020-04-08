@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.List
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class TaskController : ControllerBase
+    public class TaskController : BaseApiController
     {
         private readonly IListTaskUseCase _listTaskUseCase;
         private readonly ListTaskPresenter _listTaskPresenter;
@@ -26,7 +22,14 @@ namespace Api.UseCases.Task.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(request.CompanyId, request.PageNumber), _listTaskPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(companyId, request.PageNumber, request.FilterName), _listTaskPresenter);
             return _listTaskPresenter.ContentResult;
         }
     }

@@ -24,7 +24,7 @@ namespace Quiplogs.Inventory.UseCases.Task
             //temp var
             var pageSize = 20;
 
-            var response = await _repository.List(message.CompanyId, message.PageNumber, pageSize);
+            var response = await _repository.List(message.CompanyId, message.PageNumber, message.FilterName, pageSize);
             if (response.Success)
             {
                 var total = await _repository.GetTotalRecords(message.CompanyId);

@@ -26,6 +26,7 @@ using Quiplogs.BlobStorage;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Infrastructure.Auth;
 using Quiplogs.Inventory;
+using Quiplogs.Inventory.Data.Mapping;
 using Quiplogs.WorkOrder;
 using StackExchange.Redis;
 using System;
@@ -136,7 +137,8 @@ namespace Api
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new DataProfile());
+                mc.AddProfile(new CoreProfile());
+                mc.AddProfile(new InventoryProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

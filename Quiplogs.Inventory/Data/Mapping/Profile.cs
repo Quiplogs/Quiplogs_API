@@ -4,13 +4,12 @@ using Quiplogs.Inventory.Domain.Entities;
 
 namespace Quiplogs.Inventory.Data.Mapping
 {
-    public class DataProfile : Profile
+    public class InventoryProfile : Profile
     {
-        public DataProfile()
+        public InventoryProfile()
         {
             CreateMap<TaskEntity, TaskDto>();
             CreateMap<TaskDto, TaskEntity>();
-
             CreateMap<Part, PartDto>();
             CreateMap<PartDto, Part>();
         }

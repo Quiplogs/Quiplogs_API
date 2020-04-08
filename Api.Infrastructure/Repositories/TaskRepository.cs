@@ -26,12 +26,13 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListTaskResponse> List(string companyId,  int pageNumber, int pageSize)
+        public async Task<ListTaskResponse> List(string companyId, int pageNumber, string filterName, int pageSize)
         {
             try
             {
                 var TaskList = _context.Tasks.Where(x =>
-                    x.CompanyId == companyId)
+                     x.CompanyId == companyId
+                    && (filterName == null || x.Code.Contains(filterName)))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 

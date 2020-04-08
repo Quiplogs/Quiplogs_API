@@ -110,6 +110,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var Location = _context.Locations.FirstOrDefault(x => x.Id == id);
 
+                await UpdateTotalItems(Location.CompanyId);
                 _context.Remove(Location);
                 await _context.SaveChangesAsync();
 

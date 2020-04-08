@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Task;
 
 namespace Api.UseCases.Task.Get
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class TaskController : ControllerBase
+    public class TaskController : BaseApiController
     {
         private readonly IGetTaskUseCase _getTaskUseCase;
         private readonly GetTaskPresenter _getTaskPresenter;
@@ -20,7 +16,7 @@ namespace Api.UseCases.Task.Get
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetTaskRequest request)
         {
             if (!ModelState.IsValid)
