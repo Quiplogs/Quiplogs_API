@@ -4,6 +4,7 @@ using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Quiplogs.Inventory.Data.Entities;
 using Quiplogs.Inventory.Domain.Entities;
 using Quiplogs.Inventory.Dto.Repositories.Part;
@@ -27,16 +28,18 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPartResponse> List(string companyId, int pageNumber, int pageSize)
+        public async Task<ListPartResponse> List(string companyId, string locationId, string filterName, int pageNumber, int pageSize)
         {
             try
             {
-                var PartList = _context.Parts.Where(x =>
-                    x.CompanyId == companyId)
+                var partsList = _context.Parts.Where(x =>
+                     x.CompanyId == companyId
+                    && (locationId == null || x.LocationId == locationId)
+                    && (filterName == null || x.Code.Contains(filterName)))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
-                List<Part> mappedPart = _mapper.Map<List<Part>>(PartList);
+                List<Part> mappedPart = _mapper.Map<List<Part>>(partsList);
                 return new ListPartResponse(mappedPart, true, null);
             }
             catch (SqlException ex)
@@ -49,7 +52,7 @@ namespace Api.Infrastructure.Repositories
         {
             try
             {
-                var Part = _context.Parts.FirstOrDefault(x => x.Id == id);
+                var Part = _context.Parts.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
                 Part mappedPart = _mapper.Map<Part>(Part);
                 return new GetPartResponse(mappedPart, true, null);
@@ -60,30 +63,45 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<PutPartResponse> Put(Part Part)
+        public async Task<PutPartResponse> Put(Part model)
         {
             try
             {
-                var PartMapped = _mapper.Map<PartDto>(Part);
+                var existingModel = _context.Parts.Find(model.Id);
+                var modelMapped = _mapper.Map<PartDto>(model);
 
-                if (string.IsNullOrEmpty(PartMapped.Id))
+                if (existingModel == null)
                 {
-                    _context.Parts.Add(PartMapped);
-                    await UpdateTotalItems(Part.CompanyId);
+                    _context.Parts.Add(modelMapped);
+                    await UpdateTotalItems(model.CompanyId);
                 }
                 else
                 {
-                    _context.Parts.Update(PartMapped);
+                    _context.Entry(existingModel).CurrentValues.SetValues(modelMapped);
                 }
 
                 await _context.SaveChangesAsync();
 
-                Part mappedPart = _mapper.Map<Part>(PartMapped);
-                return new PutPartResponse(mappedPart, true, null);
+                Part mappedLocation = _mapper.Map<Part>(modelMapped);
+                return new PutPartResponse(mappedLocation, true, null);
             }
             catch (SqlException ex)
             {
                 return new PutPartResponse(null, false, new[] { new Error(GlobalVariables.error_partFailure, $"Error updating Part. {ex.Message}") });
+            }
+        }
+
+        public async Task RemoveImage(string id)
+        {
+            var model = _context.Parts.AsNoTracking().FirstOrDefault(x => x.Id == id);
+
+            if (model != null)
+            {
+                model.ImgFileName = "";
+                model.ImgUrl = "";
+
+                _context.Parts.Update(model);
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -95,6 +113,8 @@ namespace Api.Infrastructure.Repositories
 
                 _context.Remove(Part);
                 await _context.SaveChangesAsync();
+
+                await UpdateTotalItems(Part.CompanyId);
 
                 return new RemovePartResponse(id, true, null);
             }

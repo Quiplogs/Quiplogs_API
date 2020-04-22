@@ -23,6 +23,7 @@ namespace Api.Core.UseCases.Location
 
         public async Task<bool> Handle(PutLocationRequest message, IOutputPort<PutLocationResponse> outputPort)
         {
+            //Use automapper
             var location = new Domain.Entities.Location();           
 
             var existingLocation = await _repository.Get(message.Id);

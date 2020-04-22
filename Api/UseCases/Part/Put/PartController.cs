@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Part;
 
 namespace Api.UseCases.Part.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PartController : ControllerBase
+    public class PartController : BaseApiController
     {
         private readonly IPutPartUseCase _putPartUseCase;
         private readonly PutPartPresenter _putPartPresenter;
@@ -19,14 +15,21 @@ namespace Api.UseCases.Part.Put
             _putPartPresenter = putPartPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutPartRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Part), _putPartPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Id, request.Code, request.Name, request.Description, companyId, request.LocationId, request.ImageFileName, request.ImageBase64, request.ImageMimeType), _putPartPresenter);
             return _putPartPresenter.ContentResult;
         }
     }

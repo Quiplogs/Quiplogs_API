@@ -7,6 +7,8 @@ namespace Quiplogs.Inventory.Data.Entities
     {
         public string Code { get; set; }
 
+        public string Name { get; set; }
+
         public string Description { get; set; }
 
         public string ImgFileName { get; set; }
@@ -17,5 +19,10 @@ namespace Quiplogs.Inventory.Data.Entities
 
         [ForeignKey("CompanyId")]
         public CompanyDto Company { get; set; }
+
+        public string LocationId { get; set; }
+
+        [ForeignKey("LocationId")]
+        public LocationDto Location { get; set; }
     }
 }

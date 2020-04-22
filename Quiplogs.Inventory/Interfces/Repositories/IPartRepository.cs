@@ -5,7 +5,7 @@ namespace Quiplogs.Inventory.Interfaces.Repositories
 {
     public interface IPartRepository
     {
-        Task<ListPartResponse> List(string companyId, int pageNumber, int pageSize);
+        Task<ListPartResponse> List(string companyId, string locationId, string filterName, int pageNumber, int pageSize);
         Task<int> GetTotalRecords(string companyId);
         Task<GetPartResponse> Get(string id);
         Task<PutPartResponse> Put(Domain.Entities.Part Part);

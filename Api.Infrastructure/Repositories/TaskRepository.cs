@@ -32,7 +32,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var TaskList = _context.Tasks.Where(x =>
                      x.CompanyId == companyId
-                    && (filterName == null || x.Code.Contains(filterName)))
+                    && (filterName == null || x.Name.Contains(filterName)))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
