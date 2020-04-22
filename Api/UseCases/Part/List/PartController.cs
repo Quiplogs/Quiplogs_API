@@ -4,11 +4,7 @@ using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.List
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PartController : ControllerBase
+    public class PartController : BaseApiController
     {
         private readonly IListPartUseCase _listPartUseCase;
         private readonly ListPartPresenter _listPartPresenter;
@@ -26,7 +22,14 @@ namespace Api.UseCases.Part.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(request.CompanyId, request.PageNumber), _listPartPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(companyId, request.LocationId, request.FilterName, request.PageNumber), _listPartPresenter);
             return _listPartPresenter.ContentResult;
         }
     }

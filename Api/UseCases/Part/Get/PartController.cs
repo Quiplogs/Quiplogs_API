@@ -4,11 +4,7 @@ using Quiplogs.Inventory.Interfaces.UseCases.Part;
 
 namespace Api.UseCases.Part.Get
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PartController : ControllerBase
+    public class PartController : BaseApiController
     {
         private readonly IGetPartUseCase _getPartUseCase;
         private readonly GetPartPresenter _getPartPresenter;
@@ -20,7 +16,7 @@ namespace Api.UseCases.Part.Get
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetPartRequest request)
         {
             if (!ModelState.IsValid)
