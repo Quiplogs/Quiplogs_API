@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln
     - name: Build
-      run: dotnet build /home/runner/work/Quiplogs_API/Api/Api.sln --configuration Release --no-restore
+      run: dotnet build /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test /home/runner/work/Quiplogs_API/Api/Api.sln --no-restore --verbosity normal
+      run: dotnet test /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln --no-restore --verbosity normal
