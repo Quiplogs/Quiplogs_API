@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore /home/runner/work/Quiplogs_API/api/api.sln
+      run: dotnet restore /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln
     - name: Build
       run: dotnet build /home/runner/work/Quiplogs_API/api/api.sln --configuration Release --no-restore
     - name: Test
