@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
-    public partial class InitialCommit : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,9 @@ namespace Quiplogs.Infrastructure.Migrations
                     PostCode = table.Column<string>(nullable: true),
                     SubscriptionId = table.Column<int>(nullable: false),
                     IsLocked = table.Column<bool>(nullable: false),
-                    LockedReason = table.Column<string>(nullable: true)
+                    LockedReason = table.Column<string>(nullable: true),
+                    LogoFileName = table.Column<string>(nullable: true),
+                    LogoUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,30 +78,6 @@ namespace Quiplogs.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Parts",
-                schema: "Portal",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    DateUpdated = table.Column<DateTime>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Parts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Parts_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalSchema: "Portal",
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tasks",
                 schema: "Portal",
                 columns: table => new
@@ -107,7 +85,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CompanyId = table.Column<string>(nullable: true)
                 },
@@ -198,11 +176,13 @@ namespace Quiplogs.Infrastructure.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Lat = table.Column<long>(nullable: true),
-                    Long = table.Column<long>(nullable: true),
+                    Lat = table.Column<decimal>(type: "decimal(18, 6)", nullable: true),
+                    Long = table.Column<decimal>(type: "decimal(18, 6)", nullable: true),
                     City = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
+                    ImgFileName = table.Column<string>(nullable: true),
+                    ImgUrl = table.Column<string>(nullable: true),
                     CompanyId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -272,13 +252,18 @@ namespace Quiplogs.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Make = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
-                    BuildYear = table.Column<int>(nullable: false),
+                    SerialNumber = table.Column<string>(nullable: true),
+                    ManufacuredYear = table.Column<int>(nullable: false),
+                    PurchasedYear = table.Column<int>(nullable: false),
                     CurrentWorkDone = table.Column<decimal>(nullable: false),
                     UoM = table.Column<string>(nullable: true),
+                    ImgFileName = table.Column<string>(nullable: true),
                     ImgUrl = table.Column<string>(nullable: true),
+                    WarrantyUrl = table.Column<string>(nullable: true),
+                    InstructionManualUrl = table.Column<string>(nullable: true),
                     LocationId = table.Column<string>(nullable: true),
                     CompanyId = table.Column<string>(nullable: true)
                 },
@@ -294,6 +279,41 @@ namespace Quiplogs.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Asset_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalSchema: "Portal",
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parts",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    ImgFileName = table.Column<string>(nullable: true),
+                    ImgUrl = table.Column<string>(nullable: true),
+                    CompanyId = table.Column<string>(nullable: true),
+                    LocationId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Parts_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Parts_Locations_LocationId",
                         column: x => x.LocationId,
                         principalSchema: "Portal",
                         principalTable: "Locations",
@@ -334,8 +354,11 @@ namespace Quiplogs.Infrastructure.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     AssetId = table.Column<string>(nullable: true),
-                    IsRecurring = table.Column<bool>(nullable: false),
+                    CompanyId = table.Column<string>(nullable: true),
+                    LocationId = table.Column<string>(nullable: true),
                     Interval = table.Column<decimal>(nullable: false),
+                    Notes = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     UoM = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -346,6 +369,20 @@ namespace Quiplogs.Infrastructure.Migrations
                         column: x => x.AssetId,
                         principalSchema: "Portal",
                         principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenances_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenances_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalSchema: "Portal",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -359,12 +396,15 @@ namespace Quiplogs.Infrastructure.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     ReferenceNumber = table.Column<string>(nullable: true),
+                    DueDate = table.Column<DateTime>(nullable: true),
                     DateCompleted = table.Column<DateTime>(nullable: true),
-                    FaultNotes = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
                     HoursWorked = table.Column<decimal>(nullable: false),
+                    MintuesWorked = table.Column<decimal>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    TechnicianId = table.Column<string>(nullable: true),
                     MechanicId = table.Column<string>(nullable: true),
-                    MechanicName = table.Column<string>(nullable: true),
+                    TechnicianName = table.Column<string>(nullable: true),
                     ResponsableUserId = table.Column<string>(nullable: true),
                     ResponsableUserName = table.Column<string>(nullable: true),
                     AssetId = table.Column<string>(nullable: true),
@@ -422,7 +462,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     PlannedMaintenanceId = table.Column<string>(nullable: true),
                     PartId = table.Column<string>(nullable: true),
                     Quantity = table.Column<decimal>(nullable: false),
-                    UoM = table.Column<string>(nullable: true)
+                    UoM = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -454,7 +495,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     PlannedMaintenanceId = table.Column<string>(nullable: true),
                     TaskId = table.Column<string>(nullable: true),
                     Quantity = table.Column<decimal>(nullable: false),
-                    UoM = table.Column<string>(nullable: true)
+                    UoM = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -489,7 +531,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     PartDescription = table.Column<string>(nullable: true),
                     Quantity = table.Column<decimal>(nullable: false),
                     UoM = table.Column<string>(nullable: true),
-                    IsCompleted = table.Column<bool>(nullable: false)
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -523,7 +566,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     TaskDescription = table.Column<string>(nullable: true),
                     Quantity = table.Column<decimal>(nullable: false),
                     UoM = table.Column<string>(nullable: true),
-                    IsCompleted = table.Column<bool>(nullable: false)
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -639,6 +683,12 @@ namespace Quiplogs.Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Parts_LocationId",
+                schema: "Portal",
+                table: "Parts",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlannedMaintenanceParts_PartId",
                 schema: "Portal",
                 table: "PlannedMaintenanceParts",
@@ -655,6 +705,18 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 table: "PlannedMaintenances",
                 column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenances_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenances",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenances_LocationId",
+                schema: "Portal",
+                table: "PlannedMaintenances",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlannedMaintenanceTasks_PlannedMaintenanceId",

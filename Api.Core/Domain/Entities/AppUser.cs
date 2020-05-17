@@ -2,26 +2,14 @@
 {
     public class AppUser
     {
-        public string Id { get; }
-        public string FirstName { get;}
-        public string LastName { get; }
-        public string Email { get; }
-        public string UserName { get; }
-        public string PasswordHash { get;}
-        public string Role { get;}
-        public string CompanyId { get; }
-        public string LocationId { get; }
-        public AppUser(string firstName, string lastName, string email, string userName, string role, string companyId, string locationId, string id = null, string passwordHash = null)
-        {
-            Id = id;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            UserName = userName;
-            PasswordHash = passwordHash;
-            Role = role;
-            CompanyId = companyId;
-            LocationId = locationId;
-        }
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public string PasswordHash { get; set; }
+        public string Role { get; set; }
+        public string CompanyId { get; set; }
+        public string LocationId { get; set; }
     }
 }

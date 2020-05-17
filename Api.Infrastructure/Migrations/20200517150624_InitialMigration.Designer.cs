@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20200223140745_Initial Commit")]
-    partial class InitialCommit
+    [Migration("20200517150624_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,12 +159,6 @@ namespace Quiplogs.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("BuildYear")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CompanyId")
                         .HasColumnType("nvarchar(450)");
 
@@ -177,7 +171,13 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImgFileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstructionManualUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationId")
@@ -186,10 +186,25 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Make")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ManufacuredYear")
+                        .HasColumnType("int");
+
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchasedYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WarrantyUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -262,6 +277,12 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("LockedReason")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LogoFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -306,11 +327,17 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Lat")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ImgFileName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Long")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Lat")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<decimal?>("Long")
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -418,150 +445,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderDto", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("DateCompleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FaultNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("HoursWorked")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MechanicId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MechanicName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReferenceNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponsableUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ResponsableUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("MechanicId");
-
-                    b.HasIndex("ResponsableUserId");
-
-                    b.ToTable("WorkOrders");
-                });
-
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderPartDto", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PartCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UoM")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkOrderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PartId");
-
-                    b.HasIndex("WorkOrderId");
-
-                    b.ToTable("WorkOrderParts");
-                });
-
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderTaskDto", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("TaskDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaskId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UoM")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkOrderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.HasIndex("WorkOrderId");
-
-                    b.ToTable("WorkOrderTasks");
-                });
-
             modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.PartDto", b =>
                 {
                     b.Property<string>("Id")
@@ -583,9 +466,23 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImgFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Parts");
                 });
@@ -595,9 +492,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyId")
                         .HasColumnType("nvarchar(450)");
@@ -609,6 +503,9 @@ namespace Quiplogs.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -627,6 +524,9 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -636,8 +536,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<decimal>("Interval")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("IsRecurring")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LocationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UoM")
                         .HasColumnType("nvarchar(max)");
@@ -645,6 +551,10 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssetId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("PlannedMaintenances");
                 });
@@ -660,6 +570,9 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PartId")
                         .HasColumnType("nvarchar(450)");
@@ -694,6 +607,9 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PlannedMaintenanceId")
                         .HasColumnType("nvarchar(450)");
 
@@ -713,6 +629,165 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("PlannedMaintenanceTasks");
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssetId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("DateCompleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("HoursWorked")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MechanicId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("MintuesWorked")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReferenceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsableUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ResponsableUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TechnicianId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TechnicianName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("MechanicId");
+
+                    b.HasIndex("ResponsableUserId");
+
+                    b.ToTable("WorkOrders");
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderPartDto", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PartCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkOrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.ToTable("WorkOrderParts");
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderTaskDto", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TaskDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkOrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.ToTable("WorkOrderTasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -813,13 +888,8 @@ namespace Quiplogs.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderDto", b =>
+            modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.PartDto", b =>
                 {
-                    b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
@@ -828,50 +898,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "Mechanic")
-                        .WithMany()
-                        .HasForeignKey("MechanicId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "ResponsableUser")
-                        .WithMany()
-                        .HasForeignKey("ResponsableUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderPartDto", b =>
-                {
-                    b.HasOne("Quiplogs.Inventory.Data.Entities.PartDto", "Part")
-                        .WithMany()
-                        .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Quiplogs.Infrastructure.Data.Entities.WorkOrderDto", "WorkOrder")
-                        .WithMany("WorkOrderParts")
-                        .HasForeignKey("WorkOrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Quiplogs.Infrastructure.Data.Entities.WorkOrderTaskDto", b =>
-                {
-                    b.HasOne("Quiplogs.Inventory.Data.Entities.TaskDto", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Quiplogs.Infrastructure.Data.Entities.WorkOrderDto", "WorkOrder")
-                        .WithMany()
-                        .HasForeignKey("WorkOrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.PartDto", b =>
-                {
-                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -888,6 +914,16 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -907,13 +943,67 @@ namespace Quiplogs.Infrastructure.Migrations
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceTaskDto", b =>
                 {
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
-                        .WithMany()
+                        .WithMany("PlannedMaintenanceTasks")
                         .HasForeignKey("PlannedMaintenanceId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Quiplogs.Inventory.Data.Entities.TaskDto", "Task")
                         .WithMany()
                         .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", b =>
+                {
+                    b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "Technician")
+                        .WithMany()
+                        .HasForeignKey("MechanicId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "ResponsableUser")
+                        .WithMany()
+                        .HasForeignKey("ResponsableUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderPartDto", b =>
+                {
+                    b.HasOne("Quiplogs.Inventory.Data.Entities.PartDto", "Part")
+                        .WithMany()
+                        .HasForeignKey("PartId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", "WorkOrder")
+                        .WithMany("WorkOrderParts")
+                        .HasForeignKey("WorkOrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderTaskDto", b =>
+                {
+                    b.HasOne("Quiplogs.Inventory.Data.Entities.TaskDto", "Task")
+                        .WithMany()
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", "WorkOrder")
+                        .WithMany("WorkOrderTasks")
+                        .HasForeignKey("WorkOrderId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

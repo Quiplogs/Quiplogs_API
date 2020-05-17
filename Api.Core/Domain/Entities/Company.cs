@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Api.Core.Domain.Entities
 {
-    public class Company
+    public class Company : BaseEntity
     {
-        public Guid Id { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
-        public DateTime DateUpdated { get; set; }
-
         public string Name { get; set; }
 
         public string PhoneNumber { get; set; }

@@ -42,7 +42,8 @@ namespace Api.UseCases.Company.Register
                 LicenceNumber = request.LicenceNumber,
                 PhoneNumber = request.PhoneNumber,
                 UserName = request.UserName,
-                UserPassword = request.Password
+                UserPassword = request.Password,
+                FirstName = request.FirstName
             };
 
             await _registerCompanyWorkOrder.Handle(company, _registerCompanyPresenter);

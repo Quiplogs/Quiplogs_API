@@ -6,6 +6,8 @@ namespace Api.Core.Interfaces.Repositories
 {
     public interface ICompanyRepository
     {
-        Task<CreateCompanyResponse> Create(Company company, string password);
+        Task<CreateCompanyResponse> Put(Company model);
+
+        Task<int> GetTotalRecords();
     }
 }

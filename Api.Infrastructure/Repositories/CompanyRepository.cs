@@ -1,10 +1,12 @@
-﻿using Api.Core.Domain.Entities;
+﻿using Api.Core;
+using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Dto.Repositories;
+using Api.Core.Helpers;
 using Api.Core.Interfaces.Repositories;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Quiplogs.Core.Data.Entities;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,26 +15,61 @@ namespace Api.Infrastructure.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {
-        private readonly UserManager<UserEntity> _userManager;
         private readonly IMapper _mapper;
         private readonly SqlDbContext _context;
+        private ICaching _cache;
 
-        public CompanyRepository(UserManager<UserEntity> userManager, IMapper mapper, SqlDbContext context)
+        public CompanyRepository(IMapper mapper, SqlDbContext context, ICaching cache)
         {
-            _userManager = userManager;
             _mapper = mapper;
             _context = context;
+            _cache = cache;
         }
 
-        public async Task<CreateCompanyResponse> Create(Company company, string password)
+        public async Task<CreateCompanyResponse> Put(Company model)
         {
-            var companyMapped = _mapper.Map<CompanyDto>(company);
+            try
+            {
+                var existingModel = _context.Companies.Find(model.Id);
+                var mappedModel = _mapper.Map<CompanyDto>(model);
 
-            _context.Add(companyMapped);
-            _context.SaveChanges();
+                if (existingModel == null)
+                {
+                    _context.Companies.Add(mappedModel);                    
+                }
+                else
+                {
+                    _context.Entry(existingModel).CurrentValues.SetValues(mappedModel);
+                }
 
-            var identityResult = await _userManager.AddPasswordAsync(companyMapped.Users.FirstOrDefault(), password);
-            return new CreateCompanyResponse(companyMapped.Id, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
+                await _context.SaveChangesAsync();
+                await UpdateTotalItems();
+
+                Company mappedCompany = _mapper.Map<Company>(mappedModel);
+                return new CreateCompanyResponse(mappedModel.Id, true, null);
+            }
+            catch (SqlException ex)
+            {
+                return new CreateCompanyResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error updating Company. {ex.Message}") });
+            }
+        }
+
+        public async Task<int> GetTotalRecords()
+        {
+            var _cacheKey = $"Companies-total";
+            var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
+
+            if (cachedTotal == 0)
+            {
+                await UpdateTotalItems();
+            }
+
+            return cachedTotal;
+        }
+
+        private async Task UpdateTotalItems()
+        {
+            await _cache.SetAsnyc($"Companies-total", _context.Companies.Count());
         }
     }
 }
