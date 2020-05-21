@@ -4,9 +4,9 @@ using Quiplogs.WorkOrder.Domain.Entities;
 
 namespace Quiplogs.WorkOrder.Data.Mapping
 {
-    public class DataProfile : Profile
+    public class WorkOrderProfile : Profile
     {
-        public DataProfile()
+        public WorkOrderProfile()
         {
             CreateMap<WorkOrderEntity, WorkOrderDto>();
             CreateMap<WorkOrderDto, WorkOrderEntity>();

@@ -18,13 +18,13 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 
         public Location Location { get; set; }
 
-        public decimal Interval { get; set; }
+        public decimal Cycles { get; set; }
 
         public string Notes { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public string UoM { get; set; }
+        public int UoM { get; set; }
 
         public List<PlannedMaintenancePart> PlannedMaintenanceParts { get; set; }
 

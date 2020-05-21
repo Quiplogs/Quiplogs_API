@@ -15,7 +15,7 @@ namespace Api.UseCases.PlannedMaintenance.Remove
             _removePlannedMaintenancePresenter = removePlannedMaintenancePresenter;
         }
 
-        [HttpPost("Remove")]
+        [HttpDelete()]
         public async Task<ActionResult> Remove([FromBody] RemovePlannedMaintenanceRequest request)
         {
             if (!ModelState.IsValid)

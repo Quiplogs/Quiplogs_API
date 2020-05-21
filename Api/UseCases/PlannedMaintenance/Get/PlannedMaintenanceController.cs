@@ -15,7 +15,7 @@ namespace Api.UseCases.PlannedMaintenance.Get
             _getPlannedMaintenancePresenter = getPlannedMaintenancePresenter;
         }
 
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetPlannedMaintenanceRequest request)
         {
             if (!ModelState.IsValid)

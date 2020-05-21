@@ -23,7 +23,7 @@ namespace Quiplogs.WorkOrder.Data.Entities
         public LocationDto Location { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
-        public decimal Cycle { get; set; }
+        public decimal Cycles { get; set; }
 
         public bool IsRecurring { get; set; }
 

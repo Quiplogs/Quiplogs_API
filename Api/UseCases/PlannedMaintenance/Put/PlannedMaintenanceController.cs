@@ -15,7 +15,7 @@ namespace Api.UseCases.PlannedMaintenance.Put
             _putPlannedMaintenancePresenter = putPlannedMaintenancePresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutPlannedMaintenanceRequest request)
         {
             if (!ModelState.IsValid)

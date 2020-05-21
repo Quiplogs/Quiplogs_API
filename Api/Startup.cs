@@ -28,6 +28,7 @@ using Quiplogs.Infrastructure.Auth;
 using Quiplogs.Inventory;
 using Quiplogs.Inventory.Data.Mapping;
 using Quiplogs.WorkOrder;
+using Quiplogs.WorkOrder.Data.Mapping;
 using StackExchange.Redis;
 using System;
 using System.Net;
@@ -55,7 +56,7 @@ namespace Api
             services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
 
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             //Redis cache
             var redisSettingsSection = Configuration.GetSection("RedisSettings");
@@ -139,6 +140,7 @@ namespace Api
             {
                 mc.AddProfile(new CoreProfile());
                 mc.AddProfile(new InventoryProfile());
+                mc.AddProfile(new WorkOrderProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
