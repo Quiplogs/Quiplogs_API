@@ -4,11 +4,7 @@ using Quiplogs.PlannedMaintenance.Interfaces.UseCases.PlannedMaintenance;
 
 namespace Api.UseCases.PlannedMaintenance.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenanceController : ControllerBase
+    public class PlannedMaintenanceController : BaseApiController
     {
         private readonly IRemovePlannedMaintenanceUseCase _removePlannedMaintenanceUseCase;
         private readonly RemovePlannedMaintenancePresenter _removePlannedMaintenancePresenter;

@@ -4,11 +4,7 @@ using Quiplogs.PlannedMaintenance.Interfaces.UseCases.PlannedMaintenance;
 
 namespace Api.UseCases.PlannedMaintenance.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenanceController : ControllerBase
+    public class PlannedMaintenanceController : BaseApiController
     {
         private readonly IPutPlannedMaintenanceUseCase _putPlannedMaintenanceUseCase;
         private readonly PutPlannedMaintenancePresenter _putPlannedMaintenancePresenter;
@@ -26,7 +22,14 @@ namespace Api.UseCases.PlannedMaintenance.Put
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest(request.PlannedMaintenance), _putPlannedMaintenancePresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _putPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest(request.AssetId, companyId, request.Cycles, request.IsRecurring, request.UoM), _putPlannedMaintenancePresenter);
             return _putPlannedMaintenancePresenter.ContentResult;
         }
     }

@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
 
 namespace Api.UseCases.PlannedMaintenance.Get
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenanceController : ControllerBase
+    public class PlannedMaintenanceController : BaseApiController
     {
         private readonly IGetPlannedMaintenanceUseCase _getPlannedMaintenanceUseCase;
         private readonly GetPlannedMaintenancePresenter _getPlannedMaintenancePresenter;

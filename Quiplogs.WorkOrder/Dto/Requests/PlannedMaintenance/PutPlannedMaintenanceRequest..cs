@@ -5,10 +5,23 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 {
     public class PutPlannedMaintenanceRequest : IRequest<PutPlannedMaintenanceResponse>
     {
-        public Domain.Entities.PlannedMaintenanceEntity PlannedMaintenance { get; }
-        public PutPlannedMaintenanceRequest(Domain.Entities.PlannedMaintenanceEntity plannedMaintenance)
+        public string AssetId { get; set; }
+
+        public string CompanyId { get; set; }
+
+        public decimal Cycles { get; set; }
+
+        public bool IsRecurring { get; set; }
+
+        public int UoM { get; set; }
+
+        public PutPlannedMaintenanceRequest(string assetId, string companyId, decimal cycles, bool isRecurring, int uom)
         {
-            PlannedMaintenance = plannedMaintenance;
+            AssetId = assetId;
+            CompanyId = companyId;
+            Cycles = cycles;
+            IsRecurring = isRecurring;
+            UoM = uom;
         }
     }
 }

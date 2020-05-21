@@ -21,6 +21,8 @@ namespace Quiplogs.WorkOrder.Data.Mapping
             CreateMap<PlannedMaintenancePartDto, PlannedMaintenancePart>();
             CreateMap<PlannedMaintenanceTask, PlannedMaintenanceTaskDto>();
             CreateMap<PlannedMaintenanceTaskDto, PlannedMaintenanceTask>();
+
+            CreateMap<Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest, PlannedMaintenanceEntity>();
         }
     }
 }

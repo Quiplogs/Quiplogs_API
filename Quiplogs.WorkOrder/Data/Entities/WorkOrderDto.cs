@@ -16,8 +16,10 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         public string Notes { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal HoursWorked { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal MintuesWorked { get; set; }
 
         public bool IsDeleted { get; set; }

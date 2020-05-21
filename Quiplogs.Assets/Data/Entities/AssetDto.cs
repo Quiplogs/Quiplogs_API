@@ -1,5 +1,4 @@
 ﻿using Quiplogs.Core.Data.Entities;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Assets.Data.Entities
@@ -18,9 +17,10 @@ namespace Quiplogs.Assets.Data.Entities
 
         public int PurchasedYear { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal CurrentWorkDone { get; set; }
 
-        public string UoM { get; set; }
+        public int UoM { get; set; }
 
         public string ImgFileName { get; set; }
 

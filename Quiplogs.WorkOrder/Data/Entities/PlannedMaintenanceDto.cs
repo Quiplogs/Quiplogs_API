@@ -22,13 +22,16 @@ namespace Quiplogs.WorkOrder.Data.Entities
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
 
-        public decimal Interval { get; set; }
-        
+        [Column(TypeName = "decimal(18, 6)")]
+        public decimal Cycle { get; set; }
+
+        public bool IsRecurring { get; set; }
+
         public string Notes { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public string UoM { get; set; }
+        public int UoM { get; set; }
 
         public List<PlannedMaintenancePartDto> PlannedMaintenanceParts { get; set; }
 

@@ -1,9 +1,15 @@
-﻿using Quiplogs.WorkOrder.Domain.Entities;
-
-namespace Api.UseCases.PlannedMaintenance.Put
+﻿namespace Api.UseCases.PlannedMaintenance.Put
 {
     public class PutPlannedMaintenanceRequest
     {
-        public PlannedMaintenanceEntity PlannedMaintenance { get; set; }
+        public string AssetId { get; set; }
+
+        public string CompanyId { get; set; }
+
+        public decimal Cycles { get; set; }
+
+        public bool IsRecurring { get; set; }
+
+        public int UoM { get; set; }
     }
 }

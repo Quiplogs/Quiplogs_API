@@ -1,5 +1,6 @@
 ﻿using Quiplogs.Core.Data.Entities;
 using Quiplogs.Inventory.Data.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
@@ -10,8 +11,10 @@ namespace Quiplogs.WorkOrder.Data.Entities
         public string TaskId { get; set; }
         public TaskDto Task { get; set; }
         public string TaskDescription { get; set; }
+
+        [Column(TypeName = "decimal(18, 6)")]
         public decimal Quantity { get; set; }
-        public string UoM { get; set; }
+        public int UoM { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsDeleted { get; set; }
     }
