@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenanceTask;
 
 namespace Api.UseCases.PlannedMaintenanceTask.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenanceTaskController : ControllerBase
+    public class PlannedMaintenanceTaskController : BaseApiController
     {
         private readonly IRemovePlannedMaintenanceTaskUseCase _removePlannedMaintenanceTaskUseCase;
         private readonly RemovePlannedMaintenanceTaskPresenter _removePlannedMaintenanceTaskPresenter;
@@ -19,13 +15,14 @@ namespace Api.UseCases.PlannedMaintenanceTask.Remove
             _removePlannedMaintenanceTaskPresenter = removePlannedMaintenanceTaskPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemovePlannedMaintenanceTaskRequest request)
+        [HttpDelete()]
+        public async Task<ActionResult> Remove([FromQuery] RemovePlannedMaintenanceTaskRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
+
             await _removePlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.RemovePlannedMaintenanceTaskRequest(request.Id), _removePlannedMaintenanceTaskPresenter);
             return _removePlannedMaintenanceTaskPresenter.ContentResult;
         }

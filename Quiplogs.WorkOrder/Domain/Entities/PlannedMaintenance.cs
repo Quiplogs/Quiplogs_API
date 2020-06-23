@@ -6,6 +6,8 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 {
     public class PlannedMaintenanceEntity : BaseEntity
     {
+        public string Name { get; set; }
+
         public string AssetId { get; set; }
 
         public Asset Asset { get; set; }
@@ -17,6 +19,8 @@ namespace Quiplogs.WorkOrder.Domain.Entities
         public string LocationId { get; set; }
 
         public Location Location { get; set; }
+
+        public bool IsRecurring { get; set; }
 
         public decimal Cycles { get; set; }
 

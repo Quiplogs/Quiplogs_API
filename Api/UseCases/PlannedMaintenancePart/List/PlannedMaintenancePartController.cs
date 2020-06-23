@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
 
 namespace Api.UseCases.PlannedMaintenancePart.List
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenancePartController : ControllerBase
+    public class PlannedMaintenancePartController : BaseApiController
     {
         private readonly IListPlannedMaintenancePartUseCase _listPlannedMaintenancePartUseCase;
         private readonly ListPlannedMaintenancePartPresenter _listPlannedMaintenancePartPresenter;
@@ -26,7 +22,8 @@ namespace Api.UseCases.PlannedMaintenancePart.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listPlannedMaintenancePartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart.ListPlannedMaintenancePartRequest(request.PlannedMaintenanceId, request.PageNumber), _listPlannedMaintenancePartPresenter);
+
+            await _listPlannedMaintenancePartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart.ListPlannedMaintenancePartRequest(request.PlannedMaintenanceId), _listPlannedMaintenancePartPresenter);
             return _listPlannedMaintenancePartPresenter.ContentResult;
         }
     }

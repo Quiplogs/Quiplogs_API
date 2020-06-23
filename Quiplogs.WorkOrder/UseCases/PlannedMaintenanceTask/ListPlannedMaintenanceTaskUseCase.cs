@@ -21,16 +21,10 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
 
         public async Task<bool> Handle(ListPlannedMaintenanceTaskRequest message, IOutputPort<ListPlannedMaintenanceTaskResponse> outputPort)
         {
-            //temp var
-            var pageSize = 20;
-
-            var response = await _repository.List(message.PlannedMaintenanceId, message.PageNumber, pageSize);
+            var response = await _repository.List(message.PlannedMaintenanceId);
             if (response.Success)
             {
-                var total = _repository.GetTotalRecords(message.PlannedMaintenanceId);
-                var pagedResult = new PagedResult<Domain.Entities.PlannedMaintenanceTask>(response.PlannedMaintenanceTasks, total, message.PageNumber, pageSize);
-
-                outputPort.Handle(new ListPlannedMaintenanceTaskResponse(pagedResult, true));
+                outputPort.Handle(new ListPlannedMaintenanceTaskResponse(response.PlannedMaintenanceTasks, true));
                 return true;
             }
 

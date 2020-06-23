@@ -24,7 +24,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenance
             //temp var
             var pageSize = 20;
 
-            var response = await _repository.List(message.CompanyId, message.LocationId, message.AssetId, message.PageNumber, pageSize);
+            var response = await _repository.List(message.CompanyId, message.LocationId, message.AssetId, message.PageNumber, pageSize, message.ShouldPage);
             if (response.Success)
             {
                 var total = await _repository.GetTotalRecords(message.CompanyId);

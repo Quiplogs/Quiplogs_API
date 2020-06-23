@@ -7,6 +7,7 @@ namespace Quiplogs.WorkOrder.Data.Entities
 {
     public class PlannedMaintenanceDto : BaseEntity
     {
+        public string Name { get; set; }
         public string AssetId { get; set; }
 
         [ForeignKey("AssetId")]

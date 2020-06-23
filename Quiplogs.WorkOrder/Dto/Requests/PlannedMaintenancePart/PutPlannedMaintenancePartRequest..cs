@@ -3,12 +3,21 @@ using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenancePart;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart
 {
-    public class PutPlannedMaintenancePartRequest : IRequest<PutPlannedMaintenancePartResponse>
+    public class PutPlannedMaintenancePartDtoRequest : IRequest<PutPlannedMaintenancePartResponse>
     {
-        public Domain.Entities.PlannedMaintenancePart PlannedMaintenancePart { get; }
-        public PutPlannedMaintenancePartRequest(Domain.Entities.PlannedMaintenancePart plannedMaintenancePart)
+        public string CompanyId { get; set; }
+        public string PlannedMaintenanceId { get; set; }
+        public string PartId { get; set; }
+        public decimal Quantity { get; set; }
+        public string UoM { get; set; }
+
+        public PutPlannedMaintenancePartDtoRequest(string companyId, string plannedMaintenanceId, string partId, decimal quantity, string uom)
         {
-            PlannedMaintenancePart = plannedMaintenancePart;
+            CompanyId = companyId;
+            PlannedMaintenanceId = plannedMaintenanceId;
+            PartId = partId;
+            Quantity = quantity;
+            UoM = uom;
         }
     }
 }

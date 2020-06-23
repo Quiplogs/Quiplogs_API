@@ -4,6 +4,7 @@ using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenanceTask;
@@ -27,17 +28,18 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPlannedMaintenanceTaskResponse> List(string plannedMaintenanceId, int pageNumber, int pageSize)
+        public async Task<ListPlannedMaintenanceTaskResponse> List(string plannedMaintenanceId)
         {
             try
             {
-                var PlannedMaintenanceTaskList = _context.PlannedMaintenanceTasks.Where(x =>
-                    x.PlannedMaintenanceId == plannedMaintenanceId)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToList();
+                var modelList = 
+                    _context.PlannedMaintenanceTasks
+                    .Where(x => x.PlannedMaintenanceId == plannedMaintenanceId)
+                    .Include(x => x.Task)
+                    .ToList();
 
-                var mappedPlannedMaintenanceTask = _mapper.Map<List<PlannedMaintenanceTask>>(PlannedMaintenanceTaskList);
-                return new ListPlannedMaintenanceTaskResponse(mappedPlannedMaintenanceTask, true, null);
+                var mappedList = _mapper.Map<List<PlannedMaintenanceTask>>(modelList);
+                return new ListPlannedMaintenanceTaskResponse(mappedList, true, null);
             }
             catch (SqlException ex)
             {

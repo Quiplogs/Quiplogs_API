@@ -4,7 +4,7 @@ using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenancePart;
 
 namespace Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart
 {
-    public interface IPutPlannedMaintenancePartUseCase : IRequestHandler<PutPlannedMaintenancePartRequest, PutPlannedMaintenancePartResponse>
+    public interface IPutPlannedMaintenancePartUseCase : IRequestHandler<PutPlannedMaintenancePartDtoRequest, PutPlannedMaintenancePartResponse>
     {
     }
 }

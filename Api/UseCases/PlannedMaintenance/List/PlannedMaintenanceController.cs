@@ -22,7 +22,14 @@ namespace Api.UseCases.PlannedMaintenance.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _listPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.ListPlannedMaintenanceRequest(request.CompanyId, request.LocationId, request.AssetId, request.PageNumber), _listPlannedMaintenancePresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _listPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.ListPlannedMaintenanceRequest(companyId, request.LocationId, request.AssetId, request.ShouldPage, request.PageNumber), _listPlannedMaintenancePresenter);
             return _listPlannedMaintenancePresenter.ContentResult;
         }
     }

@@ -7,8 +7,12 @@ namespace Quiplogs.WorkOrder.Data.Entities
     public class PlannedMaintenanceTaskDto : BaseEntity
     {
         public string PlannedMaintenanceId { get; set; }
+
+        [ForeignKey("PlannedMaintenanceId")]
         public PlannedMaintenanceDto PlannedMaintenance { get; set; }
         public string TaskId { get; set; }
+
+        [ForeignKey("TaskId")]
         public TaskDto Task { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]

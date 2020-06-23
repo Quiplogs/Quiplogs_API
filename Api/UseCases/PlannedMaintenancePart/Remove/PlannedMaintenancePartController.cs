@@ -5,11 +5,7 @@ using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenancePartPart.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenancePartController : ControllerBase
+    public class PlannedMaintenancePartController : BaseApiController
     {
         private readonly IRemovePlannedMaintenancePartUseCase _removePlannedMaintenancePartUseCase;
         private readonly RemovePlannedMaintenancePartPresenter _removePlannedMaintenancePartPresenter;
@@ -20,13 +16,14 @@ namespace Api.UseCases.PlannedMaintenancePartPart.Remove
             _removePlannedMaintenancePartPresenter = removePlannedMaintenancePartPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemovePlannedMaintenancePartRequest request)
+        [HttpDelete()]
+        public async Task<ActionResult> Remove([FromQuery] RemovePlannedMaintenancePartRequest request)
         {
-            if (!ModelState.IsValid)
+             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
+
             await _removePlannedMaintenancePartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart.RemovePlannedMaintenancePartRequest(request.Id), _removePlannedMaintenancePartPresenter);
             return _removePlannedMaintenancePartPresenter.ContentResult;
         }

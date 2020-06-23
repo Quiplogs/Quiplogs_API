@@ -8,10 +8,8 @@ using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenance;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Quiplogs.Infrastructure.Repositories
@@ -29,18 +27,31 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPlannedMaintenanceResponse> List(string companyId, string locationId, string assetId, int pageNumber, int pageSize)
+        public async Task<ListPlannedMaintenanceResponse> List(string companyId, string locationId, string assetId, int pageNumber, int pageSize, bool? shouldPage = true)
         {
             try
             {
-                var PlannedMaintenanceList = _context.PlannedMaintenances.Where(x =>
-                    x.CompanyId == companyId
-                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId)
-                    && (string.IsNullOrEmpty(assetId) || x.AssetId == assetId))
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToList();
+                var modelList = new List<PlannedMaintenanceDto>();
 
-                var mappedPlannedMaintenance = _mapper.Map<List<PlannedMaintenanceEntity>>(PlannedMaintenanceList);
+                if (shouldPage.Value)
+                {
+                    modelList = _context.PlannedMaintenances.Where(x =>
+                                    x.CompanyId == companyId
+                                    && x.AssetId == assetId
+                                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                                    .Skip((pageNumber - 1) * pageSize)
+                                    .Take(pageSize).ToList();
+                }
+                else
+                {
+                    modelList = _context.PlannedMaintenances.Where(x =>
+                                    x.CompanyId == companyId
+                                    && x.AssetId == assetId
+                                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                                    .ToList();
+                }
+
+                var mappedPlannedMaintenance = _mapper.Map<List<PlannedMaintenanceEntity>>(modelList);
                 return new ListPlannedMaintenanceResponse(mappedPlannedMaintenance, true, null);
             }
             catch (SqlException ex)

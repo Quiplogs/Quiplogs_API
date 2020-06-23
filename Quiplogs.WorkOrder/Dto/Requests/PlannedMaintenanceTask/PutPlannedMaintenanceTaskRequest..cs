@@ -5,10 +5,17 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask
 {
     public class PutPlannedMaintenanceTaskRequest : IRequest<PutPlannedMaintenanceTaskResponse>
     {
-        public Domain.Entities.PlannedMaintenanceTask PlannedMaintenanceTask { get; }
-        public PutPlannedMaintenanceTaskRequest(Domain.Entities.PlannedMaintenanceTask plannedMaintenanceTask)
+        public string CompanyId { get; set; }
+        public string PlannedMaintenanceId { get; set; }
+        public string TaskId { get; set; }
+        public decimal Quantity { get; set; }
+
+        public PutPlannedMaintenanceTaskRequest(string companyId, string plannedMaintenanceId, string taskId, decimal quantity)
         {
-            PlannedMaintenanceTask = plannedMaintenanceTask;
+            CompanyId = companyId;
+            PlannedMaintenanceId = plannedMaintenanceId;
+            TaskId = taskId;
+            Quantity = quantity;
         }
     }
 }

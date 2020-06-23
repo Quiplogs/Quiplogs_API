@@ -7,8 +7,13 @@ namespace Quiplogs.WorkOrder.Data.Entities
     public class PlannedMaintenancePartDto : BaseEntity
     {
         public string PlannedMaintenanceId { get; set; }
+
+        [ForeignKey("PlannedMaintenanceId")]
         public PlannedMaintenanceDto PlannedMaintenance { get; set; }
+
         public string PartId { get; set; }
+
+        [ForeignKey("PartId")]
         public PartDto Part { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]

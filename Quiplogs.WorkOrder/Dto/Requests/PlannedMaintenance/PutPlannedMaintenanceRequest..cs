@@ -5,6 +5,7 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 {
     public class PutPlannedMaintenanceRequest : IRequest<PutPlannedMaintenanceResponse>
     {
+        public string Name { get; set; }
         public string AssetId { get; set; }
 
         public string CompanyId { get; set; }
@@ -15,8 +16,9 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 
         public int UoM { get; set; }
 
-        public PutPlannedMaintenanceRequest(string assetId, string companyId, decimal cycles, bool isRecurring, int uom)
+        public PutPlannedMaintenanceRequest(string name, string assetId, string companyId, decimal cycles, bool isRecurring, int uom)
         {
+            Name = name;
             AssetId = assetId;
             CompanyId = companyId;
             Cycles = cycles;

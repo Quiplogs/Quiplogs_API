@@ -1,14 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
 using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
 
 namespace Api.UseCases.PlannedMaintenancePart.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenancePartController : ControllerBase
+    public class PlannedMaintenancePartController : BaseApiController
     {
         private readonly IPutPlannedMaintenancePartUseCase _putPlannedMaintenancePartUseCase;
         private readonly PutPlannedMaintenancePartPresenter _putPlannedMaintenancePartPresenter;
@@ -19,14 +16,21 @@ namespace Api.UseCases.PlannedMaintenancePart.Put
             _putPlannedMaintenancePartPresenter = putPlannedMaintenancePartPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutPlannedMaintenancePartRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putPlannedMaintenancePartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart.PutPlannedMaintenancePartRequest(request.PlannedMaintenancePart), _putPlannedMaintenancePartPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _putPlannedMaintenancePartUseCase.Handle(new PutPlannedMaintenancePartDtoRequest(companyId, request.PlannedMaintenanceId, request.PartId, request.Quantity, request.UoM), _putPlannedMaintenancePartPresenter);
             return _putPlannedMaintenancePartPresenter.ContentResult;
         }
     }

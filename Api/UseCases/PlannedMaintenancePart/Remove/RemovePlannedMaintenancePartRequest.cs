@@ -3,5 +3,7 @@
     public class RemovePlannedMaintenancePartRequest
     {
         public string Id { get; set; }
+
+        public string CompanyId { get; set; }
     }
 }

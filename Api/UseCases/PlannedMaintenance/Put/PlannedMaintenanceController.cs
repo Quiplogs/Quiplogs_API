@@ -29,7 +29,7 @@ namespace Api.UseCases.PlannedMaintenance.Put
                 companyId = this.GetCompanyId();
             }
 
-            await _putPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest(request.AssetId, companyId, request.Cycles, request.IsRecurring, request.UoM), _putPlannedMaintenancePresenter);
+            await _putPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest(request.Name, request.AssetId, companyId, request.Cycles, request.IsRecurring, request.UoM), _putPlannedMaintenancePresenter);
             return _putPlannedMaintenancePresenter.ContentResult;
         }
     }

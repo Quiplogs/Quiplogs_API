@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
+using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
+using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;
 
 namespace Quiplogs.WorkOrder.Data.Mapping
 {
@@ -23,6 +25,8 @@ namespace Quiplogs.WorkOrder.Data.Mapping
             CreateMap<PlannedMaintenanceTaskDto, PlannedMaintenanceTask>();
 
             CreateMap<Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest, PlannedMaintenanceEntity>();
+            CreateMap<PutPlannedMaintenancePartDtoRequest, PlannedMaintenancePart>();
+            CreateMap<PutPlannedMaintenanceTaskRequest, PlannedMaintenanceTask>();
         }
     }
 }

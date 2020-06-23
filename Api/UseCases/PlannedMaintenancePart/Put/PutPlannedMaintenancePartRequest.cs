@@ -2,6 +2,10 @@
 {
     public class PutPlannedMaintenancePartRequest
     {
-        public Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenancePart PlannedMaintenancePart { get; set; }
+        public string CompanyId { get; set; }
+        public string PlannedMaintenanceId { get; set; }
+        public string PartId { get; set; }
+        public decimal Quantity { get; set; }
+        public string UoM { get; set; }
     }
 }

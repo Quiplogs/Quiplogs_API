@@ -6,11 +6,9 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask
     public class ListPlannedMaintenanceTaskRequest : IRequest<ListPlannedMaintenanceTaskResponse>
     {
         public string PlannedMaintenanceId { get; }
-        public int PageNumber { get; }
-        public ListPlannedMaintenanceTaskRequest(string plannedMaintenanceId, int pageNumber)
+        public ListPlannedMaintenanceTaskRequest(string plannedMaintenanceId)
         {
             PlannedMaintenanceId = plannedMaintenanceId;
-            PageNumber = pageNumber;
         }
     }
 }

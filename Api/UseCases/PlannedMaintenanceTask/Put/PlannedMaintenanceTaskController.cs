@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenanceTask;
 
 namespace Api.UseCases.PlannedMaintenanceTask.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class PlannedMaintenanceTaskController : ControllerBase
+    public class PlannedMaintenanceTaskController : BaseApiController
     {
         private readonly IPutPlannedMaintenanceTaskUseCase _putPlannedMaintenanceTaskUseCase;
         private readonly PutPlannedMaintenanceTaskPresenter _putPlannedMaintenanceTaskPresenter;
@@ -19,14 +15,21 @@ namespace Api.UseCases.PlannedMaintenanceTask.Put
             _putPlannedMaintenanceTaskPresenter = putPlannedMaintenanceTaskPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutPlannedMaintenanceTaskRequest request)
         {
-            if (!ModelState.IsValid)
+             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _putPlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.PutPlannedMaintenanceTaskRequest(request.PlannedMaintenanceTask), _putPlannedMaintenanceTaskPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _putPlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.PutPlannedMaintenanceTaskRequest(companyId, request.PlannedMaintenanceId, request.TaskId, request.Quantity), _putPlannedMaintenanceTaskPresenter);
             return _putPlannedMaintenanceTaskPresenter.ContentResult;
         }
     }

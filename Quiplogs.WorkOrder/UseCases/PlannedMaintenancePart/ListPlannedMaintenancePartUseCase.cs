@@ -1,5 +1,4 @@
 ﻿using Api.Core;
-using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
@@ -21,16 +20,11 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenancePartPart
 
         public async Task<bool> Handle(ListPlannedMaintenancePartRequest message, IOutputPort<ListPlannedMaintenancePartResponse> outputPort)
         {
-            //temp var
-            var pageSize = 20;
+            var response = await _repository.List(message.PlannedMaintenanceId);
 
-            var response = await _repository.List(message.PlannedMaintenanceId, message.PageNumber, pageSize);
             if (response.Success)
-            {
-                var total = _repository.GetTotalRecords(message.PlannedMaintenanceId);
-                var pagedResult = new PagedResult<Domain.Entities.PlannedMaintenancePart>(response.PlannedMaintenanceParts, total, message.PageNumber, pageSize);
-
-                outputPort.Handle(new ListPlannedMaintenancePartResponse(pagedResult, true));
+            { 
+                outputPort.Handle(new ListPlannedMaintenancePartResponse(response.PlannedMaintenanceParts, true));
                 return true;
             }
 

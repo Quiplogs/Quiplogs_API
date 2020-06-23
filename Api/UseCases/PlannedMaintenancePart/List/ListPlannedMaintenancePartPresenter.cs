@@ -18,7 +18,7 @@ namespace Api.UseCases.PlannedMaintenancePart.List
         public void Handle(ListPlannedMaintenancePartResponse response)
         {
             ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
-            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.PagedResult) : JsonSerializer.SerializeObject(response.Errors);
+            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.PlannedMaintenanceParts) : JsonSerializer.SerializeObject(response.Errors);
         }
     }
 }
