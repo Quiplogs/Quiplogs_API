@@ -22,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Quiplogs.Assets;
+using Quiplogs.Assets.Data.Mapping;
 using Quiplogs.BlobStorage;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Infrastructure.Auth;
@@ -144,6 +145,7 @@ namespace Api
                 mc.AddProfile(new CoreProfile());
                 mc.AddProfile(new InventoryProfile());
                 mc.AddProfile(new WorkOrderProfile());
+                mc.AddProfile(new AssetProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

@@ -4,14 +4,16 @@ using Api.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200701194155_UpdateWorkOrders")]
+    partial class UpdateWorkOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,8 +186,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Make")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ManufacuredDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ManufacuredYear")
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
@@ -193,8 +195,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("PurchasedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("PurchasedYear")
+                        .HasColumnType("int");
 
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");

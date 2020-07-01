@@ -53,6 +53,8 @@ namespace Quiplogs.WorkOrder.Data.Entities
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
 
+        public string Status { get; set; }
+
         public List<WorkOrderPartDto> WorkOrderParts { get; set; }
 
         public List<WorkOrderTaskDto> WorkOrderTasks { get; set; }

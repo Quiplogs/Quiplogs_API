@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderTask;
 
 namespace Api.UseCases.WorkOrderTask.List
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class WorkOrderTaskController : ControllerBase
+    public class WorkOrderTaskController : BaseApiController
     {
         private readonly IListWorkOrderTaskUseCase _listWorkOrderTaskUseCase;
         private readonly ListWorkOrderTaskPresenter _listWorkOrderTaskPresenter;
@@ -26,6 +22,13 @@ namespace Api.UseCases.WorkOrderTask.List
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
             await _listWorkOrderTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask.ListWorkOrderTaskRequest(request.WordOrderId, request.PageNumber), _listWorkOrderTaskPresenter);
             return _listWorkOrderTaskPresenter.ContentResult;
         }

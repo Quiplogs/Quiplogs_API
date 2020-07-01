@@ -5,11 +5,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderPart;
 
 namespace Api.UseCases.WorkOrderPart.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class WorkOrderPartController : ControllerBase
+    public class WorkOrderPartController : BaseApiController
     {
         private readonly IRemoveWorkOrderPartUseCase _removeWorkOrderPartUseCase;
         private readonly RemoveWorkOrderPartPresenter _removeWorkOrderPartPresenter;
@@ -20,7 +16,7 @@ namespace Api.UseCases.WorkOrderPart.Remove
             _removeWorkOrderPartPresenter = removeWorkOrderPartPresenter;
         }
 
-        [HttpPost("Remove")]
+        [HttpDelete()]
         public async Task<ActionResult> Remove([FromBody] RemoveWorkOrderPartRequest request)
         {
             if (!ModelState.IsValid)

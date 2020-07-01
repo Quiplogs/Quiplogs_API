@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderTask;
 
 namespace Api.UseCases.WorkOrderTask.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class WorkOrderTaskController : ControllerBase
+    public class WorkOrderTaskController : BaseApiController
     {
         private readonly IRemoveWorkOrderTaskUseCase _removeWorkOrderTaskUseCase;
         private readonly RemoveWorkOrderTaskPresenter _removeWorkOrderTaskPresenter;
@@ -19,7 +15,7 @@ namespace Api.UseCases.WorkOrderTask.Remove
             _removeWorkOrderTaskPresenter = removeWorkOrderTaskPresenter;
         }
 
-        [HttpPost("Remove")]
+        [HttpDelete()]
         public async Task<ActionResult> Remove([FromBody] RemoveWorkOrderTaskRequest request)
         {
             if (!ModelState.IsValid)
