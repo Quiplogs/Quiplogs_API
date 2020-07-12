@@ -1,15 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Assets.Interfaces.UseCases.Asset;
 
 namespace Api.UseCases.Asset.Get
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class AssetController : ControllerBase
+    public class AssetController : BaseApiController
     {
         private readonly IGetAssetUseCase _getAssetUseCase;
         private readonly GetAssetPresenter _getAssetPresenter;
@@ -21,7 +16,7 @@ namespace Api.UseCases.Asset.Get
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetAssetRequest request)
         {
             if (!ModelState.IsValid)

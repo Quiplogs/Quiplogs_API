@@ -1,15 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Assets.Interfaces.UseCases.Asset;
 
 namespace Api.UseCases.Asset.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class AssetController : ControllerBase
+    public class AssetController : BaseApiController
     {
         private readonly IRemoveAssetUseCase _removeAssetUseCase;
         private readonly RemoveAssetPresenter _removeAssetPresenter;
@@ -20,8 +15,8 @@ namespace Api.UseCases.Asset.Remove
             _removeAssetPresenter = removeAssetPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemoveAssetRequest request)
+        [HttpDelete()]
+        public async Task<ActionResult> Remove([FromQuery] RemoveAssetRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

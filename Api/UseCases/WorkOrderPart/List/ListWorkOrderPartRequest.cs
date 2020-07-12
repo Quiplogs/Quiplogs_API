@@ -8,6 +8,7 @@ namespace Api.UseCases.WorkOrderPart.List
     public class ListWorkOrderPartRequest
     {
         public string WordOrderId { get; set; }
+        public string CompanyId { get; set; }
         public int PageNumber { get; set; }
     }
 }

@@ -184,8 +184,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Make")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ManufacuredYear")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("ManufacuredDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
@@ -193,8 +193,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PurchasedYear")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("PurchasedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");
@@ -662,7 +662,16 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<decimal>("HoursWorked")
                         .HasColumnType("decimal(18, 6)");
 
+                    b.Property<bool>("InBusy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
 
                     b.Property<string>("LocationId")
@@ -684,6 +693,9 @@ namespace Quiplogs.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ResponsableUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TechnicianId")
@@ -725,16 +737,13 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PartCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartDescription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PartId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Quantity")
+                    b.Property<decimal>("QuantityRequired")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<decimal>("QuantityUsed")
                         .HasColumnType("decimal(18, 6)");
 
                     b.Property<int>("UoM")
@@ -770,11 +779,11 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Quantity")
+                    b.Property<decimal>("QuantityRequired")
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<string>("TaskDescription")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("QuantityUsed")
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<string>("TaskId")
                         .HasColumnType("nvarchar(450)");

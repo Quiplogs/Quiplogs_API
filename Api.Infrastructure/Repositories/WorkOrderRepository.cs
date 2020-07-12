@@ -46,6 +46,26 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
+        public int GetCurrentOpenWorkOrderCount(string companyId, string assetId)
+        {
+            //return _context.WorkOrders.Where(
+            //    x => x.CompanyId == companyId
+            //    && x.AssetId == assetId
+            //    && x.).c
+
+            return 0;
+        }
+
+        public int GetCurrentInProgressWorkOrderCount(string companyId, string assetId)
+        {
+            return 0;
+        }
+
+        public int GetCurrentCompletedWorkOrderCount(string companyId, string assetId)
+        {
+            return 0;
+        }
+
         public async Task<GetWorkOrderResponse> Get(string id)
         {
             try

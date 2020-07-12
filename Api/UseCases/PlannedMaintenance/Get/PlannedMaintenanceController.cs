@@ -22,6 +22,7 @@ namespace Api.UseCases.PlannedMaintenance.Get
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
+
             await _getPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.GetPlannedMaintenanceRequest(request.Id), _getPlannedMaintenancePresenter);
             return _getPlannedMaintenancePresenter.ContentResult;
         }

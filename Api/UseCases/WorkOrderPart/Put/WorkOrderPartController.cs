@@ -4,11 +4,7 @@ using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderPart;
 
 namespace Api.UseCases.WorkOrderPart.Put
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class WorkOrderPartController : ControllerBase
+    public class WorkOrderPartController : BaseApiController
     {
         private readonly IPutWorkOrderPartUseCase _putWorkOrderPartUseCase;
         private readonly PutWorkOrderPartPresenter _putWorkOrderPartPresenter;
@@ -19,13 +15,20 @@ namespace Api.UseCases.WorkOrderPart.Put
             _putWorkOrderPartPresenter = putWorkOrderPartPresenter;
         }
 
-        [HttpPut("Put")]
+        [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutWorkOrderPartRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
             await _putWorkOrderPartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart.PutWorkOrderPartRequest(request.WorkOrderPart), _putWorkOrderPartPresenter);
             return _putWorkOrderPartPresenter.ContentResult;
         }

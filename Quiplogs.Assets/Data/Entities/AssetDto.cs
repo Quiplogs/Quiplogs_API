@@ -1,4 +1,5 @@
 ﻿using Quiplogs.Core.Data.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Assets.Data.Entities
@@ -13,9 +14,9 @@ namespace Quiplogs.Assets.Data.Entities
 
         public string SerialNumber { get; set; }
 
-        public int ManufacuredYear { get; set; }
+        public DateTime? ManufacuredDate { get; set; }
 
-        public int PurchasedYear { get; set; }
+        public DateTime? PurchasedDate { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
         public decimal CurrentWorkDone { get; set; }

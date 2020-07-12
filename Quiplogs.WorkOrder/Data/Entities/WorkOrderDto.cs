@@ -14,6 +14,12 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         public DateTime? DateCompleted { get; set; }
 
+        public bool IsOpen { get; set; }
+
+        public bool InBusy { get; set; }
+
+        public bool IsCompleted { get; set; }
+
         public string Notes { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
@@ -52,6 +58,8 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
+
+        public string Status { get; set; }
 
         public List<WorkOrderPartDto> WorkOrderParts { get; set; }
 
