@@ -12,7 +12,7 @@ namespace Api.UseCases.Asset.Put
 
         public string SerialNumber { get; set; }
 
-        public DateTime? ManufacuredDate { get; set; }
+        public DateTime? ManufacturedDate { get; set; }
 
         public DateTime? PurchasedDate { get; set; }
 

@@ -2,6 +2,7 @@
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Assets.Domain.Entities;
 using Quiplogs.Assets.Dto.Requests.Asset;
+using Quiplogs.Assets.Dto.Requests.AssetUsage;
 
 namespace Quiplogs.Assets.Data.Mapping
 {
@@ -13,6 +14,10 @@ namespace Quiplogs.Assets.Data.Mapping
             CreateMap<AssetDto, Asset>();
 
             CreateMap<PutAssetRequest, Asset>();
+            CreateMap<PutAssetUsageRequest, Asset>();
+
+            CreateMap<AssetUsage, AssetUsageDto>();
+            CreateMap<AssetUsageDto, AssetUsage>();
         }
     }
 }

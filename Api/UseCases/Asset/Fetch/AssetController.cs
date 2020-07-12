@@ -4,11 +4,7 @@ using System.Threading.Tasks;
 
 namespace Api.UseCases.Asset.Fetch
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class AssetController : ControllerBase
+    public class AssetController : BaseApiController
     {
         private readonly IFetchAssetUseCase _fetchAssetUseCase;
         private readonly FetchAssetPresenter _fetchAssetPresenter;
@@ -26,7 +22,14 @@ namespace Api.UseCases.Asset.Fetch
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _fetchAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.FetchAssetRequest(request.CompanyId, request.LocationId, request.PageNumber), _fetchAssetPresenter);
+
+            var companyId = request.CompanyId;
+            if (string.IsNullOrEmpty(companyId))
+            {
+                companyId = this.GetCompanyId();
+            }
+
+            await _fetchAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.FetchAssetRequest(companyId, request.LocationId, request.PageNumber), _fetchAssetPresenter);
             return _fetchAssetPresenter.ContentResult;
         }
     }

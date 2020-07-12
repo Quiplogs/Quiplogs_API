@@ -28,8 +28,8 @@ namespace Api.UseCases.Asset.Put
             {
                 companyId = this.GetCompanyId();
             }
-
-            await _putAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.PutAssetRequest(request.Name, request.Make, request.Model, request.SerialNumber, request.ManufacuredDate, request.PurchasedDate, request. CurrentWorkDone, request.UoM, request.ImgFileName, request.ImgUrl, request.WarrantyUrl, request.InstructionManualUrl, request.LocationId, companyId), _putAssetPresenter);
+             
+            await _putAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.PutAssetRequest(request.Name, request.Make, request.Model, request.SerialNumber, request.ManufacturedDate, request.PurchasedDate, request. CurrentWorkDone, request.UoM, request.ImgFileName, request.ImgUrl, request.WarrantyUrl, request.InstructionManualUrl, request.LocationId, companyId), _putAssetPresenter);
             return _putAssetPresenter.ContentResult;
         }
     }
