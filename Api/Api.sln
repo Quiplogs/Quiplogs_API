@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Inventory", "..\Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.WorkOrder", "..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj", "{FF541C6B-91A1-4F8E-A88F-A75EE5C4F91B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiplogs.BlobStorage", "..\Quiplogs.BlobStorage\Quiplogs.BlobStorage.csproj", "{31FECFB5-DCD0-4DEF-9B29-267AF55BC39E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.BlobStorage", "..\Quiplogs.BlobStorage\Quiplogs.BlobStorage.csproj", "{31FECFB5-DCD0-4DEF-9B29-267AF55BC39E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

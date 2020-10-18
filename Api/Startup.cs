@@ -28,6 +28,7 @@ using Quiplogs.Core.Data.Entities;
 using Quiplogs.Infrastructure.Auth;
 using Quiplogs.Inventory;
 using Quiplogs.Inventory.Data.Mapping;
+using Quiplogs.Notifications.Send;
 using Quiplogs.WorkOrder;
 using Quiplogs.WorkOrder.Data.Mapping;
 using StackExchange.Redis;
@@ -171,6 +172,8 @@ namespace Api
             builder.RegisterModule(new AssetsModule());
             builder.RegisterModule(new InventoryModule());
             builder.RegisterModule(new WorkOrderModule());
+
+            builder.RegisterModule(new SendNotificationModule(Configuration));
 
             // Presenters
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
