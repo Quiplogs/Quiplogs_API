@@ -28,20 +28,20 @@ namespace Api.UseCases.User.Get
         [HttpGet("Get")]
         public async Task<ActionResult> Get([FromQuery] GetUserRequest request)
         {
-            var tags = new Dictionary<string, string>();
-            tags.Add("firstName", "Jonathan");
+            //var tags = new Dictionary<string, string>();
+            //tags.Add("firstName", "Jonathan");
 
-            var mail = new EmailWithTemplate
-            {
-                TemplateId = "12345667",
-                FromEmailAddress = "test@from.com",
-                FromName = "Busy Dev",
-                ToEmailAddress = "test.to.com",
-                ToName = "Another Busy Dev",
-                ReplacementTags = tags
-            };
+            //var mail = new EmailWithTemplate
+            //{
+            //    TemplateId = "12345667",
+            //    FromEmailAddress = "test@from.com",
+            //    FromName = "Busy Dev",
+            //    ToEmailAddress = "test.to.com",
+            //    ToName = "Another Busy Dev",
+            //    ReplacementTags = tags
+            //};
 
-            await _sendService.SendNotification(mail);
+            //await _sendService.SendNotification(mail);
 
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

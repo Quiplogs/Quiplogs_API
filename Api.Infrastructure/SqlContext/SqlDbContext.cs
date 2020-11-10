@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Dashboard.StoredProcedureModels;
 using Quiplogs.Inventory.Data.Entities;
 using Quiplogs.WorkOrder.Data.Entities;
 using System;
@@ -26,6 +27,9 @@ namespace Api.Infrastructure.SqlContext
         public DbSet<TaskDto> Tasks { get; set; }
         public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
         public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
+
+        //Stored Procedure Result Classes
+        public DbSet<WorkOrdersCompletedByDayForWeek> SP_WorkOrdersCompletedByDayForWeek { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -88,6 +92,11 @@ namespace Api.Infrastructure.SqlContext
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            modelBuilder.Entity<WorkOrdersCompletedByDayForWeek>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
             base.OnModelCreating(modelBuilder);
         }

@@ -25,6 +25,7 @@ using Quiplogs.Assets;
 using Quiplogs.Assets.Data.Mapping;
 using Quiplogs.BlobStorage;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Dashboard;
 using Quiplogs.Infrastructure.Auth;
 using Quiplogs.Inventory;
 using Quiplogs.Inventory.Data.Mapping;
@@ -172,6 +173,7 @@ namespace Api
             builder.RegisterModule(new AssetsModule());
             builder.RegisterModule(new InventoryModule());
             builder.RegisterModule(new WorkOrderModule());
+            builder.RegisterModule(new DashboardModule());
 
             builder.RegisterModule(new SendNotificationModule(Configuration));
 
