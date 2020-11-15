@@ -6,9 +6,9 @@ namespace Quiplogs.Dashboard
     {
         public static Dictionary<string, string> Procedures = new Dictionary<string, string>
         {
-            {"TotalAssets", "Analytics_TotalAssets"},
-            {"TotalAssetsInMaintenance", "Analytics_TotalAssetsInMaintenance"},
-            {"WorkOrderOpen", "Analytics_WorkOrderOpen"},
+            {"TextHeader", "Analytics_TextHeaderValues"},
+            {"WorkOrderOpen", "Analytics_WorkOrderOpenList"},
+            {"WorkOrderPlannedVUnplanned", "Analytics_WorkOrderPlannedVUnplanned"},
             {"WorkOrderPriority", "Analytics_WorkOrderPriority"},
             {"WorkOrdersCompletedByDayForWeek", "Analytics_WorkOrdersCompletedByDayForWeek"},
         };

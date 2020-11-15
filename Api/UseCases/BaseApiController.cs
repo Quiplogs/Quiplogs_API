@@ -6,7 +6,7 @@ namespace Api.UseCases
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {

@@ -28,10 +28,6 @@ namespace Api.Infrastructure.SqlContext
         public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
         public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
 
-        //Stored Procedure Result Classes
-        public DbSet<WorkOrdersCompletedByDayForWeek> SP_WorkOrdersCompletedByDayForWeek { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(schema: DbGlobals.SchemaName);

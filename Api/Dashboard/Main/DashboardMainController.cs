@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Dashboard;
 using System;
-using System.Threading.Tasks;
 
 namespace Api.Dashboard.Main
 {
@@ -16,7 +15,7 @@ namespace Api.Dashboard.Main
         }
 
         [HttpGet]
-        public async Task<IActionResult> TotalAssets([FromQuery] DashboardMainRequest request)
+        public IActionResult TotalAssets([FromQuery] DashboardMainRequest request)
         {
             if (!ModelState.IsValid)
             { 
@@ -26,13 +25,13 @@ namespace Api.Dashboard.Main
 
             var analyticsReuqest = new AnalyticsRequest
             {
-                CompanyId = request.CompanyId,
+                CompanyId = Guid.Parse(GetCompanyId()),
                 LocationId = request.LocationId,
                 StoredProcedure = request.QueryName
             };
 
-            var data = await _repo.GetDashboardData(analyticsReuqest);
-            return Ok(data);
+            var data = _repo.GetDashboardData(analyticsReuqest);
+            return new JsonResult(data);
         }
     }
 }

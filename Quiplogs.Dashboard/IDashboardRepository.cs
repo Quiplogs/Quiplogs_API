@@ -1,11 +1,9 @@
-﻿using Quiplogs.Dashboard.StoredProcedureModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Quiplogs.Dashboard
 {
     public interface IDashboardRepository
     {
-        Task<List<WorkOrdersCompletedByDayForWeek>> GetDashboardData(AnalyticsRequest request);
+        IEnumerable<dynamic> GetDashboardData(AnalyticsRequest request);
     }
 }

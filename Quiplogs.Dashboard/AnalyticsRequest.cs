@@ -6,7 +6,7 @@ namespace Quiplogs.Dashboard
     {
         public Guid CompanyId { get; set; }
 
-        public Guid LocationId { get; set; }
+        public Guid? LocationId { get; set; }
 
         private string storedProcedure;
         public string StoredProcedure
