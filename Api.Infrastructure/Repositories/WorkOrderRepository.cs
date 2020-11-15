@@ -27,13 +27,14 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListWorkOrderResponse> List(string companyId, string locationId, int pageNumber, int pageSize)
+        public async Task<ListWorkOrderResponse> List(string companyId, string locationId, string assetId, int pageNumber, int pageSize)
         {
             try
             {
                 var WorkOrderList = _context.WorkOrders.Where(x =>
                     x.CompanyId == companyId
-                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId)
+                    && (string.IsNullOrEmpty(assetId) || x.AssetId == assetId))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
@@ -81,25 +82,25 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<PutWorkOrderResponse> Put(WorkOrderEntity WorkOrder)
+        public async Task<PutWorkOrderResponse> Put(WorkOrderEntity model)
         {
             try
             {
-                var WorkOrderMapped = _mapper.Map<WorkOrderDto>(WorkOrder);
+                var modelMapped = _mapper.Map<WorkOrderDto>(model);
 
-                if (string.IsNullOrEmpty(WorkOrderMapped.Id))
+                if (string.IsNullOrEmpty(modelMapped.Id))
                 {
-                    _context.WorkOrders.Add(WorkOrderMapped);
-                    await UpdateTotalItems(WorkOrder.CompanyId);
+                    _context.WorkOrders.Add(modelMapped);
+                    await UpdateTotalItems(model.CompanyId, model.AssetId);
                 }
                 else
                 {
-                    _context.WorkOrders.Update(WorkOrderMapped);
+                    _context.WorkOrders.Update(modelMapped);
                 }
 
                 await _context.SaveChangesAsync();
 
-                var mappedWorkOrder = _mapper.Map<WorkOrderEntity>(WorkOrderMapped);
+                var mappedWorkOrder = _mapper.Map<WorkOrderEntity>(modelMapped);
                 return new PutWorkOrderResponse(mappedWorkOrder, true, null);
             }
             catch (SqlException ex)
@@ -125,22 +126,29 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(string companyId, string assetId)
         {
-            var _cacheKey = $"WorkOrder-total-{companyId}";
+            var _cacheKey = $"WorkOrder-total-{companyId}-{assetId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
 
             if (cachedTotal == 0)
             {
-                await UpdateTotalItems(companyId);
-            }
+                cachedTotal = await UpdateTotalItems(companyId, assetId);
+            }            
 
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task<int> UpdateTotalItems(string companyId, string assetId)
         {
-            await _cache.SetAsnyc($"WorkOrder-total-{companyId}", _context.WorkOrders.Count());
+            var _cacheKey = $"WorkOrder-total-{companyId}-{assetId}";
+            await _cache.SetAsnyc(_cacheKey, 
+                _context
+                .WorkOrders
+                .Where(x => x.CompanyId == companyId && x.AssetId == assetId)
+                .Count());
+
+            return await _cache.GetAsnyc<int>(_cacheKey);
         }
     }
 }

@@ -4,14 +4,16 @@ using Api.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200907183431_FixWorkOrder")]
+    partial class FixWorkOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -665,9 +667,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPlanned")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LocationId")
                         .HasColumnType("nvarchar(450)");
 
@@ -677,14 +676,17 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
                     b.Property<string>("ReferenceNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("ResponsableUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ResponsableUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TechnicianId")
                         .HasColumnType("nvarchar(450)");
@@ -699,6 +701,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("ResponsableUserId");
 
                     b.HasIndex("TechnicianId");
 
@@ -967,6 +971,11 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "ResponsableUser")
+                        .WithMany()
+                        .HasForeignKey("ResponsableUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "Technician")

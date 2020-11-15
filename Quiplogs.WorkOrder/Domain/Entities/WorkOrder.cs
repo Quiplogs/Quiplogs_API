@@ -41,6 +41,8 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 
         public Location Location { get; set; }
 
+        public int Status { get; set; }
+
         public List<WorkOrderPart> WorkOrderParts { get; set; }
 
         public List<WorkOrderTask> WorkOrderTasks { get; set; }

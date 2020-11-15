@@ -5,12 +5,12 @@ using Quiplogs.Assets.Interfaces.UseCases.AssetUsage;
 
 namespace Api.UseCases.AssetUsage.Put
 {
-    public class AssetUsageControlle : BaseApiController
+    public class AssetUsageController : BaseApiController
     {
         private readonly IPutAssetUsageUseCase _useCase;
         private readonly PutAssetUsagePresenter _presenter;
 
-        public AssetUsageControlle(IPutAssetUsageUseCase useCase, PutAssetUsagePresenter presenter)
+        public AssetUsageController(IPutAssetUsageUseCase useCase, PutAssetUsagePresenter presenter)
         {
             _useCase = useCase;
             _presenter = presenter;

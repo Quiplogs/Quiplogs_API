@@ -14,12 +14,6 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         public DateTime? DateCompleted { get; set; }
 
-        public bool IsOpen { get; set; }
-
-        public bool InBusy { get; set; }
-
-        public bool IsCompleted { get; set; }
-
         public string Notes { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
@@ -32,17 +26,10 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         public string TechnicianId { get; set; }
 
-        [ForeignKey("MechanicId")]
+        [ForeignKey("TechnicianId")]
         public UserEntity Technician { get; set; }
 
         public string TechnicianName { get; set; }
-
-        public string ResponsableUserId { get; set; }
-
-        [ForeignKey("ResponsableUserId")]
-        public UserEntity ResponsableUser { get; set; }
-
-        public string ResponsableUserName { get; set; }
 
         [ForeignKey("AssetId")]
         public string AssetId { get; set; }
@@ -59,7 +46,11 @@ namespace Quiplogs.WorkOrder.Data.Entities
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
+
+        public int Priority { get; set; }
+
+        public bool IsPlanned { get; set; }
 
         public List<WorkOrderPartDto> WorkOrderParts { get; set; }
 

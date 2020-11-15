@@ -29,7 +29,7 @@ namespace Api.UseCases.WorkOrder.List
                 companyId = this.GetCompanyId();
             }
 
-            await _listWorkOrderUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrder.ListWorkOrderRequest(request.CompanyId, request.LocationId, request.PageNumber), _listWorkOrderPresenter);
+            await _listWorkOrderUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrder.ListWorkOrderRequest(companyId, request.LocationId, request.AssetId, request.PageNumber), _listWorkOrderPresenter);
             return _listWorkOrderPresenter.ContentResult;
         }
     }

@@ -24,10 +24,10 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
             //temp var
             var pageSize = 20;
 
-            var response = await _repository.List(message.CompanyId, message.LocationId, message.PageNumber, pageSize);
+            var response = await _repository.List(message.CompanyId, message.LocationId, message.AssetId, message.PageNumber, pageSize);
             if (response.Success)
             {
-                var total = await _repository.GetTotalRecords(message.CompanyId);
+                var total = await _repository.GetTotalRecords(message.CompanyId, message.AssetId);
                 var pagedResult = new PagedResult<Domain.Entities.WorkOrderEntity>(response.WorkOrders, total, message.PageNumber, pageSize);
 
                 outputPort.Handle(new ListWorkOrderResponse(pagedResult, true));
