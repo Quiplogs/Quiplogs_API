@@ -4,14 +4,16 @@ using Api.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201129120339_PMSchedule")]
+    partial class PMSchedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,9 +547,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("PlannedMaintenanceId")
                         .HasColumnType("nvarchar(450)");
 
@@ -788,19 +787,19 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("CompanyId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Cycles")
+                        .HasColumnType("decimal(18, 6)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DefaultTechnicianId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DefaultTechnicianName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRecurring")
                         .HasColumnType("bit");
 
                     b.Property<string>("LocationId")
@@ -812,11 +811,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TechnicianId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UoM")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UoM")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -825,8 +821,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("TechnicianId");
 
                     b.ToTable("PlannedMaintenances");
                 });
@@ -1256,11 +1250,6 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "DefaultTechnician")
-                        .WithMany()
-                        .HasForeignKey("TechnicianId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

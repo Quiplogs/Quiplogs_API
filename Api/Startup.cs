@@ -66,19 +66,19 @@ namespace Api
             var redisSettingsSection = Configuration.GetSection("RedisSettings");
             var redisSettings = redisSettingsSection.Get<RedisSettings>();
 
-            services.AddDistributedMemoryCache();
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.ConfigurationOptions = new ConfigurationOptions
-                {
-                    AllowAdmin = redisSettings.AllowAdmin,
-                    Ssl = redisSettings.Ssl,
-                    ConnectTimeout = redisSettings.ConnectTimeout,
-                    ConnectRetry = redisSettings.ConnectRetry,
-                    DefaultDatabase = redisSettings.Database,
-                    EndPoints = { { redisSettings.Host, redisSettings.Port } }
-                };
-            });
+            //services.AddDistributedMemoryCache();
+            //services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.ConfigurationOptions = new ConfigurationOptions
+            //    {
+            //        AllowAdmin = redisSettings.AllowAdmin,
+            //        Ssl = redisSettings.Ssl,
+            //        ConnectTimeout = redisSettings.ConnectTimeout,
+            //        ConnectRetry = redisSettings.ConnectRetry,
+            //        DefaultDatabase = redisSettings.Database,
+            //        EndPoints = { { redisSettings.Host, redisSettings.Port } }
+            //    };
+            //});
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

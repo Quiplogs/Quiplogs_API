@@ -4,6 +4,7 @@ using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Dashboard.StoredProcedureModels;
 using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.PMSchedule.Data.Entities;
 using Quiplogs.WorkOrder.Data.Entities;
 using System;
 using System.Linq;
@@ -27,6 +28,12 @@ namespace Api.Infrastructure.SqlContext
         public DbSet<TaskDto> Tasks { get; set; }
         public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
         public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
+
+        public DbSet<PlannedMaintenanceScheduleCustomDto> PlannedMaintenanceScheduleCustom { get; set; }
+        public DbSet<PlannedMaintenanceScheduleDailyDto> PlannedMaintenanceScheduleDaily { get; set; }
+        public DbSet<PlannedMaintenanceScheduleWeeklyDto> PlannedMaintenanceScheduleWeekly { get; set; }
+        public DbSet<PlannedMaintenanceScheduleMonthlyDto> PlannedMaintenanceScheduleMonthly { get; set; }        
+        public DbSet<PlannedMaintenanceScheduleYearlyDto> PlannedMaintenanceScheduleYearly { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -81,6 +88,26 @@ namespace Api.Infrastructure.SqlContext
               .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<PlannedMaintenanceTaskDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PlannedMaintenanceScheduleCustomDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PlannedMaintenanceScheduleDailyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PlannedMaintenanceScheduleWeeklyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PlannedMaintenanceScheduleMonthlyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<PlannedMaintenanceScheduleYearlyDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 

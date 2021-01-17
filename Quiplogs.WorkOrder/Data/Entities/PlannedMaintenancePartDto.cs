@@ -18,7 +18,7 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         [Column(TypeName = "decimal(18, 6)")]
         public decimal Quantity { get; set; }
-        public int UoM { get; set; }
+        public string UoM { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

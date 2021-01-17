@@ -20,15 +20,17 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 
         public Location Location { get; set; }
 
-        public bool IsRecurring { get; set; }
+        public string DefaultTechnicianId { get; set; }
 
-        public decimal Cycles { get; set; }
+        public AppUser DefaultTechnician { get; set; }
+
+        public string DefaultTechnicianName { get; set; }
 
         public string Notes { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public int UoM { get; set; }
+        public string UoM { get; set; }
 
         public List<PlannedMaintenancePart> PlannedMaintenanceParts { get; set; }
 

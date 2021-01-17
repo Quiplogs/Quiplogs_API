@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Quiplogs.Assets\Quiplogs.Assets.csproj" />
     <ProjectReference Include="..\Quiplogs.Dashboard\Quiplogs.Dashboard.csproj" />
     <ProjectReference Include="..\Quiplogs.Inventory\Quiplogs.Inventory.csproj" />
+    <ProjectReference Include="..\Quiplogs.PMSchedule\Quiplogs.Schedules.csproj" />
     <ProjectReference Include="..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj" />
   </ItemGroup>
 

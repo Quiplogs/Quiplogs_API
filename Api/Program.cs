@@ -19,7 +19,9 @@ namespace Api
                 {
                     webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
                     webBuilder.UseIISIntegration();
+                    //webBuilder.UseKestrel();
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("http://*:5024");
                 });
     }
 }
