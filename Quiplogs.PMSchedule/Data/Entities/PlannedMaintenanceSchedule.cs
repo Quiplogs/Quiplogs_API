@@ -8,12 +8,12 @@ namespace Quiplogs.PMSchedule.Data.Entities
 {
     public abstract class PlannedMaintenanceSchedule : BaseEntity
     {
-        public string PlannedMaintenanceId { get; set; }
+        public Guid PlannedMaintenanceId { get; set; }
 
         [ForeignKey("PlannedMaintenanceId")]
         public PlannedMaintenanceDto PlannedMaintenance { get; set; }
 
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }

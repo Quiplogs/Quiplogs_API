@@ -9,6 +9,7 @@ using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Assets.Domain.Entities;
 using Quiplogs.Assets.Dto.Repositories.Asset;
 using Quiplogs.Assets.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,13 +29,13 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<FetchAssetResponse> GetAll(string companyId, string locationId, int pageNumber, int pageSize)
+        public async Task<FetchAssetResponse> GetAll(Guid companyId, Guid? locationId, int pageNumber, int pageSize)
         {
             try
             {
                 var modelList = _context.Asset.Where(
                     x => x.CompanyId == companyId
-                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                    && (!locationId.HasValue|| x.LocationId == locationId.Value))
                     .Include(x => x.Location)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
@@ -48,7 +49,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<GetAssetResponse> Get(string id)
+        public async Task<GetAssetResponse> Get(Guid id)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var modelMapped = _mapper.Map<AssetDto>(model);
 
-                if (string.IsNullOrEmpty(modelMapped.Id))
+                if (modelMapped.Id == null)
                 {
                     _context.Asset.Add(modelMapped);
                 }
@@ -89,7 +90,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<RemoveAssetResponse> Remove(string id)
+        public async Task<RemoveAssetResponse> Remove(Guid id)
         {
             try
             {
@@ -98,7 +99,7 @@ namespace Api.Infrastructure.Repositories
                 _context.Remove(model);
                 await _context.SaveChangesAsync();
 
-                return new RemoveAssetResponse(id, true, null);
+                return new RemoveAssetResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
@@ -106,7 +107,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"Asset-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -119,7 +120,7 @@ namespace Api.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task UpdateTotalItems(Guid companyId)
         {
             var _cacheKey = $"Asset-total-{companyId}";
             var cachedTotal = _context.Asset.Where(x => x.CompanyId == companyId).Count();

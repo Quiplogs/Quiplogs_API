@@ -43,7 +43,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListPlannedMaintenanceTaskResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, $"Error fetching PlannedMaintenanceTask. {ex.Message}") });
+                return new ListPlannedMaintenanceTaskResponse(null, false, new[] { new Error(GlobalVariables.error_list, $"Error fetching PlannedMaintenanceTask. {ex.Message}") });
             }
         }
 

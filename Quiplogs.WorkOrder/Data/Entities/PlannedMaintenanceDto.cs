@@ -1,29 +1,25 @@
 ﻿using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class PlannedMaintenanceDto : BaseEntity
+    public class PlannedMaintenanceDto : BaseEntityDto
     {
         public string Name { get; set; }
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }
 
-        public string CompanyId { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public CompanyDto Company { get; set; }
-
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
 
-        public string DefaultTechnicianId { get; set; }
+        public Guid DefaultTechnicianId { get; set; }
 
         [ForeignKey("TechnicianId")]
         public UserEntity DefaultTechnician { get; set; }

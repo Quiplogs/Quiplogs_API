@@ -3,10 +3,12 @@ using Api.Core.Dto;
 using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Assets.Domain.Entities;
 using Quiplogs.Assets.Dto.Repositories.AssetUsage;
 using Quiplogs.Assets.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,14 +29,14 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListAssetUsageResponse> GetAll(string assetId, int pageNumber, int pageSize)
+        public async Task<ListAssetUsageResponse> GetAll(Guid assetId, int pageNumber, int pageSize)
         {
             try
             {
-                var modelList = _context.AssetUsage.Where(
+                var modelList = await _context.AssetUsage.Where(
                     x => x.AssetId == assetId)
                     .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToList();
+                    .Take(pageSize).ToListAsync();
 
                 List<AssetUsage> mappedModel = _mapper.Map<List<AssetUsage>>(modelList);
                 return new ListAssetUsageResponse(mappedModel, true, null);
@@ -45,11 +47,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<GetAssetUsageResponse> Get(string id)
+        public async Task<GetAssetUsageResponse> Get(Guid id)
         {
             try
             {
-                var model = _context.AssetUsage.FirstOrDefault(x => x.Id == id);
+                var model =await _context.AssetUsage.FirstOrDefaultAsync(x => x.Id == id);
 
                 var mappedModel = _mapper.Map<AssetUsage>(model);
                 return new GetAssetUsageResponse(mappedModel, true, null);
@@ -66,7 +68,7 @@ namespace Quiplogs.Infrastructure.Repositories
             {
                 var modelMapped = _mapper.Map<AssetUsageDto>(model);
 
-                if (string.IsNullOrEmpty(modelMapped.Id))
+                if (modelMapped.Id == null)
                 {
                     _context.AssetUsage.Add(modelMapped);
                 }
@@ -86,16 +88,16 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<RemoveAssetUsageResponse> Remove(string id)
+        public async Task<RemoveAssetUsageResponse> Remove(Guid id)
         {
             try
             {
-                var model = _context.AssetUsage.FirstOrDefault(x => x.Id == id);
+                var model = await _context.AssetUsage.FirstOrDefaultAsync(x => x.Id == id);
 
                 _context.Remove(model);
                 await _context.SaveChangesAsync();
 
-                return new RemoveAssetUsageResponse(id, true, null);
+                return new RemoveAssetUsageResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
@@ -103,7 +105,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<int> GetTotalRecords(string assetId)
+        public async Task<int> GetTotalRecords(Guid assetId)
         {
             var _cacheKey = $"AssetUsage-total-{assetId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -116,7 +118,7 @@ namespace Quiplogs.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string assetId)
+        private async Task UpdateTotalItems(Guid assetId)
         {
             var _cacheKey = $"AssetUsage-total-{assetId}";
             var cachedTotal = _context.AssetUsage.Where(x => x.AssetId == assetId).Count();

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Assets.Data.Entities
 {
-    public class AssetUsageDto : BaseEntity
+    public class AssetUsageDto : BaseEntityDto
     {
         [Column(TypeName = "decimal(18, 6)")]
         public decimal WorkDone { get; set; }
@@ -12,7 +12,7 @@ namespace Quiplogs.Assets.Data.Entities
         public DateTime? DateCaptured { get; set; }
 
         [ForeignKey("AssetId")]
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         public AssetDto Asset { get; set; }
     }
