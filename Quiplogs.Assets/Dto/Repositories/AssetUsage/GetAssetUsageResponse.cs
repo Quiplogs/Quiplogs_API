@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Repositories.AssetUsage
 {
-    public class GetAssetUsageResponse : BaseResponse
+    public class GetAssetUsageResponse : BaseRepositoryResponse
     {
         public Domain.Entities.AssetUsage AssetUsage { get; set; }
 

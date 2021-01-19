@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenance
 {
-    public class RemovePlannedMaintenanceResponse : BaseResponse
+    public class RemovePlannedMaintenanceResponse : BaseRepositoryResponse
     {
         public string Description { get; set; }
 

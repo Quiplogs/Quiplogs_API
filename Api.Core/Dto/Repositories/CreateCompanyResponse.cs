@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories
 {
-    public class CreateCompanyResponse : BaseResponse
+    public class CreateCompanyResponse : BaseRepositoryResponse
     {
         public string Id { get; set; }
 

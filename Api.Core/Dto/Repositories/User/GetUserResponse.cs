@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.User
 {
-    public class GetUserResponse : BaseResponse
+    public class GetUserResponse : BaseRepositoryResponse
     {
         public AppUser User { get; set; }
 

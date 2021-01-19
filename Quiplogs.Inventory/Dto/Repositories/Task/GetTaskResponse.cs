@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Repositories.Task
 {
-    public class GetTaskResponse : BaseResponse
+    public class GetTaskResponse : BaseRepositoryResponse
     {
         public Domain.Entities.TaskEntity Task { get; set; }
 

@@ -1,11 +1,9 @@
-﻿using Api.Core.Dto;
-using Api.Core.Dto.Responses;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using System.Collections.Generic;
 
-namespace Quiplogs.Core.Dto
+namespace Api.Core.Dto.Repositories
 {
-    public class BaseModelListResponse<T> : BaseResponse where T : BaseEntity
+    public class BaseModelListResponse<T> : BaseRepositoryResponse where T : BaseEntity
     {
         public List<T> Models { get; set; }
 

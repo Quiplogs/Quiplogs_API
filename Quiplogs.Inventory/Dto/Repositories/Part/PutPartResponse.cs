@@ -3,7 +3,7 @@ using Api.Core.Dto.Responses;
 using System.Collections.Generic;
 namespace Quiplogs.Inventory.Dto.Repositories.Part
 {
-    public class PutPartResponse : BaseResponse
+    public class PutPartResponse : BaseRepositoryResponse
     {
         public Domain.Entities.Part Part { get; set; }
 

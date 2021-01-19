@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrder
 {
-    public class GetWorkOrderResponse : BaseResponse
+    public class GetWorkOrderResponse : BaseRepositoryResponse
     {
         public Domain.Entities.WorkOrderEntity WorkOrder { get; set; }
 

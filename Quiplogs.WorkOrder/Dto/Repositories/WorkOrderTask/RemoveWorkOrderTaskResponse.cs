@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderTask
 {
-    public class RemoveWorkOrderTaskResponse : BaseResponse
+    public class RemoveWorkOrderTaskResponse : BaseRepositoryResponse
     {
         public string Description { get; set; }
 

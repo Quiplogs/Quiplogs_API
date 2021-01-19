@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.Location
 {
-    public class RemoveLocationResponse : BaseResponse
+    public class RemoveLocationResponse : BaseRepositoryResponse
     {
         public string Description { get; set; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Repositories.Part
 {
-    public class ListPartResponse : BaseResponse
+    public class ListPartResponse : BaseRepositoryResponse
     {
         public List<Domain.Entities.Part> Parts { get; set; }
 

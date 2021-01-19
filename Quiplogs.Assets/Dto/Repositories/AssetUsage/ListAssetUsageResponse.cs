@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Repositories.AssetUsage
 {
-    public class ListAssetUsageResponse : BaseResponse
+    public class ListAssetUsageResponse : BaseRepositoryResponse
     {
         public List<Domain.Entities.AssetUsage> AssetUsageList { get; set; }
 

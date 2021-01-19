@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.Location
 {
-    public class ListLocationResponse : BaseResponse
+    public class ListLocationResponse : BaseRepositoryResponse
     {
         public List<Domain.Entities.Location> Locations { get; set; }
 

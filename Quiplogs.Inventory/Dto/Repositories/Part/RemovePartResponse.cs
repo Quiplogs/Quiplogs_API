@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Repositories.Part
 {
-    public class RemovePartResponse : BaseResponse
+    public class RemovePartResponse : BaseRepositoryResponse
     {
         public string Description { get; set; }
 

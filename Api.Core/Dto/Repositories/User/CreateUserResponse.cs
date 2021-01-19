@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.User
 {
-    public class CreateUserResponse : BaseResponse
+    public class CreateUserResponse : BaseRepositoryResponse
     {
         public string Id { get; set; }
 

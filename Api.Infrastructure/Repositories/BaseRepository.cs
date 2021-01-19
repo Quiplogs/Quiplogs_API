@@ -6,18 +6,19 @@ using Api.Core.Dto;
 using Api.Core.Helpers;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 using Api.Core.Domain.Entities;
-using Quiplogs.Core.Dto.Responses;
+using Api.Core.Dto.Repositories;
+using System.Collections.Generic;
 using Quiplogs.Core.Data.Entities;
 using Api.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Repositories;
+using Quiplogs.Core.Interfaces.Repositories;
 
 namespace Quiplogs.Infrastructure.Repositories
 {
-    public class BaseRepository<T1, T2>
+    public class BaseRepository<T1, T2> : IBaseRepository<T1, T2>
         where T1 : BaseEntity
         where T2 : BaseEntityDto
     {
@@ -53,6 +54,29 @@ namespace Quiplogs.Infrastructure.Repositories
             catch (SqlException ex)
             {
                 return new BaseModelListResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_list, $"Error listing models-({typeof(T1).Name}). {ex.Message}") });
+            }
+        }
+
+        public async Task<BasePagedResponse<T1>> PagedList(Expression<Func<T2, bool>> condition, Expression<Func<T2, T2>> include, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var modelList = new List<T2>();
+                modelList = await entities.Include(include)
+                                    .Where(condition)
+                                    .Skip((pageNumber - 1) * pageSize)
+                                    .Take(pageSize).ToListAsync();
+
+
+                var mappedList = _mapper.Map<List<T1>>(modelList);
+                var total = await GetTotalRecords(modelList.FirstOrDefault().CompanyId);
+                var pagedResult = new PagedResult<T1>(mappedList, total, pageNumber, pageSize);
+                
+                return new BasePagedResponse<T1>(pagedResult, true, null);
+            }
+            catch (SqlException ex)
+            {
+                return new BasePagedResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_list, $"Error listing models-({typeof(T1).Name}). {ex.Message}") });
             }
         }
 
@@ -105,7 +129,7 @@ namespace Quiplogs.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> GetTotalRecords(Guid companyId)
+        private async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"{typeof(T1).Name}-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
