@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Api.Core.Interfaces.UseCases.User;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Notifications.Email.Models;
 using Quiplogs.Notifications.Send.Interfaces;
 
 namespace Api.UseCases.User.Get

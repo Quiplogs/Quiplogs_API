@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Core.Data.Entities
 {
-    public class UserEntity : IdentityUser
+    public class UserEntity : IdentityUser<Guid>
     {
         public string FirstName { get; set; }
 
@@ -12,12 +12,12 @@ namespace Quiplogs.Core.Data.Entities
 
         public string Role { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]
         public CompanyDto Company { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Quiplogs.PMSchedule.Data.Entities
 {
-    public class PlannedMaintenanceScheduleYearlyDto : PlannedMaintenanceScheduleTime
+    public class ScheduleYearlyDto : ScheduleTime
     {
         //On which month should it recur
         public int RecurrenceMonth { get; set; }

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.Asset;
-using System.Threading.Tasks;
-
-namespace Api.UseCases.Asset.Fetch
+﻿namespace Api.UseCases.Asset.Fetch
 {
     public class AssetController : BaseApiController
     {

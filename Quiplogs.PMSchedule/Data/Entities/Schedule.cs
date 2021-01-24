@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.PMSchedule.Data.Entities
 {
-    public abstract class PlannedMaintenanceSchedule : BaseEntityDto
+    public abstract class Schedule : BaseEntityDto
     {
         public Guid PlannedMaintenanceId { get; set; }
 

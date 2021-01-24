@@ -2,7 +2,7 @@
 
 namespace Quiplogs.PMSchedule.Data.Entities
 {
-    public abstract class PlannedMaintenanceScheduleTime : PlannedMaintenanceSchedule
+    public abstract class ScheduleTime : Schedule
     {
         //Recurs every X
         public int RecurEvery { get; set; }

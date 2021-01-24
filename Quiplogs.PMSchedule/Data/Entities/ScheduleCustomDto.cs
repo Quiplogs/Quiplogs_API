@@ -2,7 +2,7 @@
 
 namespace Quiplogs.PMSchedule.Data.Entities
 {
-    public class PlannedMaintenanceScheduleCustomDto : PlannedMaintenanceSchedule
+    public class ScheduleCustomDto : Schedule
     {
         [Column(TypeName = "decimal(18, 6)")]
         public decimal RecurEvery { get; set; }

@@ -32,7 +32,6 @@ using Quiplogs.Inventory.Data.Mapping;
 using Quiplogs.Notifications.Send;
 using Quiplogs.WorkOrder;
 using Quiplogs.WorkOrder.Data.Mapping;
-using StackExchange.Redis;
 using System;
 using System.Net;
 using System.Reflection;

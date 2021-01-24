@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Assets.Dto.Requests.AssetUsage;

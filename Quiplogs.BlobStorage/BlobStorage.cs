@@ -3,7 +3,6 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Quiplogs.BlobStorage.Models;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Quiplogs.BlobStorage

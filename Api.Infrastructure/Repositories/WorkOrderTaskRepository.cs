@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;
@@ -11,7 +10,6 @@ using Quiplogs.WorkOrder.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Quiplogs.Infrastructure.Repositories

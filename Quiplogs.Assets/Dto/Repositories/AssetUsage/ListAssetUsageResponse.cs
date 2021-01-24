@@ -1,7 +1,5 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Dto.Repositories;
-using Api.Core.Dto.Responses;
 using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Repositories.AssetUsage

@@ -1,6 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
+﻿using Api.Core.Interfaces;
 using Api.Core.Interfaces.Repositories;
 using Quiplogs.BlobStorage;
 using Quiplogs.BlobStorage.Models;

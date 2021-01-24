@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Requests.Part;
 using Quiplogs.Inventory.Dto.Responses.Part;

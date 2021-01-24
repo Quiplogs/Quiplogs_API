@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Quiplogs.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20210117141816_MoveCyclesToSchedules")]
-    partial class MoveCyclesToSchedules
+    [Migration("20210124125248_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,10 +22,11 @@ namespace Quiplogs.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -49,7 +50,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,9 +63,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -73,7 +73,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,9 +86,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -97,7 +96,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -108,9 +107,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -119,13 +117,13 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -134,10 +132,10 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -155,12 +153,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Assets.Data.Entities.AssetDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("CurrentWorkDone")
                         .HasColumnType("decimal(18, 6)");
@@ -180,8 +178,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("InstructionManualUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Make")
                         .HasColumnType("nvarchar(max)");
@@ -218,12 +216,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Assets.Data.Entities.AssetUsageDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateCaptured")
                         .HasColumnType("datetime2");
@@ -241,14 +242,16 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.HasIndex("AssetId");
 
+                    b.HasIndex("CompanyId");
+
                     b.ToTable("AssetUsage");
                 });
 
             modelBuilder.Entity("Quiplogs.Core.Data.Entities.CompanyDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address1")
                         .HasColumnType("nvarchar(max)");
@@ -308,15 +311,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Core.Data.Entities.LocationDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
@@ -342,8 +345,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -356,15 +359,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Core.Data.Entities.UserEntity", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -389,8 +392,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -458,15 +461,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.PartDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -483,8 +486,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -500,12 +503,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.TaskDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -526,14 +529,20 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleCustomDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleCustomDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("CycleNextDue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -550,32 +559,37 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RecurEvery")
-                        .HasColumnType("int");
+                    b.Property<decimal>("RecurEvery")
+                        .HasColumnType("decimal(18, 6)");
 
-                    b.Property<int>("StartingAt")
-                        .HasColumnType("int");
+                    b.Property<decimal>("StartingAt")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssetId");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PlannedMaintenanceId");
 
                     b.ToTable("PlannedMaintenanceScheduleCustom");
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleDailyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleDailyDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -592,8 +606,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RecurEvery")
                         .HasColumnType("int");
@@ -608,19 +622,24 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.HasIndex("AssetId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("PlannedMaintenanceId");
 
                     b.ToTable("PlannedMaintenanceScheduleDaily");
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleMonthlyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleMonthlyDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -637,8 +656,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RecurEvery")
                         .HasColumnType("int");
@@ -656,19 +675,24 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.HasIndex("AssetId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("PlannedMaintenanceId");
 
                     b.ToTable("PlannedMaintenanceScheduleMonthly");
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleWeeklyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleWeeklyDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -691,8 +715,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("Monday")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RecurEvery")
                         .HasColumnType("int");
@@ -722,19 +746,24 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.HasIndex("AssetId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("PlannedMaintenanceId");
 
                     b.ToTable("PlannedMaintenanceScheduleWeekly");
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleYearlyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleYearlyDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -751,8 +780,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RecurEvery")
                         .HasColumnType("int");
@@ -773,6 +802,8 @@ namespace Quiplogs.Infrastructure.Migrations
 
                     b.HasIndex("AssetId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("PlannedMaintenanceId");
 
                     b.ToTable("PlannedMaintenanceScheduleYearly");
@@ -780,15 +811,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -796,8 +827,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DefaultTechnicianId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("DefaultTechnicianId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DefaultTechnicianName")
                         .HasColumnType("nvarchar(max)");
@@ -805,8 +836,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -814,8 +845,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TechnicianId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("TechnicianId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UoM")
                         .HasColumnType("nvarchar(max)");
@@ -835,9 +866,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenancePartDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -848,11 +882,11 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PartId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PartId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18, 6)");
@@ -861,6 +895,8 @@ namespace Quiplogs.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PartId");
 
@@ -871,9 +907,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceTaskDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -884,19 +923,21 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PlannedMaintenanceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PlannedMaintenanceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<string>("TaskId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UoM")
-                        .HasColumnType("int");
+                    b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PlannedMaintenanceId");
 
@@ -907,15 +948,15 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssetId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateCompleted")
                         .HasColumnType("datetime2");
@@ -938,8 +979,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsPlanned")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LocationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("MintuesWorked")
                         .HasColumnType("decimal(18, 6)");
@@ -956,8 +997,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("TechnicianId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("TechnicianId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TechnicianName")
                         .HasColumnType("nvarchar(max)");
@@ -977,9 +1018,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderPartDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -993,8 +1037,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PartId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PartId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("QuantityRequired")
                         .HasColumnType("decimal(18, 6)");
@@ -1002,13 +1046,15 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<decimal>("QuantityUsed")
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<int>("UoM")
-                        .HasColumnType("int");
+                    b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WorkOrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("WorkOrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PartId");
 
@@ -1019,9 +1065,12 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderTaskDto", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -1041,16 +1090,18 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.Property<decimal>("QuantityUsed")
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<string>("TaskId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UoM")
-                        .HasColumnType("int");
+                    b.Property<string>("UoM")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WorkOrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("WorkOrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("TaskId");
 
@@ -1059,16 +1110,16 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.ToTable("WorkOrderTasks");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", null)
                         .WithMany()
@@ -1077,7 +1128,7 @@ namespace Quiplogs.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", null)
                         .WithMany()
@@ -1086,9 +1137,9 @@ namespace Quiplogs.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1101,7 +1152,7 @@ namespace Quiplogs.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", null)
                         .WithMany()
@@ -1115,12 +1166,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.Assets.Data.Entities.AssetUsageDto", b =>
@@ -1128,7 +1181,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.Core.Data.Entities.LocationDto", b =>
@@ -1136,12 +1196,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "ResponsableUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.Core.Data.Entities.UserEntity", b =>
@@ -1149,12 +1211,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany("Users")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.PartDto", b =>
@@ -1162,12 +1226,14 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.Inventory.Data.Entities.TaskDto", b =>
@@ -1175,72 +1241,113 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleCustomDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleCustomDto", b =>
                 {
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany()
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleDailyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleDailyDto", b =>
                 {
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany()
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleMonthlyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleMonthlyDto", b =>
                 {
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany()
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleWeeklyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleWeeklyDto", b =>
                 {
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany()
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.PlannedMaintenanceScheduleYearlyDto", b =>
+            modelBuilder.Entity("Quiplogs.PMSchedule.Data.Entities.ScheduleYearlyDto", b =>
                 {
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany()
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", b =>
@@ -1248,17 +1355,20 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "DefaultTechnician")
                         .WithMany()
@@ -1268,28 +1378,44 @@ namespace Quiplogs.Infrastructure.Migrations
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenancePartDto", b =>
                 {
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Quiplogs.Inventory.Data.Entities.PartDto", "Part")
                         .WithMany()
                         .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany("PlannedMaintenanceParts")
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceTaskDto", b =>
                 {
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.PlannedMaintenanceDto", "PlannedMaintenance")
                         .WithMany("PlannedMaintenanceTasks")
                         .HasForeignKey("PlannedMaintenanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Inventory.Data.Entities.TaskDto", "Task")
                         .WithMany()
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", b =>
@@ -1297,48 +1423,68 @@ namespace Quiplogs.Infrastructure.Migrations
                     b.HasOne("Quiplogs.Assets.Data.Entities.AssetDto", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.LocationDto", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.Core.Data.Entities.UserEntity", "Technician")
                         .WithMany()
                         .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderPartDto", b =>
                 {
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Quiplogs.Inventory.Data.Entities.PartDto", "Part")
                         .WithMany()
                         .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", "WorkOrder")
                         .WithMany("WorkOrderParts")
                         .HasForeignKey("WorkOrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quiplogs.WorkOrder.Data.Entities.WorkOrderTaskDto", b =>
                 {
+                    b.HasOne("Quiplogs.Core.Data.Entities.CompanyDto", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Quiplogs.Inventory.Data.Entities.TaskDto", "Task")
                         .WithMany()
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Quiplogs.WorkOrder.Data.Entities.WorkOrderDto", "WorkOrder")
                         .WithMany("WorkOrderTasks")
                         .HasForeignKey("WorkOrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.PlannedMaintenance.Interfaces.UseCases.PlannedMaintenance;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance;

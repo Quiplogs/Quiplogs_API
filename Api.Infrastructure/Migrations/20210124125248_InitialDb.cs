@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quiplogs.Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -30,7 +30,7 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -55,13 +55,25 @@ namespace Quiplogs.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkOrdersCompletedByDayForWeek",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Date = table.Column<string>(nullable: true),
+                    TotalCompleted = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 schema: "Portal",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -82,12 +94,12 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -106,8 +118,8 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +140,7 @@ namespace Quiplogs.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -145,7 +157,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,7 +169,7 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -172,7 +184,8 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -180,10 +193,9 @@ namespace Quiplogs.Infrastructure.Migrations
                     Long = table.Column<decimal>(type: "decimal(18, 6)", nullable: true),
                     City = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
                     ImgFileName = table.Column<string>(nullable: true),
-                    ImgUrl = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true)
+                    ImgUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +214,7 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -220,8 +232,8 @@ namespace Quiplogs.Infrastructure.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Role = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true),
+                    LocationId = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false)
                 },
@@ -249,23 +261,23 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Make = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
                     SerialNumber = table.Column<string>(nullable: true),
-                    ManufacuredYear = table.Column<int>(nullable: false),
-                    PurchasedYear = table.Column<int>(nullable: false),
-                    CurrentWorkDone = table.Column<decimal>(nullable: false),
+                    ManufacuredDate = table.Column<DateTime>(nullable: true),
+                    PurchasedDate = table.Column<DateTime>(nullable: true),
+                    CurrentWorkDone = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     UoM = table.Column<string>(nullable: true),
                     ImgFileName = table.Column<string>(nullable: true),
                     ImgUrl = table.Column<string>(nullable: true),
                     WarrantyUrl = table.Column<string>(nullable: true),
                     InstructionManualUrl = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true)
+                    LocationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,7 +303,8 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     Code = table.Column<string>(nullable: true),
@@ -299,8 +312,7 @@ namespace Quiplogs.Infrastructure.Migrations
                     Description = table.Column<string>(nullable: true),
                     ImgFileName = table.Column<string>(nullable: true),
                     ImgUrl = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true)
+                    LocationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -326,12 +338,13 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    WorkDone = table.Column<decimal>(nullable: false),
+                    WorkDone = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     DateCaptured = table.Column<DateTime>(nullable: true),
-                    AssetId = table.Column<string>(nullable: true)
+                    AssetId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,6 +356,13 @@ namespace Quiplogs.Infrastructure.Migrations
                         principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AssetUsage_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,13 +370,16 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    AssetId = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true),
-                    Interval = table.Column<decimal>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    LocationId = table.Column<Guid>(nullable: false),
+                    DefaultTechnicianId = table.Column<Guid>(nullable: false),
+                    TechnicianId = table.Column<Guid>(nullable: true),
+                    DefaultTechnicianName = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     UoM = table.Column<string>(nullable: true)
@@ -385,6 +408,13 @@ namespace Quiplogs.Infrastructure.Migrations
                         principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenances_AspNetUsers_TechnicianId",
+                        column: x => x.TechnicianId,
+                        principalSchema: "Portal",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -392,24 +422,24 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     ReferenceNumber = table.Column<string>(nullable: true),
                     DueDate = table.Column<DateTime>(nullable: true),
                     DateCompleted = table.Column<DateTime>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
-                    HoursWorked = table.Column<decimal>(nullable: false),
-                    MintuesWorked = table.Column<decimal>(nullable: false),
+                    HoursWorked = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    MintuesWorked = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    TechnicianId = table.Column<string>(nullable: true),
-                    MechanicId = table.Column<string>(nullable: true),
+                    TechnicianId = table.Column<Guid>(nullable: false),
                     TechnicianName = table.Column<string>(nullable: true),
-                    ResponsableUserId = table.Column<string>(nullable: true),
-                    ResponsableUserName = table.Column<string>(nullable: true),
-                    AssetId = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true)
+                    AssetId = table.Column<Guid>(nullable: false),
+                    LocationId = table.Column<Guid>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    Priority = table.Column<int>(nullable: false),
+                    IsPlanned = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -436,15 +466,8 @@ namespace Quiplogs.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_WorkOrders_AspNetUsers_MechanicId",
-                        column: x => x.MechanicId,
-                        principalSchema: "Portal",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_WorkOrders_AspNetUsers_ResponsableUserId",
-                        column: x => x.ResponsableUserId,
+                        name: "FK_WorkOrders_AspNetUsers_TechnicianId",
+                        column: x => x.TechnicianId,
                         principalSchema: "Portal",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -456,18 +479,26 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    PlannedMaintenanceId = table.Column<string>(nullable: true),
-                    PartId = table.Column<string>(nullable: true),
-                    Quantity = table.Column<decimal>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    PartId = table.Column<Guid>(nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     UoM = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlannedMaintenanceParts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceParts_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PlannedMaintenanceParts_Parts_PartId",
                         column: x => x.PartId,
@@ -485,22 +516,260 @@ namespace Quiplogs.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PlannedMaintenanceScheduleCustom",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    DateLastProcessed = table.Column<DateTime>(nullable: true),
+                    DateNextDue = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    RecurEvery = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    CycleNextDue = table.Column<decimal>(nullable: false),
+                    StartingAt = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlannedMaintenanceScheduleCustom", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleCustom_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalSchema: "Portal",
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleCustom_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleCustom_PlannedMaintenances_PlannedMaintenanceId",
+                        column: x => x.PlannedMaintenanceId,
+                        principalSchema: "Portal",
+                        principalTable: "PlannedMaintenances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlannedMaintenanceScheduleDaily",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    DateLastProcessed = table.Column<DateTime>(nullable: true),
+                    DateNextDue = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    RecurEvery = table.Column<int>(nullable: false),
+                    RecurrenceTime = table.Column<DateTime>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlannedMaintenanceScheduleDaily", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleDaily_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalSchema: "Portal",
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleDaily_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleDaily_PlannedMaintenances_PlannedMaintenanceId",
+                        column: x => x.PlannedMaintenanceId,
+                        principalSchema: "Portal",
+                        principalTable: "PlannedMaintenances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlannedMaintenanceScheduleMonthly",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    DateLastProcessed = table.Column<DateTime>(nullable: true),
+                    DateNextDue = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    RecurEvery = table.Column<int>(nullable: false),
+                    RecurrenceTime = table.Column<DateTime>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    RecurrenceDay = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlannedMaintenanceScheduleMonthly", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleMonthly_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalSchema: "Portal",
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleMonthly_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleMonthly_PlannedMaintenances_PlannedMaintenanceId",
+                        column: x => x.PlannedMaintenanceId,
+                        principalSchema: "Portal",
+                        principalTable: "PlannedMaintenances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlannedMaintenanceScheduleWeekly",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    DateLastProcessed = table.Column<DateTime>(nullable: true),
+                    DateNextDue = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    RecurEvery = table.Column<int>(nullable: false),
+                    RecurrenceTime = table.Column<DateTime>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    Monday = table.Column<bool>(nullable: false),
+                    Tuesday = table.Column<bool>(nullable: false),
+                    Wednesday = table.Column<bool>(nullable: false),
+                    Thursday = table.Column<bool>(nullable: false),
+                    Friday = table.Column<bool>(nullable: false),
+                    Saturday = table.Column<bool>(nullable: false),
+                    Sunday = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlannedMaintenanceScheduleWeekly", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleWeekly_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalSchema: "Portal",
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleWeekly_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleWeekly_PlannedMaintenances_PlannedMaintenanceId",
+                        column: x => x.PlannedMaintenanceId,
+                        principalSchema: "Portal",
+                        principalTable: "PlannedMaintenances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlannedMaintenanceScheduleYearly",
+                schema: "Portal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    AssetId = table.Column<Guid>(nullable: false),
+                    DateLastProcessed = table.Column<DateTime>(nullable: true),
+                    DateNextDue = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    RecurEvery = table.Column<int>(nullable: false),
+                    RecurrenceTime = table.Column<DateTime>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    RecurrenceMonth = table.Column<int>(nullable: false),
+                    RecurrenceDay = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlannedMaintenanceScheduleYearly", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleYearly_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalSchema: "Portal",
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleYearly_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceScheduleYearly_PlannedMaintenances_PlannedMaintenanceId",
+                        column: x => x.PlannedMaintenanceId,
+                        principalSchema: "Portal",
+                        principalTable: "PlannedMaintenances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PlannedMaintenanceTasks",
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    PlannedMaintenanceId = table.Column<string>(nullable: true),
-                    TaskId = table.Column<string>(nullable: true),
-                    Quantity = table.Column<decimal>(nullable: false),
+                    PlannedMaintenanceId = table.Column<Guid>(nullable: false),
+                    TaskId = table.Column<Guid>(nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     UoM = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlannedMaintenanceTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlannedMaintenanceTasks_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PlannedMaintenanceTasks_PlannedMaintenances_PlannedMaintenanceId",
                         column: x => x.PlannedMaintenanceId,
@@ -522,14 +791,14 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    WorkOrderId = table.Column<string>(nullable: true),
-                    PartId = table.Column<string>(nullable: true),
-                    PartCode = table.Column<string>(nullable: true),
-                    PartDescription = table.Column<string>(nullable: true),
-                    Quantity = table.Column<decimal>(nullable: false),
+                    WorkOrderId = table.Column<Guid>(nullable: false),
+                    PartId = table.Column<Guid>(nullable: false),
+                    QuantityRequired = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    QuantityUsed = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     UoM = table.Column<string>(nullable: true),
                     IsCompleted = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
@@ -537,6 +806,13 @@ namespace Quiplogs.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkOrderParts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkOrderParts_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_WorkOrderParts_Parts_PartId",
                         column: x => x.PartId,
@@ -558,13 +834,14 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateUpdated = table.Column<DateTime>(nullable: false),
-                    WorkOrderId = table.Column<string>(nullable: true),
-                    TaskId = table.Column<string>(nullable: true),
-                    TaskDescription = table.Column<string>(nullable: true),
-                    Quantity = table.Column<decimal>(nullable: false),
+                    WorkOrderId = table.Column<Guid>(nullable: false),
+                    TaskId = table.Column<Guid>(nullable: false),
+                    QuantityRequired = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    QuantityUsed = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     UoM = table.Column<string>(nullable: true),
                     IsCompleted = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
@@ -572,6 +849,13 @@ namespace Quiplogs.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkOrderTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkOrderTasks_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "Portal",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_WorkOrderTasks_Tasks_TaskId",
                         column: x => x.TaskId,
@@ -665,6 +949,12 @@ namespace Quiplogs.Infrastructure.Migrations
                 column: "AssetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AssetUsage_CompanyId",
+                schema: "Portal",
+                table: "AssetUsage",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Locations_CompanyId",
                 schema: "Portal",
                 table: "Locations",
@@ -687,6 +977,12 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal",
                 table: "Parts",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceParts_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceParts",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlannedMaintenanceParts_PartId",
@@ -719,6 +1015,108 @@ namespace Quiplogs.Infrastructure.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenances_TechnicianId",
+                schema: "Portal",
+                table: "PlannedMaintenances",
+                column: "TechnicianId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleCustom_AssetId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleCustom",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleCustom_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleCustom",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleCustom_PlannedMaintenanceId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleCustom",
+                column: "PlannedMaintenanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleDaily_AssetId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleDaily",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleDaily_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleDaily",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleDaily_PlannedMaintenanceId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleDaily",
+                column: "PlannedMaintenanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleMonthly_AssetId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleMonthly",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleMonthly_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleMonthly",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleMonthly_PlannedMaintenanceId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleMonthly",
+                column: "PlannedMaintenanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleWeekly_AssetId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleWeekly",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleWeekly_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleWeekly",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleWeekly_PlannedMaintenanceId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleWeekly",
+                column: "PlannedMaintenanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleYearly_AssetId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleYearly",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleYearly_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleYearly",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceScheduleYearly_PlannedMaintenanceId",
+                schema: "Portal",
+                table: "PlannedMaintenanceScheduleYearly",
+                column: "PlannedMaintenanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlannedMaintenanceTasks_CompanyId",
+                schema: "Portal",
+                table: "PlannedMaintenanceTasks",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlannedMaintenanceTasks_PlannedMaintenanceId",
                 schema: "Portal",
                 table: "PlannedMaintenanceTasks",
@@ -734,6 +1132,12 @@ namespace Quiplogs.Infrastructure.Migrations
                 name: "IX_Tasks_CompanyId",
                 schema: "Portal",
                 table: "Tasks",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkOrderParts_CompanyId",
+                schema: "Portal",
+                table: "WorkOrderParts",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
@@ -767,16 +1171,16 @@ namespace Quiplogs.Infrastructure.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkOrders_MechanicId",
+                name: "IX_WorkOrders_TechnicianId",
                 schema: "Portal",
                 table: "WorkOrders",
-                column: "MechanicId");
+                column: "TechnicianId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkOrders_ResponsableUserId",
+                name: "IX_WorkOrderTasks_CompanyId",
                 schema: "Portal",
-                table: "WorkOrders",
-                column: "ResponsableUserId");
+                table: "WorkOrderTasks",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkOrderTasks_TaskId",
@@ -877,11 +1281,35 @@ namespace Quiplogs.Infrastructure.Migrations
                 schema: "Portal");
 
             migrationBuilder.DropTable(
+                name: "PlannedMaintenanceScheduleCustom",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
+                name: "PlannedMaintenanceScheduleDaily",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
+                name: "PlannedMaintenanceScheduleMonthly",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
+                name: "PlannedMaintenanceScheduleWeekly",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
+                name: "PlannedMaintenanceScheduleYearly",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
                 name: "PlannedMaintenanceTasks",
                 schema: "Portal");
 
             migrationBuilder.DropTable(
                 name: "WorkOrderParts",
+                schema: "Portal");
+
+            migrationBuilder.DropTable(
+                name: "WorkOrdersCompletedByDayForWeek",
                 schema: "Portal");
 
             migrationBuilder.DropTable(

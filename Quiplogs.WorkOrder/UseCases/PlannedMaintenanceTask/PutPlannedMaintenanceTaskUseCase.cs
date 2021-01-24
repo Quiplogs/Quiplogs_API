@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using AutoMapper;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;

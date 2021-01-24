@@ -1,5 +1,4 @@
-﻿using Api.Core.Dto.Responses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.User
 {

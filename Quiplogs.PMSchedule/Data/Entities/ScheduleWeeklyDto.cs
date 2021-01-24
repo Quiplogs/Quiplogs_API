@@ -1,6 +1,6 @@
 ﻿namespace Quiplogs.PMSchedule.Data.Entities
 {
-    public class PlannedMaintenanceScheduleWeeklyDto : PlannedMaintenanceScheduleTime
+    public class ScheduleWeeklyDto : ScheduleTime
     {
         public bool Monday { get; set; }
         public bool Tuesday { get; set; }

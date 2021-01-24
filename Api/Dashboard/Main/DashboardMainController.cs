@@ -1,7 +1,6 @@
 ﻿using Api.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Dashboard;
-using System;
 
 namespace Api.Dashboard.Main
 {

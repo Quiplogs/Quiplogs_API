@@ -1,11 +1,9 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Requests.Part;
 using Quiplogs.Inventory.Dto.Responses.Part;
 using Quiplogs.Inventory.Interfaces.Repositories;
 using Quiplogs.Inventory.Interfaces.UseCases.Part;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Quiplogs.Inventory.UseCases.Part

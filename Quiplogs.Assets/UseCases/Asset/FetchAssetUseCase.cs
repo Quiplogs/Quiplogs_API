@@ -1,14 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Quiplogs.Assets.Dto.Requests.Asset;
-using Quiplogs.Assets.Dto.Responses.Asset;
-using Quiplogs.Assets.Interfaces.Repositories;
-using Quiplogs.Assets.Interfaces.UseCases.Asset;
-using System.Threading.Tasks;
-
-namespace Quiplogs.Assets.UseCases.Asset
+﻿namespace Quiplogs.Assets.UseCases.Asset
 {
     //public class FetchAssetUseCase : IFetchAssetUseCase
     //{

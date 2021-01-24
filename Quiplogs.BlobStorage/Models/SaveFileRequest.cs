@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quiplogs.BlobStorage.Models
+﻿namespace Quiplogs.BlobStorage.Models
 {
     public class SaveFileRequest
     {

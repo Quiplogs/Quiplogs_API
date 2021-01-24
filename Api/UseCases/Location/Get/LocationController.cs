@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿ using System.Threading.Tasks;
 using Api.Core.Interfaces.UseCases.Location;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Data.Entities;
 
 namespace Api.UseCases.Location.Get
 {

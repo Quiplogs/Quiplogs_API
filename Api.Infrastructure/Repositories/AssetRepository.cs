@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Helpers;
 using Api.Infrastructure.SqlContext;
 using AutoMapper;

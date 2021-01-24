@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto.Responses;
 using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.User
