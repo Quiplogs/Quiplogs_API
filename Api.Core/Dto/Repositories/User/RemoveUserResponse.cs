@@ -1,9 +1,8 @@
-﻿using Api.Core.Dto.Responses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.User
 {
-    public class RemoveUserResponse : BaseResponse
+    public class RemoveUserResponse : BaseRepositoryResponse
     {
         public string UserName { get; set; }
 

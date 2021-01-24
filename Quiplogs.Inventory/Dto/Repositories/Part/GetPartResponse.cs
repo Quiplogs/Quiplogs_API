@@ -1,10 +1,10 @@
 ﻿using Api.Core.Dto;
-using Api.Core.Dto.Responses;
+using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Repositories.Part
 {
-    public class GetPartResponse : BaseResponse
+    public class GetPartResponse : BaseRepositoryResponse
     {
         public Domain.Entities.Part Part { get; set; }
 

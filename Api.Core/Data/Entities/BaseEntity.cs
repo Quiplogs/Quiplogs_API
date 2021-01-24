@@ -4,11 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Core.Data.Entities
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntityDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
+        public Guid CompanyId { get; set; }
+
+        [ForeignKey("CompanyId")]
+        public CompanyDto Company { get; set; }
 
         public DateTime DateCreated { get; set; }
 

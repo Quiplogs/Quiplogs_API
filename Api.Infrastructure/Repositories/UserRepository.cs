@@ -5,6 +5,7 @@ using Api.Core.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Quiplogs.Core.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,19 +42,19 @@ namespace Api.Infrastructure.Repositories
             return await _userManager.CheckPasswordAsync(_mapper.Map<UserEntity>(user), password);
         }
 
-        public async Task<GetAllUsersResponse> GetAll(string companyId, string locationId)
+        public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid locationId)
         {
             var users = _userManager.Users.Where(x =>
                 x.CompanyId == companyId
-                && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId));
+                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId));
 
             List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
             return new GetAllUsersResponse(mappedUsers, true, null);
         }
 
-        public async Task<GetUserResponse> Get(string id)
+        public async Task<GetUserResponse> Get(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             AppUser mappedUser = _mapper.Map<AppUser>(user);
             return new GetUserResponse(mappedUser, true, null);
         }
@@ -66,9 +67,9 @@ namespace Api.Infrastructure.Repositories
             return new UpdateUserResponse(mappedUser, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
         }
 
-        public async Task<RemoveUserResponse> Remove(string id)
+        public async Task<RemoveUserResponse> Remove(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             var identityResult = await _userManager.DeleteAsync(user);
             AppUser mappedUser = _mapper.Map<AppUser>(user);
             return new RemoveUserResponse($"{user.FirstName} {user.LastName}", identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));

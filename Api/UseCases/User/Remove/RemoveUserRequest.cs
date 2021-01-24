@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.User.Remove
+﻿using System;
+
+namespace Api.UseCases.User.Remove
 {
     public class RemoveUserRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

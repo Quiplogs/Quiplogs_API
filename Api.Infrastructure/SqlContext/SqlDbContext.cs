@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Api.Infrastructure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
@@ -10,9 +12,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Infrastructure.SqlContext
+namespace Quiplogs.Infrastructure.SqlContext
 {
-    public class SqlDbContext : IdentityDbContext<UserEntity>
+    public class SqlDbContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
     {
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options) { }
 
@@ -28,12 +30,11 @@ namespace Api.Infrastructure.SqlContext
         public DbSet<TaskDto> Tasks { get; set; }
         public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
         public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
-
-        public DbSet<PlannedMaintenanceScheduleCustomDto> PlannedMaintenanceScheduleCustom { get; set; }
-        public DbSet<PlannedMaintenanceScheduleDailyDto> PlannedMaintenanceScheduleDaily { get; set; }
-        public DbSet<PlannedMaintenanceScheduleWeeklyDto> PlannedMaintenanceScheduleWeekly { get; set; }
-        public DbSet<PlannedMaintenanceScheduleMonthlyDto> PlannedMaintenanceScheduleMonthly { get; set; }        
-        public DbSet<PlannedMaintenanceScheduleYearlyDto> PlannedMaintenanceScheduleYearly { get; set; }
+        public DbSet<ScheduleCustomDto> ScheduleCustom { get; set; }
+        public DbSet<ScheduleDailyDto> ScheduleDaily { get; set; }
+        public DbSet<ScheduleWeeklyDto> ScheduleWeekly { get; set; }
+        public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }        
+        public DbSet<ScheduleYearlyDto> ScheduleYearly { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,23 +92,23 @@ namespace Api.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PlannedMaintenanceScheduleCustomDto>()
+            modelBuilder.Entity<ScheduleCustomDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PlannedMaintenanceScheduleDailyDto>()
+            modelBuilder.Entity<ScheduleDailyDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PlannedMaintenanceScheduleWeeklyDto>()
+            modelBuilder.Entity<ScheduleWeeklyDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PlannedMaintenanceScheduleMonthlyDto>()
+            modelBuilder.Entity<ScheduleMonthlyDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<PlannedMaintenanceScheduleYearlyDto>()
+            modelBuilder.Entity<ScheduleYearlyDto>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
@@ -138,14 +139,14 @@ namespace Api.Infrastructure.SqlContext
 
         private void AddAuditInfo()
         {
-            var entries = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var entries = ChangeTracker.Entries().Where(x => x.Entity is BaseEntityDto && (x.State == EntityState.Added || x.State == EntityState.Modified));
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entry.Entity).DateCreated = DateTime.Now;
+                    ((BaseEntityDto)entry.Entity).DateCreated = DateTime.Now;
                 }
-                ((BaseEntity)entry.Entity).DateUpdated = DateTime.Now;
+                ((BaseEntityDto)entry.Entity).DateUpdated = DateTime.Now;
             }
         }
     }

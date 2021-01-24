@@ -1,11 +1,10 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Responses;
+﻿using Api.Core.Dto;
+using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 
 namespace Quiplogs.Assets.Dto.Repositories.AssetUsage
 {
-    public class ListAssetUsageResponse : BaseResponse
+    public class ListAssetUsageResponse : BaseRepositoryResponse
     {
         public List<Domain.Entities.AssetUsage> AssetUsageList { get; set; }
 

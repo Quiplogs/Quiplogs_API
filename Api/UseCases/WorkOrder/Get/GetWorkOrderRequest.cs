@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.WorkOrder.Get
+﻿using System;
+
+namespace Api.UseCases.WorkOrder.Get
 {
     public class GetWorkOrderRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Api.Core.Dto;
-using Api.Core.Dto.Responses;
+using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 
 namespace Quiplogs.Inventory.Dto.Repositories.Task
 {
-    public class PutTaskResponse : BaseResponse
+    public class PutTaskResponse : BaseRepositoryResponse
     {
         public Domain.Entities.TaskEntity Task { get; set; }
 

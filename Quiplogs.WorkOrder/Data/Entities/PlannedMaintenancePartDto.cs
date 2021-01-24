@@ -1,17 +1,18 @@
 ﻿using Quiplogs.Core.Data.Entities;
 using Quiplogs.Inventory.Data.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class PlannedMaintenancePartDto : BaseEntity
+    public class PlannedMaintenancePartDto : BaseEntityDto
     {
-        public string PlannedMaintenanceId { get; set; }
+        public Guid PlannedMaintenanceId { get; set; }
 
         [ForeignKey("PlannedMaintenanceId")]
         public PlannedMaintenanceDto PlannedMaintenance { get; set; }
 
-        public string PartId { get; set; }
+        public Guid PartId { get; set; }
 
         [ForeignKey("PartId")]
         public PartDto Part { get; set; }

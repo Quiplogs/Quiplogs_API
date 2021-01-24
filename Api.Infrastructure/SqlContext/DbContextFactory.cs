@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Api.Infrastructure.SqlContext
+namespace Quiplogs.Infrastructure.SqlContext
 {
     public class DbContextFactory : DesignTimeDbContextFactoryBase<SqlDbContext>
     {

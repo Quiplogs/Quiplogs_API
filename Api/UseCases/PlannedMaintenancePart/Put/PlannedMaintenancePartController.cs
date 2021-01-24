@@ -24,13 +24,7 @@ namespace Api.UseCases.PlannedMaintenancePart.Put
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _putPlannedMaintenancePartUseCase.Handle(new PutPlannedMaintenancePartDtoRequest(companyId, request.PlannedMaintenanceId, request.PartId, request.Quantity, request.UoM), _putPlannedMaintenancePartPresenter);
+            await _putPlannedMaintenancePartUseCase.Handle(new PutPlannedMaintenancePartDtoRequest(GetCompanyId(request.CompanyId), request.PlannedMaintenanceId, request.PartId, request.Quantity, request.UoM), _putPlannedMaintenancePartPresenter);
             return _putPlannedMaintenancePartPresenter.ContentResult;
         }
     }

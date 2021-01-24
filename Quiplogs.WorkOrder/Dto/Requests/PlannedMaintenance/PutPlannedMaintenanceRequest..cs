@@ -1,14 +1,15 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance;
+using System;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 {
     public class PutPlannedMaintenanceRequest : IRequest<PutPlannedMaintenanceResponse>
     {
         public string Name { get; set; }
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public decimal Cycles { get; set; }
 
@@ -16,7 +17,7 @@ namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance
 
         public int UoM { get; set; }
 
-        public PutPlannedMaintenanceRequest(string name, string assetId, string companyId, decimal cycles, bool isRecurring, int uom)
+        public PutPlannedMaintenanceRequest(string name, Guid assetId, Guid companyId, decimal cycles, bool isRecurring, int uom)
         {
             Name = name;
             AssetId = assetId;

@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask;
@@ -34,7 +33,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderTask
                 return true;
             }
 
-            outputPort.Handle(new ListWorkOrderTaskResponse(new[] { new Error(GlobalVariables.error_workOrderTaskFailure, "No WorkOrder Tasks Found.") }));
+            outputPort.Handle(new ListWorkOrderTaskResponse(new[] { new Error("", "No WorkOrder Tasks Found.") }));
             return false;
         }
     }

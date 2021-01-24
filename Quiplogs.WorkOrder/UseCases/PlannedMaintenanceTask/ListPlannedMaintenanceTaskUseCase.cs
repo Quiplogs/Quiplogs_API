@@ -1,6 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenanceTask;
@@ -28,7 +26,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
                 return true;
             }
 
-            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, "No Planned Maintenances Tasks Found.") }));
+            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error("", "No Planned Maintenances Tasks Found.") }));
             return false;
         }
     }

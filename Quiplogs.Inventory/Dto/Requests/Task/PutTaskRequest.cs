@@ -1,18 +1,19 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Responses.Task;
+using System;
 
 namespace Quiplogs.Inventory.Dto.Requests.Task
 {
     public class PutTaskRequest : IRequest<PutTaskResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
-        public PutTaskRequest(string id, string name, string description, string companyId)
+        public PutTaskRequest(Guid id, string name, string description, Guid companyId)
         {
             Id = id;
             Name = name;

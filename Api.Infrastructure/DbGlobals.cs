@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Api.Infrastructure
+﻿namespace Api.Infrastructure
 {
     public static class DbGlobals
     {

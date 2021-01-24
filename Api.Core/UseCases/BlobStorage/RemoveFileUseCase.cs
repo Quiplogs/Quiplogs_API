@@ -1,6 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
+﻿using Api.Core.Interfaces;
 using Api.Core.Interfaces.Repositories;
 using Quiplogs.BlobStorage;
 using Quiplogs.BlobStorage.Models;
@@ -38,7 +36,7 @@ namespace Quiplogs.Core.UseCases.FileRemove
 
                     if (message.ApplicationType == "location")
                     {
-                        await _locationRepository.RemoveImage(splitFileName[1]);
+                        await _locationRepository.RemoveImage(Guid.Parse(splitFileName[1]));
                     }
 
                     outputPort.Handle(new RemoveFileResponse($"{message.FileName} has been removed succesfully", true));
@@ -46,13 +44,13 @@ namespace Quiplogs.Core.UseCases.FileRemove
                 }
                 else
                 {
-                    outputPort.Handle(new RemoveFileResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error removing file.") }));
+                    //outputPort.Handle(new RemoveFileResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error removing file.") }));
                     return false;
                 }
             }
             catch(Exception ex)
             {
-                outputPort.Handle(new RemoveFileResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error removing file.") }));
+                //outputPort.Handle(new RemoveFileResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error removing file.") }));
                 return false;
             }
         }

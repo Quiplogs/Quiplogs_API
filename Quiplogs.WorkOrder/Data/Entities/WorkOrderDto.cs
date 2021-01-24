@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class WorkOrderDto : BaseEntity
+    public class WorkOrderDto : BaseEntityDto
     {
         public string ReferenceNumber { get; set; }
 
@@ -24,24 +24,19 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         public bool IsDeleted { get; set; }
 
-        public string TechnicianId { get; set; }
+        public Guid TechnicianId { get; set; }
 
         [ForeignKey("TechnicianId")]
         public UserEntity Technician { get; set; }
 
         public string TechnicianName { get; set; }
+                
+        public Guid AssetId { get; set; }
 
         [ForeignKey("AssetId")]
-        public string AssetId { get; set; }
-
         public AssetDto Asset { get; set; }
 
-        public string CompanyId { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public CompanyDto Company { get; set; }
-
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }

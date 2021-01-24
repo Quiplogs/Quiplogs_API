@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Requests.Task;
 using Quiplogs.Inventory.Dto.Responses.Task;
@@ -27,7 +26,7 @@ namespace Quiplogs.Inventory.UseCases.Task
                 return true;
             }
 
-            outputPort.Handle(new RemoveTaskResponse(new[] { new Error(GlobalVariables.error_taskFailure, "Error removing Task.") }));
+            outputPort.Handle(new RemoveTaskResponse(new[] { new Error("", "Error removing Task.") }));
             return false;
         }
     }

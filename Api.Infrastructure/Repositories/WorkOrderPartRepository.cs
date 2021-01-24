@@ -1,13 +1,13 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Helpers;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.WorkOrderPart;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +27,7 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListWorkOrderPartResponse> List(string workOrderId, int pageNumber, int pageSize)
+        public async Task<ListWorkOrderPartResponse> List(Guid workOrderId, int pageNumber, int pageSize)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListWorkOrderPartResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderPartFailure, $"Error fetching WorkOrderPart. {ex.Message}") });
+                return new ListWorkOrderPartResponse(null, false, new[] { new Error("", $"Error fetching WorkOrderPart. {ex.Message}") });
             }
         }
 
@@ -51,7 +51,7 @@ namespace Quiplogs.Infrastructure.Repositories
             {
                 var WorkOrderPartMapped = _mapper.Map<WorkOrderPartDto>(WorkOrderPart);
 
-                if (string.IsNullOrEmpty(WorkOrderPartMapped.Id))
+                if (string.IsNullOrEmpty(WorkOrderPartMapped.Id.ToString()))
                 {
                     _context.WorkOrderParts.Add(WorkOrderPartMapped);
                 }
@@ -67,11 +67,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutWorkOrderPartResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderPartFailure, $"Error updating WorkOrderPart. {ex.Message}") });
+                return new PutWorkOrderPartResponse(null, false, new[] { new Error("", $"Error updating WorkOrderPart. {ex.Message}") });
             }
         }
 
-        public async Task<RemoveWorkOrderPartResponse> Remove(string id)
+        public async Task<RemoveWorkOrderPartResponse> Remove(Guid id)
         {
             try
             {
@@ -80,15 +80,15 @@ namespace Quiplogs.Infrastructure.Repositories
                 _context.Remove(WorkOrderPart);
                 await _context.SaveChangesAsync();
 
-                return new RemoveWorkOrderPartResponse(id, true, null);
+                return new RemoveWorkOrderPartResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemoveWorkOrderPartResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderPartFailure, $"Error removing WorkOrderPart. {ex.Message}") });
+                return new RemoveWorkOrderPartResponse(null, false, new[] { new Error("", $"Error removing WorkOrderPart. {ex.Message}") });
             }
         }
 
-        public int GetTotalRecords(string workOrderId)
+        public int GetTotalRecords(Guid workOrderId)
         {
             return _context.WorkOrderParts.Where(x => x.WorkOrderId == workOrderId).Count();
         }

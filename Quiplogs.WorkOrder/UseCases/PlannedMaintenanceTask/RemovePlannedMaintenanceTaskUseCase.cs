@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenanceTask;
@@ -27,7 +26,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
                 return true;
             }
 
-            outputPort.Handle(new RemovePlannedMaintenanceTaskResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, "Error removing Planned Maintenance Task.") }));
+            outputPort.Handle(new RemovePlannedMaintenanceTaskResponse(new[] { new Error("", "Error removing Planned Maintenance Task.") }));
             return false;
         }
     }

@@ -1,9 +1,10 @@
-﻿using Quiplogs.Core.Data.Entities;
+﻿using System;
+using Quiplogs.Core.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Inventory.Data.Entities
 {
-    public class PartDto : BaseEntity
+    public class PartDto : BaseEntityDto
     {
         public string Code { get; set; }
 
@@ -15,12 +16,7 @@ namespace Quiplogs.Inventory.Data.Entities
 
         public string ImgUrl { get; set; }
 
-        public string CompanyId { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public CompanyDto Company { get; set; }
-
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         [ForeignKey("LocationId")]
         public LocationDto Location { get; set; }

@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using AutoMapper;
 using Quiplogs.Inventory.Dto.Requests.Task;
@@ -32,7 +31,7 @@ namespace Quiplogs.Inventory.UseCases.Task
                 return true;
             }
 
-            outputPort.Handle(new PutTaskResponse(new[] { new Error(GlobalVariables.error_taskFailure, "Error updating Task.") }));
+            outputPort.Handle(new PutTaskResponse(new[] { new Error("", "Error updating Task.") }));
             return false;
         }
     }

@@ -23,13 +23,7 @@ namespace Api.UseCases.PlannedMaintenanceTask.Put
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _putPlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.PutPlannedMaintenanceTaskRequest(companyId, request.PlannedMaintenanceId, request.TaskId, request.Quantity), _putPlannedMaintenanceTaskPresenter);
+            await _putPlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.PutPlannedMaintenanceTaskRequest(GetCompanyId(request.CompanyId), request.PlannedMaintenanceId, request.TaskId, request.Quantity), _putPlannedMaintenanceTaskPresenter);
             return _putPlannedMaintenanceTaskPresenter.ContentResult;
         }
     }

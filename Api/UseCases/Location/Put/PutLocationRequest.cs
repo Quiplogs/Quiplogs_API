@@ -1,8 +1,10 @@
-﻿namespace Api.UseCases.Location.Put
+﻿using System;
+
+namespace Api.UseCases.Location.Put
 {
     public class PutLocationRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -20,8 +22,8 @@
 
         public string ImageMimeType { get; set; }
 
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

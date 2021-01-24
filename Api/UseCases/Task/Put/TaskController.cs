@@ -28,13 +28,7 @@ namespace Api.UseCases.Task.Put
                 return BadRequest();
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _putTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.PutTaskRequest(request.Id, request.Name, request.Description, companyId), _putTaskPresenter);
+            await _putTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.PutTaskRequest(request.Id, request.Name, request.Description, GetCompanyId(request.CompanyId)), _putTaskPresenter);
             return _putTaskPresenter.ContentResult;
         }
     }

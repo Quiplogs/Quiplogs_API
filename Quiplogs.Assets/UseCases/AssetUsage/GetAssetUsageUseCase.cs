@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Assets.Dto.Requests.AssetUsage;
 using Quiplogs.Assets.Dto.Responses.AssetUsage;
@@ -27,7 +26,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 return true;
             }
 
-            outputPort.Handle(new GetAssetUsageResponse(new[] { new Error(GlobalVariables.error_assetUsageFailure, "Asset Usage not Found.") }));
+            outputPort.Handle(new GetAssetUsageResponse(new[] { new Error("", "Asset Usage not Found.") }));
             return false;
         }
     }

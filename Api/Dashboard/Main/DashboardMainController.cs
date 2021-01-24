@@ -1,7 +1,6 @@
 ﻿using Api.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Dashboard;
-using System;
 
 namespace Api.Dashboard.Main
 {
@@ -25,7 +24,7 @@ namespace Api.Dashboard.Main
 
             var analyticsReuqest = new AnalyticsRequest
             {
-                CompanyId = Guid.Parse(GetCompanyId()),
+                CompanyId = GetCompanyId(request.CompanyId),
                 LocationId = request.LocationId,
                 StoredProcedure = request.QueryName
             };

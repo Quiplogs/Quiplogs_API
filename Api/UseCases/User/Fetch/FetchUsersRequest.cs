@@ -1,8 +1,10 @@
-﻿namespace Api.UseCases.User.Fetch
+﻿using System;
+
+namespace Api.UseCases.User.Fetch
 {
     public class FetchUsersRequest
     {
-        public string CompanyId { get; set; }
-        public string LocationId { get; set; }
+        public Guid CompanyId { get; set; }
+        public Guid LocationId { get; set; }
     }
 }

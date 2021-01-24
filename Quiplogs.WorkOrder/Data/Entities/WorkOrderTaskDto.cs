@@ -1,23 +1,27 @@
 ﻿using Quiplogs.Core.Data.Entities;
 using Quiplogs.Inventory.Data.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class WorkOrderTaskDto : BaseEntity
+    public class WorkOrderTaskDto : BaseEntityDto
     {
-        public string WorkOrderId { get; set; }
+        public Guid WorkOrderId { get; set; }
+
+        [ForeignKey("WorkOrderId")]
         public WorkOrderDto WorkOrder { get; set; }
-        public string TaskId { get; set; }
+        public Guid TaskId { get; set; }
 
         [ForeignKey("TaskId")]
         public TaskDto Task { get; set; }
+
         [Column(TypeName = "decimal(18, 6)")]
         public decimal QuantityRequired { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
         public decimal QuantityUsed { get; set; }
-        public int UoM { get; set; }
+        public string UoM { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsDeleted { get; set; }
     }

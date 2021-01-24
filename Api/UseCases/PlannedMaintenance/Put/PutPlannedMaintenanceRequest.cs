@@ -1,12 +1,14 @@
-﻿namespace Api.UseCases.PlannedMaintenance.Put
+﻿using System;
+
+namespace Api.UseCases.PlannedMaintenance.Put
 {
     public class PutPlannedMaintenanceRequest
     {
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         public string Name { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public decimal Cycles { get; set; }
 

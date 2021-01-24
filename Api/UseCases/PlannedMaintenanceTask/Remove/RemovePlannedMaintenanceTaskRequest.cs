@@ -1,9 +1,11 @@
-﻿namespace Api.UseCases.PlannedMaintenanceTask.Remove
+﻿using System;
+
+namespace Api.UseCases.PlannedMaintenanceTask.Remove
 {
     public class RemovePlannedMaintenanceTaskRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

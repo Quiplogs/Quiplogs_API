@@ -1,9 +1,8 @@
-﻿using Api.Core.Dto.Responses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Api.Core.Dto.Repositories.Location
 {
-    public class GetLocationResponse : BaseResponse
+    public class GetLocationResponse : BaseRepositoryResponse
     {
         public Domain.Entities.Location Location { get; set; }
 

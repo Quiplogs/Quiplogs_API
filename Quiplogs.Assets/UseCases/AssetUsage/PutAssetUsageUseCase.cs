@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using AutoMapper;
 using Quiplogs.Assets.Dto.Requests.AssetUsage;
@@ -32,7 +31,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 return true;
             }
 
-            outputPort.Handle(new PutAssetUsageResponse(new[] { new Error(GlobalVariables.error_assetUsageFailure, "Error updating Asset Usage.") }));
+            outputPort.Handle(new PutAssetUsageResponse(new[] { new Error("", "Error updating Asset Usage.") }));
             return false;
         }
     }

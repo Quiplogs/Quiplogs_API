@@ -23,13 +23,7 @@ namespace Api.UseCases.Task.List
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(companyId, request.PageNumber, request.FilterName), _listTaskPresenter);
+            await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listTaskPresenter);
             return _listTaskPresenter.ContentResult;
         }
     }

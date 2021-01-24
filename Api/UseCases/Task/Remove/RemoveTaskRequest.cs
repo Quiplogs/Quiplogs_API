@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Task.Remove
+﻿using System;
+
+namespace Api.UseCases.Task.Remove
 {
     public class RemoveTaskRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -23,13 +23,7 @@ namespace Api.UseCases.Part.Put
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Id, request.Code, request.Name, request.Description, companyId, request.LocationId, request.ImageFileName, request.ImageBase64, request.ImageMimeType), _putPartPresenter);
+            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Id, request.Code, request.Name, request.Description, GetCompanyId(request.CompanyId), request.LocationId, request.ImageFileName, request.ImageBase64, request.ImageMimeType), _putPartPresenter);
             return _putPartPresenter.ContentResult;
         }
     }

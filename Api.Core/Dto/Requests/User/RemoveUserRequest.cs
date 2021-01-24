@@ -1,12 +1,13 @@
 ﻿using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
+using System;
 
 namespace Api.Core.Dto.Requests.User
 {
     public class RemoveUserRequest : IRequest<RemoveUserResponse>
     {
-        public string Id { get; }
-        public RemoveUserRequest(string id)
+        public Guid Id { get; }
+        public RemoveUserRequest(Guid id)
         {
             Id = id;
         }
