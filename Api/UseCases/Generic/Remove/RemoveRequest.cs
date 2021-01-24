@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Api.UseCases.Asset.Get
+namespace Api.UseCases.Generic.Remove
 {
-    public class GetAssetRequest
+    public class RemoveRequest
     {
         public Guid Id { get; set; }
     }

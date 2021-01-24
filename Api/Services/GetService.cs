@@ -2,10 +2,11 @@
 using Api.Core.Domain.Entities;
 using Api.Presenters;
 using Api.Services.Interfaces;
+using Api.UseCases.Generic.Get;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 
-namespace Api.UseCases.Generic.Get
+namespace Api.Services
 {
     public class GetService<T1, T2> : IGetService<T1, T2>
         where T1 : BaseEntity
@@ -20,7 +21,6 @@ namespace Api.UseCases.Generic.Get
             _getPresenter = getPresenter;
         }
 
-        
         public async Task<JsonContentResult> Get(GetRequest request)
         {
 

@@ -1,30 +1,31 @@
 ﻿using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Get;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.Asset;
+using Quiplogs.Assets.Data.Entities;
 
 namespace Api.UseCases.Asset.Get
 {
     public class AssetController : BaseApiController
     {
-        private readonly IGetAssetUseCase _getAssetUseCase;
-        private readonly GetAssetPresenter _getAssetPresenter;
+        private readonly IGetService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _getService;
 
-        public AssetController(IGetAssetUseCase getAssetUseCase, GetAssetPresenter getAssetPresenter)
+        public AssetController(IGetService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> getService)
         {
-            _getAssetUseCase = getAssetUseCase;
-            _getAssetPresenter = getAssetPresenter;
+            _getService = getService;
         }
 
-
-        [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetAssetRequest request)
+        [HttpGet]
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _getAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.GetAssetRequest(request.Id), _getAssetPresenter);
-            return _getAssetPresenter.ContentResult;
+
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

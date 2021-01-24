@@ -1,7 +1,6 @@
 using Api.Core;
 using Api.Extensions;
 using Api.Helpers;
-using Api.Infrastructure;
 using Api.Infrastructure.Data.Mapping;
 using Quiplogs.Infrastructure.SqlContext;
 using Autofac;
@@ -37,8 +36,8 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using Api.Presenters;
+using Api.Services;
 using Api.Services.Interfaces;
-using Api.UseCases.Generic.Get;
 using Quiplogs.Infrastructure;
 
 namespace Api
