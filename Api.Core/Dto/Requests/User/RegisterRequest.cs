@@ -1,5 +1,6 @@
 ﻿using Api.Core.Dto.Responses.User;
 using Api.Core.Interfaces;
+using System;
 
 namespace Api.Core.Dto.Requests.User
 {
@@ -10,9 +11,9 @@ namespace Api.Core.Dto.Requests.User
         public string Email { get; }
         public string UserName { get; }
         public string Password { get; }
-        public string CompanyId { get; }
+        public Guid CompanyId { get; }
 
-        public RegisterRequest(string firstName, string lastName, string email, string userName, string password, string companyId)
+        public RegisterRequest(string firstName, string lastName, string email, string userName, string password, Guid companyId)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -37,7 +37,7 @@ namespace Api.Core.UseCases.Location
                     location.City = message.City;
                 if (!string.IsNullOrEmpty(message.Country))
                     location.Country = message.Country;
-                if (!string.IsNullOrEmpty(message.UserId))
+                if (!string.IsNullOrEmpty(message.UserId.ToString()))
                     location.UserId = message.UserId;
                 if (!string.IsNullOrEmpty(message.Lat))
                     location.Lat = decimal.Parse(message.Lat);
@@ -65,8 +65,8 @@ namespace Api.Core.UseCases.Location
             {
                 var savedImage = await _blobStorage.UploadImageAsync(new SaveFileRequest
                 {
-                    Container = message.CompanyId,
-                    SubContainer = response.Location.Id,
+                    Container = message.CompanyId.ToString(),
+                    SubContainer = response.Location.Id.ToString(),
                     FileName = message.ImageFileName,
                     FileBase64 = message.ImageBase64,
                     MimeType = message.ImageMimeType
@@ -84,7 +84,7 @@ namespace Api.Core.UseCases.Location
                 return true;
             }
 
-            outputPort.Handle(new PutLocationResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error updating Location.") }));
+            outputPort.Handle(new PutLocationResponse(new[] { new Error("", "Error updating Location.") }));
             return false;
         }
     }

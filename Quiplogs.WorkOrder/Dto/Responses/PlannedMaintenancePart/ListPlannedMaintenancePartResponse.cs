@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using System.Collections.Generic;
 

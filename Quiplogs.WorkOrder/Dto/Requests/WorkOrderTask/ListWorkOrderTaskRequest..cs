@@ -1,13 +1,14 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderTask;
+using System;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask
 {
     public class ListWorkOrderTaskRequest : IRequest<ListWorkOrderTaskResponse>
     {
-        public string WorkOrderId { get; }
+        public Guid WorkOrderId { get; }
         public int PageNumber { get; }
-        public ListWorkOrderTaskRequest(string workOrderId, int pageNumber)
+        public ListWorkOrderTaskRequest(Guid workOrderId, int pageNumber)
         {
             WorkOrderId = workOrderId;
             PageNumber = pageNumber;

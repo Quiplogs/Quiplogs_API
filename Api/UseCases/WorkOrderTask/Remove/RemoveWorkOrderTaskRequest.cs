@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.WorkOrderTask.Remove
+﻿using System;
+
+namespace Api.UseCases.WorkOrderTask.Remove
 {
     public class RemoveWorkOrderTaskRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

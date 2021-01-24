@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.PlannedMaintenance.Get
+﻿using System;
+
+namespace Api.UseCases.PlannedMaintenance.Get
 {
     public class GetPlannedMaintenanceRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

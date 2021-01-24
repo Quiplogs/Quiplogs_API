@@ -1,4 +1,4 @@
-name: .NET Core
+name: .NET
 
 on:
   push:
@@ -13,13 +13,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
-    - name: Install dependencies
-      run: dotnet restore /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln
+        dotnet-version: 3.1.301
+    - name: Add private GitHub registry to NuGet
+      run: dotnet nuget add source https://nuget.pkg.github.com/compiledio/index.json --name "nuget" --username nuget --password 45a74283c1ec66bd76af621671ef23145b7a43a0 --store-password-in-clear-text
+    - name: Restore dependencies
+      run: dotnet restore   
     - name: Build
-      run: dotnet build /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln --configuration Release --no-restore
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test /home/runner/work/Quiplogs_API/Quiplogs_API/Api/Api.sln --no-restore --verbosity normal
+      run: dotnet test --no-build --verbosity normal

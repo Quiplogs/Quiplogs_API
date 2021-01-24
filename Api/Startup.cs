@@ -1,9 +1,8 @@
 using Api.Core;
 using Api.Extensions;
 using Api.Helpers;
-using Api.Infrastructure;
 using Api.Infrastructure.Data.Mapping;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -32,11 +31,14 @@ using Quiplogs.Inventory.Data.Mapping;
 using Quiplogs.Notifications.Send;
 using Quiplogs.WorkOrder;
 using Quiplogs.WorkOrder.Data.Mapping;
-using StackExchange.Redis;
 using System;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Api.Presenters;
+using Api.Services;
+using Api.Services.Interfaces;
+using Quiplogs.Infrastructure;
 
 namespace Api
 {
@@ -134,8 +136,10 @@ namespace Api
                 o.Password.RequiredLength = 6;
             });
 
-            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
-            identityBuilder.AddEntityFrameworkStores<SqlDbContext>().AddDefaultTokenProviders();
+            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole<Guid>), identityBuilder.Services);
+            identityBuilder
+                .AddEntityFrameworkStores<SqlDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -178,7 +182,10 @@ namespace Api
             builder.RegisterModule(new SendNotificationModule(Configuration));
 
             // Presenters
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).InstancePerDependency();
+
+            builder.RegisterGeneric(typeof(GetPresenter<>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(GetService<,>)).As(typeof(IGetService<,>)).InstancePerDependency();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -192,11 +199,11 @@ namespace Api
 
             lifetime.ApplicationStarted.Register(() =>
             {
-                var currentTimeUTC = DateTime.UtcNow.ToString();
-                byte[] encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
+                var currentTimeUtc = DateTime.UtcNow.ToString();
+                byte[] encodedCurrentTimeUtc = Encoding.UTF8.GetBytes(currentTimeUtc);
                 var options = new DistributedCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromSeconds(20));
-                cache.Set("cachedTimeUTC", encodedCurrentTimeUTC, options);
+                cache.Set("cachedTimeUTC", encodedCurrentTimeUtc, options);
             });
 
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();

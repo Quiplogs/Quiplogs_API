@@ -1,33 +1,32 @@
-﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Location;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Data.Entities;
+﻿ using System.Threading.Tasks;
+ using Api.Services.Interfaces;
+ using Api.UseCases.Generic.Get;
+ using Microsoft.AspNetCore.Mvc;
+ using Quiplogs.Core.Data.Entities;
 
-namespace Api.UseCases.Location.Get
+ namespace Api.UseCases.Location.Get
 {
     public class LocationController : BaseApiController
     {
-        private readonly IGetLocationUseCase _getLocationUseCase;
-        private readonly GetLocationPresenter _getLocationPresenter;
+        private readonly IGetService<Core.Domain.Entities.Location, LocationDto> _getService;
 
-        public LocationController(IGetLocationUseCase getLocationUseCase, GetLocationPresenter getLocationPresenter)
+        public LocationController(IGetService<Core.Domain.Entities.Location, LocationDto> getService)
         {
-            _getLocationUseCase = getLocationUseCase;
-            _getLocationPresenter = getLocationPresenter;
+            _getService = getService;
         }
 
 
-        [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetLocationRequest request)
+        [HttpGet]
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            { 
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _getLocationUseCase.Handle(new Core.Dto.Requests.Location.GetLocationRequest(request.Id), _getLocationPresenter);
-            return _getLocationPresenter.ContentResult;
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Api.Core.UseCases.Location
                 return true;
             }
 
-            outputPort.Handle(new RemoveLocationResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Error removing Location.") }));
+            outputPort.Handle(new RemoveLocationResponse(new[] { new Error("", "Error removing Location.") }));
             return false;
         }
     }

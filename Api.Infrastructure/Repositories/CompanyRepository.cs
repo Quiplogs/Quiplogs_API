@@ -1,10 +1,9 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Dto.Repositories;
 using Api.Core.Helpers;
 using Api.Core.Interfaces.Repositories;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.Core.Data.Entities;
@@ -50,7 +49,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new CreateCompanyResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error updating Company. {ex.Message}") });
+                return new CreateCompanyResponse(new System.Guid(), false, new[] { new Error("", $"Error updating Company. {ex.Message}") });
             }
         }
 

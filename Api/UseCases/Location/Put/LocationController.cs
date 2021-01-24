@@ -23,13 +23,7 @@ namespace Api.UseCases.Location.Put
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _putLocationUseCase.Handle(new Core.Dto.Requests.Location.PutLocationRequest(request.Id, request.Name, request.City, request.Country, request.UserId, companyId, request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat.ToString(), request.Long.ToString()), _putLocationPresenter);
+            await _putLocationUseCase.Handle(new Core.Dto.Requests.Location.PutLocationRequest(request.Id, request.Name, request.City, request.Country, request.UserId, GetCompanyId(request.CompanyId), request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat.ToString(), request.Long.ToString()), _putLocationPresenter);
             return _putLocationPresenter.ContentResult;
         }
     }

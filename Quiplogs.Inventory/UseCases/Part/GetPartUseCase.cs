@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Requests.Part;
 using Quiplogs.Inventory.Dto.Responses.Part;
@@ -27,7 +26,7 @@ namespace Quiplogs.Inventory.UseCases.Part
                 return true;
             }
 
-            outputPort.Handle(new GetPartResponse(new[] { new Error(GlobalVariables.error_partFailure, "Part not Found.") }));
+            outputPort.Handle(new GetPartResponse(new[] { new Error("", "Part not Found.") }));
             return false;
         }
     }

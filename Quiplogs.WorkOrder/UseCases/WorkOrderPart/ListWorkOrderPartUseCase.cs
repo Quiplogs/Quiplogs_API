@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart;
@@ -34,7 +33,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
                 return true;
             }
 
-            outputPort.Handle(new ListWorkOrderPartResponse(new[] { new Error(GlobalVariables.error_workOrderPartFailure, "No WorkOrder Parts Found.") }));
+            outputPort.Handle(new ListWorkOrderPartResponse(new[] { new Error("", "No WorkOrder Parts Found.") }));
             return false;
         }
     }

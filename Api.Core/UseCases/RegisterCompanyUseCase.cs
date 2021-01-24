@@ -5,7 +5,6 @@ using Api.Core.Dto.Responses.Company;
 using Api.Core.Interfaces;
 using Api.Core.Interfaces.Repositories;
 using Api.Core.Interfaces.UseCases;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

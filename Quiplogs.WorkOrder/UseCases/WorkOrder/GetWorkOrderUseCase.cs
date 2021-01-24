@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.WorkOrder;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
@@ -27,7 +26,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 return true;
             }
 
-            outputPort.Handle(new GetWorkOrderResponse(new[] { new Error(GlobalVariables.error_workOrderFailure, "WorkOrder not Found.") }));
+            outputPort.Handle(new GetWorkOrderResponse(new[] { new Error("", "WorkOrder not Found.") }));
             return false;
         }
     }

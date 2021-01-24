@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenancePart;
@@ -28,7 +27,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenancePartPart
                 return true;
             }
 
-            outputPort.Handle(new ListPlannedMaintenancePartResponse(new[] { new Error(GlobalVariables.error_plannedMaintenancePartFailure, "No Planned Maintenances Parts Found.") }));
+            outputPort.Handle(new ListPlannedMaintenancePartResponse(new[] { new Error("", "No Planned Maintenances Parts Found.") }));
             return false;
         }
     }

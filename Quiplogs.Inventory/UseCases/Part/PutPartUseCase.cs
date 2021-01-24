@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.BlobStorage;
 using Quiplogs.BlobStorage.Models;
@@ -38,9 +37,9 @@ namespace Quiplogs.Inventory.UseCases.Part
                     model.Name = message.Name;
                 if (!string.IsNullOrEmpty(message.Description))
                     model.Description = message.Description;
-                if (!string.IsNullOrEmpty(message.CompanyId))
+                if (!string.IsNullOrEmpty(message.CompanyId.ToString()))
                     model.CompanyId = message.CompanyId;
-                if (!string.IsNullOrEmpty(message.LocationId))
+                if (!string.IsNullOrEmpty(message.LocationId.ToString()))
                     model.LocationId = message.LocationId;
             }
             else
@@ -59,8 +58,8 @@ namespace Quiplogs.Inventory.UseCases.Part
             {
                 var savedImage = await _blobStorage.UploadImageAsync(new SaveFileRequest
                 {
-                    Container = message.CompanyId,
-                    SubContainer = response.Part.Id,
+                    Container = message.CompanyId.ToString(),
+                    SubContainer = response.Part.Id.ToString(),
                     FileName = message.ImageFileName,
                     FileBase64 = message.ImageBase64,
                     MimeType = message.ImageMimeType
@@ -78,7 +77,7 @@ namespace Quiplogs.Inventory.UseCases.Part
                 return true;
             }
 
-            outputPort.Handle(new PutPartResponse(new[] { new Error(GlobalVariables.error_partFailure, "Error updating Part.") }));
+            outputPort.Handle(new PutPartResponse(new[] { new Error("", "Error updating Part.") }));
             return false;
         }
     }

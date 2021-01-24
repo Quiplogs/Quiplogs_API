@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quiplogs.Dashboard
+﻿namespace Quiplogs.Dashboard
 {
     public class DataPresenter
     {

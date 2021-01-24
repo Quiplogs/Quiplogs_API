@@ -34,11 +34,11 @@ namespace Api.Core.UseCases.User
                     {
                         var jwtRequest = new GenerateJwtTokenRequest()
                         {
-                            Id = user.Id,
+                            Id = user.Id.ToString(),
                             UserName = $"{user.FirstName} {user.LastName}",
                             Role = user.Role,
-                            CompanyId = user.CompanyId,
-                            LocationId = user.LocationId
+                            CompanyId = user.CompanyId.ToString(),
+                            LocationId = user.LocationId.ToString()
                         };
 
                         outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(jwtRequest), true));
@@ -46,7 +46,7 @@ namespace Api.Core.UseCases.User
                     }
                 }
             }
-            outputPort.Handle(new LoginResponse(new[] { new Error(GlobalVariables.error_loginFailure, "Invalid username or password.") }));
+            outputPort.Handle(new LoginResponse(new[] { new Error("", "Invalid username or password.") }));
             return false;
         }
     }

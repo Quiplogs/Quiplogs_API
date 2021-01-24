@@ -1,8 +1,10 @@
-﻿namespace Api.UseCases.Location.List
+﻿using System;
+
+namespace Api.UseCases.Location.List
 {
     public class ListLocationRequest
     {
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
         public int PageNumber { get; set; }
         public string FilterName { get; set; }
     }

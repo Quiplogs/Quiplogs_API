@@ -1,10 +1,10 @@
 ﻿using Api.Core.Dto;
-using Api.Core.Dto.Responses;
+using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderPart
 {
-    public class ListWorkOrderPartResponse : BaseResponse
+    public class ListWorkOrderPartResponse : BaseRepositoryResponse
     {
         public List<Domain.Entities.WorkOrderPart> WorkOrderParts { get; set; }
 

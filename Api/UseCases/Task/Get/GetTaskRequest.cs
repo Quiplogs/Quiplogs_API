@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Task.Get
+﻿using System;
+
+namespace Api.UseCases.Task.Get
 {
     public class GetTaskRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

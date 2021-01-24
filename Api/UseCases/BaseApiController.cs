@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace Api.UseCases
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {
-        internal string GetCompanyId()
-        {
-            return User.FindFirstValue("comId");
-        }
+        internal Guid GetCompanyId(Guid? companyId) =>  companyId ?? Guid.Parse(User.FindFirstValue("comId"));
     }
 }

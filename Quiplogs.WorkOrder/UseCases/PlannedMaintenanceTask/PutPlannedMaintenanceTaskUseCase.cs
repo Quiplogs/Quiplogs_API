@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using AutoMapper;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask;
@@ -32,7 +31,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
                 return true;
             }
 
-            outputPort.Handle(new PutPlannedMaintenanceTaskResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, "Error updating Planned Maintenance Task.") }));
+            outputPort.Handle(new PutPlannedMaintenanceTaskResponse(new[] { new Error("", "Error updating Planned Maintenance Task.") }));
             return false;
         }
     }

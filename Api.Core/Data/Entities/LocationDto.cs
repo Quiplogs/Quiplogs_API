@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Core.Data.Entities
 {
-    public class LocationDto : BaseEntity
+    public class LocationDto : BaseEntityDto
     {
         public string Name { get; set; }
 
@@ -16,7 +17,7 @@ namespace Quiplogs.Core.Data.Entities
 
         public string Country { get; set; }
 
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public string ImgFileName { get; set; }
 
@@ -24,10 +25,5 @@ namespace Quiplogs.Core.Data.Entities
 
         [ForeignKey("UserId")]
         public UserEntity ResponsableUser { get; set; }
-
-        public string CompanyId { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public CompanyDto Company { get; set; }
     }
 }

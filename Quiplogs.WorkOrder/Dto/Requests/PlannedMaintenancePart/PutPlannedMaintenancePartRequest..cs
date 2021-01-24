@@ -1,17 +1,18 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenancePart;
+using System;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart
 {
     public class PutPlannedMaintenancePartDtoRequest : IRequest<PutPlannedMaintenancePartResponse>
     {
-        public string CompanyId { get; set; }
-        public string PlannedMaintenanceId { get; set; }
-        public string PartId { get; set; }
+        public Guid CompanyId { get; set; }
+        public Guid PlannedMaintenanceId { get; set; }
+        public Guid PartId { get; set; }
         public decimal Quantity { get; set; }
         public string UoM { get; set; }
 
-        public PutPlannedMaintenancePartDtoRequest(string companyId, string plannedMaintenanceId, string partId, decimal quantity, string uom)
+        public PutPlannedMaintenancePartDtoRequest(Guid companyId, Guid plannedMaintenanceId, Guid partId, decimal quantity, string uom)
         {
             CompanyId = companyId;
             PlannedMaintenanceId = plannedMaintenanceId;

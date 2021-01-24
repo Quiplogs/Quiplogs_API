@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using AutoMapper;
 using Quiplogs.Assets.Dto.Requests.Asset;
@@ -32,7 +31,7 @@ namespace Quiplogs.Assets.UseCases.Asset
                 return true;
             }
 
-            outputPort.Handle(new PutAssetResponse(new[] { new Error(GlobalVariables.error_assetFailure, "Error updating Asset.") }));
+            outputPort.Handle(new PutAssetResponse(new[] { new Error("", "Error updating Asset.") }));
             return false;
         }
     }

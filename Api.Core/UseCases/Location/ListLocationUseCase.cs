@@ -33,7 +33,7 @@ namespace Api.Core.UseCases.Location
                 return true;
             }
 
-            outputPort.Handle(new ListLocationResponse(new[] { new Error(GlobalVariables.error_locationFailure, "No Locations Found.") }));
+            outputPort.Handle(new ListLocationResponse(new[] { new Error("", "No Locations Found.") }));
             return false;
         }
     }

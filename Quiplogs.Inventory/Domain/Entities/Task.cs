@@ -1,4 +1,5 @@
 ﻿using Api.Core.Domain.Entities;
+using System;
 
 namespace Quiplogs.Inventory.Domain.Entities
 {
@@ -8,7 +9,7 @@ namespace Quiplogs.Inventory.Domain.Entities
 
         public string Description { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public Company Company { get; set; }
     }

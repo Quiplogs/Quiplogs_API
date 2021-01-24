@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Dto;
+﻿using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderPart;
@@ -27,7 +26,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
                 return true;
             }
 
-            outputPort.Handle(new PutWorkOrderPartResponse(new[] { new Error(GlobalVariables.error_workOrderPartFailure, "Error updating Work Order Part.") }));
+            outputPort.Handle(new PutWorkOrderPartResponse(new[] { new Error("", "Error updating Work Order Part.") }));
             return false;
         }
     }

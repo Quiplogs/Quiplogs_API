@@ -1,12 +1,13 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Responses.Task;
+using System;
 
 namespace Quiplogs.Inventory.Dto.Requests.Task
 {
     public class RemoveTaskRequest : IRequest<RemoveTaskResponse>
     {
-        public string Id { get; }
-        public RemoveTaskRequest(string id)
+        public Guid Id { get; }
+        public RemoveTaskRequest(Guid id)
         {
             Id = id;
         }

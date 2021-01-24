@@ -1,5 +1,4 @@
-﻿using Api.Core;
-using Api.Core.Domain.Entities;
+﻿using Api.Core.Domain.Entities;
 using Api.Core.Dto;
 using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Requests.Task;
@@ -34,7 +33,7 @@ namespace Quiplogs.Inventory.UseCases.Task
                 return true;
             }
 
-            outputPort.Handle(new ListTaskResponse(new[] { new Error(GlobalVariables.error_taskFailure, "No Tasks Found.") }));
+            outputPort.Handle(new ListTaskResponse(new[] { new Error("", "No Tasks Found.") }));
             return false;
         }
     }

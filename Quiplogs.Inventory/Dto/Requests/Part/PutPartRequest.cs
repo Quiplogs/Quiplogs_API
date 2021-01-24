@@ -1,11 +1,12 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.Inventory.Dto.Responses.Part;
+using System;
 
 namespace Quiplogs.Inventory.Dto.Requests.Part
 {
     public class PutPartRequest : IRequest<PutPartResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Code { get; set; }
 
@@ -13,9 +14,9 @@ namespace Quiplogs.Inventory.Dto.Requests.Part
 
         public string Description { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public string ImageFileName { get; set; }
 
@@ -23,7 +24,7 @@ namespace Quiplogs.Inventory.Dto.Requests.Part
 
         public string ImageMimeType { get; set; }
 
-        public PutPartRequest(string id, string code, string name, string description, string companyId, string locationId, string imageFileName, string imageBase64, string imageMimeType)
+        public PutPartRequest(Guid id, string code, string name, string description, Guid companyId, Guid locationId, string imageFileName, string imageBase64, string imageMimeType)
         {
             Id = id;
             Code = code;

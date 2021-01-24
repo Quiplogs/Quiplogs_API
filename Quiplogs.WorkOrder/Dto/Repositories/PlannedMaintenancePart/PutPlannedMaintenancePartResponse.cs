@@ -1,10 +1,10 @@
 ﻿using Api.Core.Dto;
-using Api.Core.Dto.Responses;
+using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenancePart
 {
-    public class PutPlannedMaintenancePartResponse : BaseResponse
+    public class PutPlannedMaintenancePartResponse : BaseRepositoryResponse
     {
         public Domain.Entities.PlannedMaintenancePart PlannedMaintenancePart { get; set; }
 

@@ -30,11 +30,11 @@ namespace Quiplogs.Assets.Dto.Requests.Asset
 
         public string InstructionManualUrl { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
-        public PutAssetRequest(string name, string make, string model, string serialNumber, DateTime? manufacturedDate, DateTime? purchasedDate, decimal currentWorkDone, int uom, string imgFileName, string imgUrl, string warrantyUrl, string instructionManualUrl, string locationId, string companyId)
+        public PutAssetRequest(string name, string make, string model, string serialNumber, DateTime? manufacturedDate, DateTime? purchasedDate, decimal currentWorkDone, int uom, string imgFileName, string imgUrl, string warrantyUrl, string instructionManualUrl, Guid locationId, Guid companyId)
         {
             Name = name;
             Make = make;

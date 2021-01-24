@@ -17,27 +17,27 @@ namespace Quiplogs.WorkOrder.Domain.Entities
 
         public decimal MintuesWorked { get; set; }
 
-        public string TechnicianId { get; set; }
+        public Guid TechnicianId { get; set; }
 
         public AppUser Technician { get; set; }
 
         public string TechnicianName { get; set; }
 
-        public string ResponsableUserId { get; set; }
+        public Guid ResponsableUserId { get; set; }
 
         public AppUser ResponsableUser { get; set; }
 
         public string ResponsableUserName { get; set; }
 
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         public Asset Asset { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public Company Company { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public Location Location { get; set; }
 

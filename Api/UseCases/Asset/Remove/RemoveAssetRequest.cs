@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Asset.Remove
+﻿using System;
+
+namespace Api.UseCases.Asset.Remove
 {
     public class RemoveAssetRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
