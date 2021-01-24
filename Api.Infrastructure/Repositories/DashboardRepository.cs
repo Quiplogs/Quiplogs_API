@@ -1,4 +1,4 @@
-﻿using Api.Infrastructure.SqlContext;
+﻿using Quiplogs.Infrastructure.SqlContext;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Dashboard;

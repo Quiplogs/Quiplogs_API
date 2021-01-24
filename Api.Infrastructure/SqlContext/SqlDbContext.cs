@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Api.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
@@ -11,7 +12,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Infrastructure.SqlContext
+namespace Quiplogs.Infrastructure.SqlContext
 {
     public class SqlDbContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
     {

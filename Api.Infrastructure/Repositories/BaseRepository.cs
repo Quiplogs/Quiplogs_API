@@ -11,7 +11,7 @@ using Api.Core.Domain.Entities;
 using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 using Quiplogs.Core.Data.Entities;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Dto.Repositories;
 using Quiplogs.Core.Interfaces.Repositories;

@@ -1,6 +1,6 @@
 ﻿using Api.Core.Dto;
 using Api.Core.Helpers;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.Inventory.Data.Entities;

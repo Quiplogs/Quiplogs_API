@@ -3,7 +3,7 @@ using Api.Core.Dto;
 using Api.Core.Dto.Repositories.Location;
 using Api.Core.Helpers;
 using Api.Core.Interfaces.Repositories;
-using Api.Infrastructure.SqlContext;
+using Quiplogs.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

@@ -7,10 +7,10 @@ namespace Api.UseCases
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {
-        internal Guid GetCompanyId(Guid? companyId) =>  companyId.HasValue ? companyId.Value  : Guid.Parse(User.FindFirstValue("comId"));
+        internal Guid GetCompanyId(Guid? companyId) =>  companyId ?? Guid.Parse(User.FindFirstValue("comId"));
     }
 }

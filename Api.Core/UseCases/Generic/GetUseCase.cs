@@ -10,7 +10,7 @@ using Quiplogs.Core.Interfaces.UseCases.Generic;
 
 namespace Quiplogs.Core.UseCases.Generic
 {
-    public class GetUseCase<T1, T2> : IGetUseCase<T1> 
+    public class GetUseCase<T1, T2> : IGetUseCase<T1, T2> 
         where T1 : BaseEntity
         where T2 : BaseEntityDto
     {

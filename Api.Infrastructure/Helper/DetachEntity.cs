@@ -1,7 +1,7 @@
-﻿using Api.Infrastructure.SqlContext;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Interfaces;
 using System.Linq;
+using Quiplogs.Infrastructure.SqlContext;
 
 namespace Quiplogs.Infrastructure.Helper
 {
