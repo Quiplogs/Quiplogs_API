@@ -27,7 +27,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
                 return true;
             }
 
-            outputPort.Handle(new PutWorkOrderPartResponse(new[] { new Error(GlobalVariables.error_workOrderPartFailure, "Error updating Work Order Part.") }));
+            outputPort.Handle(new PutWorkOrderPartResponse(new[] { new Error("", "Error updating Work Order Part.") }));
             return false;
         }
     }

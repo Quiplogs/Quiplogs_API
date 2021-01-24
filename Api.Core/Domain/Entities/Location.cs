@@ -1,4 +1,6 @@
-﻿namespace Api.Core.Domain.Entities
+﻿using System;
+
+namespace Api.Core.Domain.Entities
 {
     public class Location : BaseEntity
     {
@@ -12,12 +14,12 @@
 
         public string Country { get; set; }
 
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public string ImgFileName { get; set; }
 
         public string ImgUrl { get; set; }
         
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

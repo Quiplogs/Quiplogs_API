@@ -33,7 +33,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenancePartPart
                 return true;
             }
 
-            outputPort.Handle(new PutPlannedMaintenancePartResponse(new[] { new Error(GlobalVariables.error_plannedMaintenancePartFailure, "Error updating Planned Maintenance Part.") }));
+            outputPort.Handle(new PutPlannedMaintenancePartResponse(new[] { new Error("", "Error updating Planned Maintenance Part.") }));
             return false;
         }
     }

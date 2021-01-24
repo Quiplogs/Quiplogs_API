@@ -9,6 +9,7 @@ using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenanceTask;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPlannedMaintenanceTaskResponse> List(string plannedMaintenanceId)
+        public async Task<ListPlannedMaintenanceTaskResponse> List(Guid plannedMaintenanceId)
         {
             try
             {
@@ -53,7 +54,7 @@ namespace Quiplogs.Infrastructure.Repositories
             {
                 var PlannedMaintenanceTaskMapped = _mapper.Map<PlannedMaintenanceTaskDto>(PlannedMaintenanceTask);
 
-                if (string.IsNullOrEmpty(PlannedMaintenanceTaskMapped.Id))
+                if (string.IsNullOrEmpty(PlannedMaintenanceTaskMapped.Id.ToString()))
                 {
                     _context.PlannedMaintenanceTasks.Add(PlannedMaintenanceTaskMapped);
                 }
@@ -69,11 +70,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutPlannedMaintenanceTaskResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, $"Error updating PlannedMaintenanceTask. {ex.Message}") });
+                return new PutPlannedMaintenanceTaskResponse(null, false, new[] { new Error("", $"Error updating PlannedMaintenanceTask. {ex.Message}") });
             }
         }
 
-        public async Task<RemovePlannedMaintenanceTaskResponse> Remove(string id)
+        public async Task<RemovePlannedMaintenanceTaskResponse> Remove(Guid id)
         {
             try
             {
@@ -82,15 +83,15 @@ namespace Quiplogs.Infrastructure.Repositories
                 _context.Remove(PlannedMaintenanceTask);
                 await _context.SaveChangesAsync();
 
-                return new RemovePlannedMaintenanceTaskResponse(id, true, null);
+                return new RemovePlannedMaintenanceTaskResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemovePlannedMaintenanceTaskResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, $"Error removing PlannedMaintenanceTask. {ex.Message}") });
+                return new RemovePlannedMaintenanceTaskResponse(null, false, new[] { new Error("", $"Error removing PlannedMaintenanceTask. {ex.Message}") });
             }
         }
 
-        public int GetTotalRecords(string plannedMaintenanceId)
+        public int GetTotalRecords(Guid plannedMaintenanceId)
         {
             return _context.PlannedMaintenanceTasks.Where(x => x.PlannedMaintenanceId == plannedMaintenanceId).Count();
         }

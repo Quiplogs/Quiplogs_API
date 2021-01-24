@@ -27,7 +27,7 @@ namespace Quiplogs.Inventory.UseCases.Part
                 return true;
             }
 
-            outputPort.Handle(new GetPartResponse(new[] { new Error(GlobalVariables.error_partFailure, "Part not Found.") }));
+            outputPort.Handle(new GetPartResponse(new[] { new Error("", "Part not Found.") }));
             return false;
         }
     }

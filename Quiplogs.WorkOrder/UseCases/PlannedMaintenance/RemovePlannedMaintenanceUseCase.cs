@@ -27,7 +27,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenance
                 return true;
             }
 
-            outputPort.Handle(new RemovePlannedMaintenanceResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, "Error removing Planned Maintenance.") }));
+            outputPort.Handle(new RemovePlannedMaintenanceResponse(new[] { new Error("", "Error removing Planned Maintenance.") }));
             return false;
         }
     }

@@ -43,7 +43,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListAssetUsageResponse(null, false, new[] { new Error(GlobalVariables.error_assetUsageFailure, $"Error fetching Asset Usage. {ex.Message}") });
+                return new ListAssetUsageResponse(null, false, new[] { new Error("", $"Error fetching Asset Usage. {ex.Message}") });
             }
         }
 
@@ -58,7 +58,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetAssetUsageResponse(null, false, new[] { new Error(GlobalVariables.error_assetUsageFailure, $"Error fetching Asset Usage. {ex.Message}") });
+                return new GetAssetUsageResponse(null, false, new[] { new Error("", $"Error fetching Asset Usage. {ex.Message}") });
             }
         }
 
@@ -84,7 +84,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutAssetUsageResponse(null, false, new[] { new Error(GlobalVariables.error_assetUsageFailure, $"Error updating Asset Usage. {ex.Message}") });
+                return new PutAssetUsageResponse(null, false, new[] { new Error("", $"Error updating Asset Usage. {ex.Message}") });
             }
         }
 
@@ -101,7 +101,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new RemoveAssetUsageResponse(null, false, new[] { new Error(GlobalVariables.error_assetUsageFailure, $"Error removing Asset Usage. {ex.Message}") });
+                return new RemoveAssetUsageResponse(null, false, new[] { new Error("", $"Error removing Asset Usage. {ex.Message}") });
             }
         }
 

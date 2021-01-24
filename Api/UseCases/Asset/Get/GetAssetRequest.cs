@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Asset.Get
+﻿using System;
+
+namespace Api.UseCases.Asset.Get
 {
     public class GetAssetRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

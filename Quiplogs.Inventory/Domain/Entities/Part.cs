@@ -1,4 +1,5 @@
 ﻿using Api.Core.Domain.Entities;
+using System;
 
 namespace Quiplogs.Inventory.Domain.Entities
 {
@@ -10,9 +11,9 @@ namespace Quiplogs.Inventory.Domain.Entities
 
         public string Description { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public string ImgFileName { get; set; }
 

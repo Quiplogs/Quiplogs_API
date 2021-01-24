@@ -26,7 +26,7 @@ namespace Api.Core.UseCases.User
                 return true;
             }
 
-            outputPort.Handle(new GetUserResponse(new[] { new Error(GlobalVariables.error_fetchUsersFailure, "No User Found.") }));
+            outputPort.Handle(new GetUserResponse(new[] { new Error("", "No User Found.") }));
             return false;
         }
     }

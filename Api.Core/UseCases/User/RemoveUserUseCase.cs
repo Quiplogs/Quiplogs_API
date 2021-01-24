@@ -26,7 +26,7 @@ namespace Api.Core.UseCases.User
                 return true;
             }
 
-            outputPort.Handle(new RemoveUserResponse(new[] { new Error(GlobalVariables.error_fetchUsersFailure, "Error removing user.") }));
+            outputPort.Handle(new RemoveUserResponse(new[] { new Error("", "Error removing user.") }));
             return false;
         }
     }

@@ -25,7 +25,7 @@ namespace Api.Dashboard.Main
 
             var analyticsReuqest = new AnalyticsRequest
             {
-                CompanyId = Guid.Parse(GetCompanyId()),
+                CompanyId = GetCompanyId(request.CompanyId),
                 LocationId = request.LocationId,
                 StoredProcedure = request.QueryName
             };

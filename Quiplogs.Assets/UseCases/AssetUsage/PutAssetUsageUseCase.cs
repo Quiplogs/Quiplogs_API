@@ -32,7 +32,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 return true;
             }
 
-            outputPort.Handle(new PutAssetUsageResponse(new[] { new Error(GlobalVariables.error_assetUsageFailure, "Error updating Asset Usage.") }));
+            outputPort.Handle(new PutAssetUsageResponse(new[] { new Error("", "Error updating Asset Usage.") }));
             return false;
         }
     }

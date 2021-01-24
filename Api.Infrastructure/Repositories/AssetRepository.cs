@@ -45,7 +45,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new FetchAssetResponse(null, false, new[] { new Error(GlobalVariables.error_assetFailure, $"Error fetching Asset. {ex.Message}") });
+                return new FetchAssetResponse(null, false, new[] { new Error("", $"Error fetching Asset. {ex.Message}") });
             }
         }
 
@@ -60,7 +60,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetAssetResponse(null, false, new[] { new Error(GlobalVariables.error_assetFailure, $"Error fetching Asset. {ex.Message}") });
+                return new GetAssetResponse(null, false, new[] { new Error("", $"Error fetching Asset. {ex.Message}") });
             }
         }
 
@@ -86,7 +86,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutAssetResponse(null, false, new[] { new Error(GlobalVariables.error_assetFailure, $"Error updating Asset. {ex.Message}") });
+                return new PutAssetResponse(null, false, new[] { new Error("", $"Error updating Asset. {ex.Message}") });
             }
         }
 
@@ -103,7 +103,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new RemoveAssetResponse(null, false, new[] { new Error(GlobalVariables.error_assetFailure, $"Error removing Asset. {ex.Message}") });
+                return new RemoveAssetResponse(null, false, new[] { new Error("", $"Error removing Asset. {ex.Message}") });
             }
         }
 

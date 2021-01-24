@@ -8,6 +8,7 @@ using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenance;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPlannedMaintenanceResponse> List(string companyId, string locationId, string assetId, int pageNumber, int pageSize, bool? shouldPage = true)
+        public async Task<ListPlannedMaintenanceResponse> List(Guid companyId, Guid locationId, Guid assetId, int pageNumber, int pageSize, bool? shouldPage = true)
         {
             try
             {
@@ -38,7 +39,7 @@ namespace Quiplogs.Infrastructure.Repositories
                     modelList = _context.PlannedMaintenances.Where(x =>
                                     x.CompanyId == companyId
                                     && x.AssetId == assetId
-                                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                                    && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
                                     .Skip((pageNumber - 1) * pageSize)
                                     .Take(pageSize).ToList();
                 }
@@ -47,7 +48,7 @@ namespace Quiplogs.Infrastructure.Repositories
                     modelList = _context.PlannedMaintenances.Where(x =>
                                     x.CompanyId == companyId
                                     && x.AssetId == assetId
-                                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId))
+                                    && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
                                     .ToList();
                 }
 
@@ -56,11 +57,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListPlannedMaintenanceResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, $"Error fetching PlannedMaintenance. {ex.Message}") });
+                return new ListPlannedMaintenanceResponse(null, false, new[] { new Error("", $"Error fetching PlannedMaintenance. {ex.Message}") });
             }
         }
 
-        public async Task<GetPlannedMaintenanceResponse> Get(string id)
+        public async Task<GetPlannedMaintenanceResponse> Get(Guid id)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetPlannedMaintenanceResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, $"Error fetching PlannedMaintenance. {ex.Message}") });
+                return new GetPlannedMaintenanceResponse(null, false, new[] { new Error("", $"Error fetching PlannedMaintenance. {ex.Message}") });
             }
         }
 
@@ -81,7 +82,7 @@ namespace Quiplogs.Infrastructure.Repositories
             {
                 var PlannedMaintenanceMapped = _mapper.Map<PlannedMaintenanceDto>(PlannedMaintenance);
 
-                if (string.IsNullOrEmpty(PlannedMaintenanceMapped.Id))
+                if (string.IsNullOrEmpty(PlannedMaintenanceMapped.Id.ToString()))
                 {
                     _context.PlannedMaintenances.Add(PlannedMaintenanceMapped);
                     await UpdateTotalItems(PlannedMaintenance.CompanyId);
@@ -98,11 +99,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutPlannedMaintenanceResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, $"Error updating PlannedMaintenance. {ex.Message}") });
+                return new PutPlannedMaintenanceResponse(null, false, new[] { new Error("", $"Error updating PlannedMaintenance. {ex.Message}") });
             }
         }
 
-        public async Task<RemovePlannedMaintenanceResponse> Remove(string id)
+        public async Task<RemovePlannedMaintenanceResponse> Remove(Guid id)
         {
             try
             {
@@ -111,15 +112,15 @@ namespace Quiplogs.Infrastructure.Repositories
                 _context.Remove(PlannedMaintenance);
                 await _context.SaveChangesAsync();
 
-                return new RemovePlannedMaintenanceResponse(id, true, null);
+                return new RemovePlannedMaintenanceResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemovePlannedMaintenanceResponse(null, false, new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, $"Error removing PlannedMaintenance. {ex.Message}") });
+                return new RemovePlannedMaintenanceResponse(null, false, new[] { new Error("", $"Error removing PlannedMaintenance. {ex.Message}") });
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"PlannedMaintenance-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -132,7 +133,7 @@ namespace Quiplogs.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task UpdateTotalItems(Guid companyId)
         {
             await _cache.SetAsnyc($"PlannedMaintenance-total-{companyId}", _context.PlannedMaintenances.Count());
         }

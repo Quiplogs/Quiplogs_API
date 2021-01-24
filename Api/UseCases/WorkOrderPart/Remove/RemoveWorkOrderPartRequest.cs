@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.WorkOrderPart.Remove
+﻿using System;
+
+namespace Api.UseCases.WorkOrderPart.Remove
 {
     public class RemoveWorkOrderPartRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

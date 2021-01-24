@@ -19,17 +19,12 @@ namespace Api.UseCases.Part.List
         public async Task<ActionResult> List([FromQuery] ListPartRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            { 
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(companyId, request.LocationId, request.FilterName, request.PageNumber), _listPartPresenter);
+            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(GetCompanyId(request.CompanyId), request.LocationId, request.FilterName, request.PageNumber), _listPartPresenter);
             return _listPartPresenter.ContentResult;
         }
     }

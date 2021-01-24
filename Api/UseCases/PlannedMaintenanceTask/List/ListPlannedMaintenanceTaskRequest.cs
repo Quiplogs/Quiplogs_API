@@ -1,9 +1,11 @@
-﻿namespace Api.UseCases.PlannedMaintenanceTask.List
+﻿using System;
+
+namespace Api.UseCases.PlannedMaintenanceTask.List
 {
     public class ListPlannedMaintenanceTaskRequest
     {
-        public string PlannedMaintenanceId { get; set; }
+        public Guid PlannedMaintenanceId { get; set; }
         public int PageNumber { get; set; }
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

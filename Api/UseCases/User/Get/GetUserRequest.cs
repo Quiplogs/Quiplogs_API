@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.User.Get
+﻿using System;
+
+namespace Api.UseCases.User.Get
 {
     public class GetUserRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
                 return true;
             }
 
-            outputPort.Handle(new RemoveWorkOrderPartResponse(new[] { new Error(GlobalVariables.error_workOrderPartFailure, "Error removing Work Order Part.") }));
+            outputPort.Handle(new RemoveWorkOrderPartResponse(new[] { new Error("", "Error removing Work Order Part.") }));
             return false;
         }
     }

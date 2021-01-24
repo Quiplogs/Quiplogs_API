@@ -9,6 +9,7 @@ using Quiplogs.Inventory.Data.Entities;
 using Quiplogs.Inventory.Domain.Entities;
 using Quiplogs.Inventory.Dto.Repositories.Part;
 using Quiplogs.Inventory.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListPartResponse> List(string companyId, string locationId, string filterName, int pageNumber, int pageSize)
+        public async Task<ListPartResponse> List(Guid companyId, Guid locationId, string filterName, int pageNumber, int pageSize)
         {
             try
             {
@@ -44,11 +45,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListPartResponse(null, false, new[] { new Error(GlobalVariables.error_partFailure, $"Error fetching Part. {ex.Message}") });
+                return new ListPartResponse(null, false, new[] { new Error("", $"Error fetching Part. {ex.Message}") });
             }
         }
 
-        public async Task<GetPartResponse> Get(string id)
+        public async Task<GetPartResponse> Get(Guid id)
         {
             try
             {
@@ -59,7 +60,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetPartResponse(null, false, new[] { new Error(GlobalVariables.error_partFailure, $"Error fetching Part. {ex.Message}") });
+                return new GetPartResponse(null, false, new[] { new Error("", $"Error fetching Part. {ex.Message}") });
             }
         }
 
@@ -87,11 +88,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutPartResponse(null, false, new[] { new Error(GlobalVariables.error_partFailure, $"Error updating Part. {ex.Message}") });
+                return new PutPartResponse(null, false, new[] { new Error("", $"Error updating Part. {ex.Message}") });
             }
         }
 
-        public async Task RemoveImage(string id)
+        public async Task RemoveImage(Guid id)
         {
             var model = _context.Parts.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
@@ -105,7 +106,7 @@ namespace Api.Infrastructure.Repositories
             }
         }
 
-        public async Task<RemovePartResponse> Remove(string id)
+        public async Task<RemovePartResponse> Remove(Guid id)
         {
             try
             {
@@ -116,15 +117,15 @@ namespace Api.Infrastructure.Repositories
 
                 await UpdateTotalItems(Part.CompanyId);
 
-                return new RemovePartResponse(id, true, null);
+                return new RemovePartResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemovePartResponse(null, false, new[] { new Error(GlobalVariables.error_partFailure, $"Error removing Part. {ex.Message}") });
+                return new RemovePartResponse(null, false, new[] { new Error("", $"Error removing Part. {ex.Message}") });
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"Part-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -137,7 +138,7 @@ namespace Api.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task UpdateTotalItems(Guid companyId)
         {
             await _cache.SetAsnyc($"Part-total-{companyId}", _context.Parts.Count());
         }

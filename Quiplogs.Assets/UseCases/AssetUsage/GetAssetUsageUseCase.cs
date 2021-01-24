@@ -27,7 +27,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 return true;
             }
 
-            outputPort.Handle(new GetAssetUsageResponse(new[] { new Error(GlobalVariables.error_assetUsageFailure, "Asset Usage not Found.") }));
+            outputPort.Handle(new GetAssetUsageResponse(new[] { new Error("", "Asset Usage not Found.") }));
             return false;
         }
     }

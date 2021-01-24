@@ -34,7 +34,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 return true;
             }
 
-            outputPort.Handle(new ListWorkOrderResponse(new[] { new Error(GlobalVariables.error_workOrderFailure, "No WorkOrders Found.") }));
+            outputPort.Handle(new ListWorkOrderResponse(new[] { new Error("", "No WorkOrders Found.") }));
             return false;
         }
     }

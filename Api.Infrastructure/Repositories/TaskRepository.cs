@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Quiplogs.Inventory.Data.Entities;
 using Quiplogs.Inventory.Dto.Repositories.Task;
 using Quiplogs.Inventory.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListTaskResponse> List(string companyId, int pageNumber, string filterName, int pageSize)
+        public async Task<ListTaskResponse> List(Guid companyId, int pageNumber, string filterName, int pageSize)
         {
             try
             {
@@ -41,11 +42,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListTaskResponse(null, false, new[] { new Error(GlobalVariables.error_taskFailure, $"Error fetching Task. {ex.Message}") });
+                return new ListTaskResponse(null, false, new[] { new Error("", $"Error fetching Task. {ex.Message}") });
             }
         }
 
-        public async Task<GetTaskResponse> Get(string id)
+        public async Task<GetTaskResponse> Get(Guid id)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetTaskResponse(null, false, new[] { new Error(GlobalVariables.error_taskFailure, $"Error fetching Task. {ex.Message}") });
+                return new GetTaskResponse(null, false, new[] { new Error("", $"Error fetching Task. {ex.Message}") });
             }
         }
 
@@ -66,7 +67,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var TaskMapped = _mapper.Map<TaskDto>(Task);
 
-                if (string.IsNullOrEmpty(TaskMapped.Id))
+                if (string.IsNullOrEmpty(TaskMapped.Id.ToString()))
                 {
                     _context.Tasks.Add(TaskMapped);
                     await UpdateTotalItems(Task.CompanyId);
@@ -83,11 +84,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutTaskResponse(null, false, new[] { new Error(GlobalVariables.error_taskFailure, $"Error updating Task. {ex.Message}") });
+                return new PutTaskResponse(null, false, new[] { new Error("", $"Error updating Task. {ex.Message}") });
             }
         }
 
-        public async Task<RemoveTaskResponse> Remove(string id)
+        public async Task<RemoveTaskResponse> Remove(Guid id)
         {
             try
             {
@@ -96,15 +97,15 @@ namespace Api.Infrastructure.Repositories
                 _context.Remove(Task);
                 await _context.SaveChangesAsync();
 
-                return new RemoveTaskResponse(id, true, null);
+                return new RemoveTaskResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemoveTaskResponse(null, false, new[] { new Error(GlobalVariables.error_taskFailure, $"Error removing Task. {ex.Message}") });
+                return new RemoveTaskResponse(null, false, new[] { new Error("", $"Error removing Task. {ex.Message}") });
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"Task-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -117,7 +118,7 @@ namespace Api.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task UpdateTotalItems(Guid companyId)
         {
             await _cache.SetAsnyc($"Task-total-{companyId}", _context.Tasks.Count());
         }

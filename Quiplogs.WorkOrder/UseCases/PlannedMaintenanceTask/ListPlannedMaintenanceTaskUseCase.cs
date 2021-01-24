@@ -28,7 +28,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
                 return true;
             }
 
-            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, "No Planned Maintenances Tasks Found.") }));
+            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error("", "No Planned Maintenances Tasks Found.") }));
             return false;
         }
     }

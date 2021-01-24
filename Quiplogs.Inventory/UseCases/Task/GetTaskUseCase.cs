@@ -27,7 +27,7 @@ namespace Quiplogs.Inventory.UseCases.Task
                 return true;
             }
 
-            outputPort.Handle(new GetTaskResponse(new[] { new Error(GlobalVariables.error_taskFailure, "Task not Found.") }));
+            outputPort.Handle(new GetTaskResponse(new[] { new Error("", "Task not Found.") }));
             return false;
         }
     }

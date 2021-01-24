@@ -34,7 +34,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenance
                 return true;
             }
 
-            outputPort.Handle(new ListPlannedMaintenanceResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceFailure, "No Planned Maintenances Found.") }));
+            outputPort.Handle(new ListPlannedMaintenanceResponse(new[] { new Error("", "No Planned Maintenances Found.") }));
             return false;
         }
     }

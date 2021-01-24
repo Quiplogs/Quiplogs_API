@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Entities;
 using Quiplogs.Assets.Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Quiplogs.WorkOrder.Domain.Entities
@@ -8,19 +9,19 @@ namespace Quiplogs.WorkOrder.Domain.Entities
     {
         public string Name { get; set; }
 
-        public string AssetId { get; set; }
+        public Guid AssetId { get; set; }
 
         public Asset Asset { get; set; }
 
-        public string CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public Company Company { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public Location Location { get; set; }
 
-        public string DefaultTechnicianId { get; set; }
+        public Guid DefaultTechnicianId { get; set; }
 
         public AppUser DefaultTechnician { get; set; }
 

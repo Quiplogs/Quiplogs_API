@@ -8,6 +8,7 @@ using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.WorkOrder;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,14 +28,14 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListWorkOrderResponse> List(string companyId, string locationId, string assetId, int pageNumber, int pageSize)
+        public async Task<ListWorkOrderResponse> List(Guid companyId, Guid locationId, Guid assetId, int pageNumber, int pageSize)
         {
             try
             {
                 var WorkOrderList = _context.WorkOrders.Where(x =>
                     x.CompanyId == companyId
-                    && (string.IsNullOrEmpty(locationId) || x.LocationId == locationId)
-                    && (string.IsNullOrEmpty(assetId) || x.AssetId == assetId))
+                    && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId)
+                    && (string.IsNullOrEmpty(assetId.ToString()) || x.AssetId == assetId))
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToList();
 
@@ -43,7 +44,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListWorkOrderResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderFailure, $"Error fetching WorkOrder. {ex.Message}") });
+                return new ListWorkOrderResponse(null, false, new[] { new Error("", $"Error fetching WorkOrder. {ex.Message}") });
             }
         }
 
@@ -67,7 +68,7 @@ namespace Api.Infrastructure.Repositories
             return 0;
         }
 
-        public async Task<GetWorkOrderResponse> Get(string id)
+        public async Task<GetWorkOrderResponse> Get(Guid id)
         {
             try
             {
@@ -78,7 +79,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetWorkOrderResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderFailure, $"Error fetching WorkOrder. {ex.Message}") });
+                return new GetWorkOrderResponse(null, false, new[] { new Error("", $"Error fetching WorkOrder. {ex.Message}") });
             }
         }
 
@@ -88,7 +89,7 @@ namespace Api.Infrastructure.Repositories
             {
                 var modelMapped = _mapper.Map<WorkOrderDto>(model);
 
-                if (string.IsNullOrEmpty(modelMapped.Id))
+                if (string.IsNullOrEmpty(modelMapped.Id.ToString()))
                 {
                     _context.WorkOrders.Add(modelMapped);
                     await UpdateTotalItems(model.CompanyId, model.AssetId);
@@ -105,11 +106,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutWorkOrderResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderFailure, $"Error updating WorkOrder. {ex.Message}") });
+                return new PutWorkOrderResponse(null, false, new[] { new Error("", $"Error updating WorkOrder. {ex.Message}") });
             }
         }
 
-        public async Task<RemoveWorkOrderResponse> Remove(string id)
+        public async Task<RemoveWorkOrderResponse> Remove(Guid id)
         {
             try
             {
@@ -118,15 +119,15 @@ namespace Api.Infrastructure.Repositories
                 _context.Remove(WorkOrder);
                 await _context.SaveChangesAsync();
 
-                return new RemoveWorkOrderResponse(id, true, null);
+                return new RemoveWorkOrderResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemoveWorkOrderResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderFailure, $"Error removing WorkOrder. {ex.Message}") });
+                return new RemoveWorkOrderResponse(null, false, new[] { new Error("", $"Error removing WorkOrder. {ex.Message}") });
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId, string assetId)
+        public async Task<int> GetTotalRecords(Guid companyId, Guid assetId)
         {
             var _cacheKey = $"WorkOrder-total-{companyId}-{assetId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -139,7 +140,7 @@ namespace Api.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task<int> UpdateTotalItems(string companyId, string assetId)
+        private async Task<int> UpdateTotalItems(Guid companyId, Guid assetId)
         {
             var _cacheKey = $"WorkOrder-total-{companyId}-{assetId}";
             await _cache.SetAsnyc(_cacheKey, 

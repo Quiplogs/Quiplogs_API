@@ -27,7 +27,7 @@ namespace Quiplogs.Assets.UseCases.Asset
                 return true;
             }
 
-            outputPort.Handle(new RemoveAssetResponse(new[] { new Error(GlobalVariables.error_assetFailure, "Error removing Asset.") }));
+            outputPort.Handle(new RemoveAssetResponse(new[] { new Error("", "Error removing Asset.") }));
             return false;
         }
     }

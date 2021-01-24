@@ -27,7 +27,7 @@ namespace Quiplogs.Inventory.UseCases.Task
                 return true;
             }
 
-            outputPort.Handle(new RemoveTaskResponse(new[] { new Error(GlobalVariables.error_taskFailure, "Error removing Task.") }));
+            outputPort.Handle(new RemoveTaskResponse(new[] { new Error("", "Error removing Task.") }));
             return false;
         }
     }

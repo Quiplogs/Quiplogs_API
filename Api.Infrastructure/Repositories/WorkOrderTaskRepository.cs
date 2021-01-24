@@ -29,7 +29,7 @@ namespace Quiplogs.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListWorkOrderTaskResponse> List(string workOrderId, int pageNumber, int pageSize)
+        public async Task<ListWorkOrderTaskResponse> List(Guid workOrderId, int pageNumber, int pageSize)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListWorkOrderTaskResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderTaskFailure, $"Error fetching WorkOrderTask. {ex.Message}") });
+                return new ListWorkOrderTaskResponse(null, false, new[] { new Error("", $"Error fetching WorkOrderTask. {ex.Message}") });
             }
         }
 
@@ -53,7 +53,7 @@ namespace Quiplogs.Infrastructure.Repositories
             {
                 var WorkOrderTaskMapped = _mapper.Map<WorkOrderTaskDto>(WorkOrderTask);
 
-                if (string.IsNullOrEmpty(WorkOrderTaskMapped.Id))
+                if (string.IsNullOrEmpty(WorkOrderTaskMapped.Id.ToString()))
                 {
                     _context.WorkOrderTasks.Add(WorkOrderTaskMapped);
                 }
@@ -69,11 +69,11 @@ namespace Quiplogs.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutWorkOrderTaskResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderTaskFailure, $"Error updating WorkOrderTask. {ex.Message}") });
+                return new PutWorkOrderTaskResponse(null, false, new[] { new Error("", $"Error updating WorkOrderTask. {ex.Message}") });
             }
         }
 
-        public async Task<RemoveWorkOrderTaskResponse> Remove(string id)
+        public async Task<RemoveWorkOrderTaskResponse> Remove(Guid id)
         {
             try
             {
@@ -82,15 +82,15 @@ namespace Quiplogs.Infrastructure.Repositories
                 _context.Remove(WorkOrderTask);
                 await _context.SaveChangesAsync();
 
-                return new RemoveWorkOrderTaskResponse(id, true, null);
+                return new RemoveWorkOrderTaskResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemoveWorkOrderTaskResponse(null, false, new[] { new Error(GlobalVariables.error_workOrderTaskFailure, $"Error removing WorkOrderTask. {ex.Message}") });
+                return new RemoveWorkOrderTaskResponse(null, false, new[] { new Error("", $"Error removing WorkOrderTask. {ex.Message}") });
             }
         }
 
-        public int GetTotalRecords(string workOrderId)
+        public int GetTotalRecords(Guid workOrderId)
         {
             return _context.WorkOrderTasks.Where(x => x.WorkOrderId == workOrderId).Count();
         }

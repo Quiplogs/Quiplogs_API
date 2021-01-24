@@ -4,7 +4,7 @@ using Quiplogs.Assets.Dto.Responses.Asset;
 
 namespace Quiplogs.Assets.Interfaces.UseCases.Asset
 {
-    public interface IFetchAssetUseCase : IRequestHandler<FetchAssetRequest, FetchAssetResponse>
-    {
-    }
+    //public interface IFetchAssetUseCase : IRequestHandler<FetchAssetRequest, FetchAssetResponse>
+    //{
+    //}
 }

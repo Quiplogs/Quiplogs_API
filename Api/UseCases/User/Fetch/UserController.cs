@@ -23,13 +23,7 @@ namespace Api.UseCases.User.Fetch
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _fetchUsersUseCase.Handle(new Core.Dto.Requests.User.FetchUsersRequest(companyId, request.LocationId), _fetchUsersPresenter);
+            await _fetchUsersUseCase.Handle(new Core.Dto.Requests.User.FetchUsersRequest(GetCompanyId(request.CompanyId), request.LocationId), _fetchUsersPresenter);
             return _fetchUsersPresenter.ContentResult;
         }        
     }

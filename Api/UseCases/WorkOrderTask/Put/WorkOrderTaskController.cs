@@ -23,12 +23,6 @@ namespace Api.UseCases.WorkOrderTask.Put
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
             await _putWorkOrderTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask.PutWorkOrderTaskRequest(request.WorkOrderTask), _putWorkOrderTaskPresenter);
             return _putWorkOrderTaskPresenter.ContentResult;
         }

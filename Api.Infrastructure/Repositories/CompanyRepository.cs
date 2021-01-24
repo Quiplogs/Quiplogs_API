@@ -50,7 +50,7 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new CreateCompanyResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error updating Company. {ex.Message}") });
+                return new CreateCompanyResponse(new System.Guid(), false, new[] { new Error("", $"Error updating Company. {ex.Message}") });
             }
         }
 

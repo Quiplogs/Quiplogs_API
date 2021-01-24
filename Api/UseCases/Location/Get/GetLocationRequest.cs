@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Location.Get
+﻿using System;
+
+namespace Api.UseCases.Location.Get
 {
     public class GetLocationRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

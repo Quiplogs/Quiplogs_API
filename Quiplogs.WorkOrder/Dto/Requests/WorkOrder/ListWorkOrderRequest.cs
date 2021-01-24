@@ -1,15 +1,16 @@
 ﻿using Api.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
+using System;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.WorkOrder
 {
     public class ListWorkOrderRequest : IRequest<ListWorkOrderResponse>
     {
-        public string CompanyId { get; }
-        public string LocationId { get; }
-        public string AssetId { get; set; }
+        public Guid CompanyId { get; }
+        public Guid LocationId { get; }
+        public Guid AssetId { get; set; }
         public int PageNumber { get; }
-        public ListWorkOrderRequest(string companyId, string locationId, string assetId, int pageNumber)
+        public ListWorkOrderRequest(Guid companyId, Guid locationId, Guid assetId, int pageNumber)
         {
             CompanyId = companyId;
             LocationId = locationId;

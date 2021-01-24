@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.PlannedMaintenance.Remove
+﻿using System;
+
+namespace Api.UseCases.PlannedMaintenance.Remove
 {
     public class RemovePlannedMaintenanceRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

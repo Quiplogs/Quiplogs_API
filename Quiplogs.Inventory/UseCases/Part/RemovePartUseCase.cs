@@ -28,7 +28,7 @@ namespace Quiplogs.Inventory.UseCases.Part
                 return true;
             }
 
-            outputPort.Handle(new RemovePartResponse(new[] { new Error(GlobalVariables.error_partFailure, "Error removing Part.") }));
+            outputPort.Handle(new RemovePartResponse(new[] { new Error("", "Error removing Part.") }));
             return false;
         }
     }

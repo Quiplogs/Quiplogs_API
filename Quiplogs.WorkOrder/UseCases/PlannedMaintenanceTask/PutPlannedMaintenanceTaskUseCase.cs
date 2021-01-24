@@ -32,7 +32,7 @@ namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
                 return true;
             }
 
-            outputPort.Handle(new PutPlannedMaintenanceTaskResponse(new[] { new Error(GlobalVariables.error_plannedMaintenanceTaskFailure, "Error updating Planned Maintenance Task.") }));
+            outputPort.Handle(new PutPlannedMaintenanceTaskResponse(new[] { new Error("", "Error updating Planned Maintenance Task.") }));
             return false;
         }
     }

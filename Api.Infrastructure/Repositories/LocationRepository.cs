@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Api.Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<ListLocationResponse> List(string companyId, int pageNumber, string filterName, int pageSize)
+        public async Task<ListLocationResponse> List(Guid companyId, int pageNumber, string filterName, int pageSize)
         {
             try
             {
@@ -43,11 +44,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new ListLocationResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error fetching Location. {ex.Message}") });
+                return new ListLocationResponse(null, false, new[] { new Error("", $"Error fetching Location. {ex.Message}") });
             }
         }
 
-        public async Task<GetLocationResponse> Get(string id)
+        public async Task<GetLocationResponse> Get(Guid id)
         {
             try
             {
@@ -58,11 +59,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new GetLocationResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error fetching Location. {ex.Message}") });
+                return new GetLocationResponse(null, false, new[] { new Error("", $"Error fetching Location. {ex.Message}") });
             }
         }
 
-        public async Task RemoveImage(string id)
+        public async Task RemoveImage(Guid id)
         {
             var _location = _context.Locations.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
@@ -100,11 +101,11 @@ namespace Api.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                return new PutLocationResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error updating Location. {ex.Message}") });
+                return new PutLocationResponse(null, false, new[] { new Error("", $"Error updating Location. {ex.Message}") });
             }
         }
 
-        public async Task<RemoveLocationResponse> Remove(string id)
+        public async Task<RemoveLocationResponse> Remove(Guid id)
         {
             try
             {
@@ -114,15 +115,15 @@ namespace Api.Infrastructure.Repositories
                 _context.Remove(Location);
                 await _context.SaveChangesAsync();
 
-                return new RemoveLocationResponse(id, true, null);
+                return new RemoveLocationResponse(id.ToString(), true, null);
             }
             catch (SqlException ex)
             {
-                return new RemoveLocationResponse(null, false, new[] { new Error(GlobalVariables.error_locationFailure, $"Error removing Location. {ex.Message}") });
+                return new RemoveLocationResponse(null, false, new[] { new Error("", $"Error removing Location. {ex.Message}") });
             }
         }
 
-        public async Task<int> GetTotalRecords(string companyId)
+        public async Task<int> GetTotalRecords(Guid companyId)
         {
             var _cacheKey = $"Location-total-{companyId}";
             var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
@@ -135,7 +136,7 @@ namespace Api.Infrastructure.Repositories
             return cachedTotal;
         }
 
-        private async Task UpdateTotalItems(string companyId)
+        private async Task UpdateTotalItems(Guid companyId)
         {
             await _cache.SetAsnyc($"Location-total-{companyId}", _context.Locations.Count());
         }

@@ -34,7 +34,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 return true;
             }
 
-            outputPort.Handle(new ListAssetUsageResponse(new[] { new Error(GlobalVariables.error_assetUsageFailure, "No Asset Usage Found.") }));
+            outputPort.Handle(new ListAssetUsageResponse(new[] { new Error("", "No Asset Usage Found.") }));
             return false;
         }
     }

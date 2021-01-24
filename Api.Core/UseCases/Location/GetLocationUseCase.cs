@@ -26,7 +26,7 @@ namespace Api.Core.UseCases.Location
                 return true;
             }
 
-            outputPort.Handle(new GetLocationResponse(new[] { new Error(GlobalVariables.error_locationFailure, "Location not Found.") }));
+            outputPort.Handle(new GetLocationResponse(new[] { new Error("", "Location not Found.") }));
             return false;
         }
     }

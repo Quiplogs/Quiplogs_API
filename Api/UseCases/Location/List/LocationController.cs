@@ -23,13 +23,7 @@ namespace Api.UseCases.Location.List
                 return BadRequest(ModelState);
             }
 
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
-
-            await _listLocationUseCase.Handle(new Core.Dto.Requests.Location.ListLocationRequest(companyId, request.PageNumber, request.FilterName), _listLocationPresenter);
+            await _listLocationUseCase.Handle(new Core.Dto.Requests.Location.ListLocationRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listLocationPresenter);
             return _listLocationPresenter.ContentResult;
         }
     }

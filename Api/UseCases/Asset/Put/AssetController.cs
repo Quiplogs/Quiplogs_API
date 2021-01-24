@@ -22,14 +22,8 @@ namespace Api.UseCases.Asset.Put
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-
-            var companyId = request.CompanyId;
-            if (string.IsNullOrEmpty(companyId))
-            {
-                companyId = this.GetCompanyId();
-            }
              
-            await _putAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.PutAssetRequest(request.Name, request.Make, request.Model, request.SerialNumber, request.ManufacturedDate, request.PurchasedDate, request. CurrentWorkDone, request.UoM, request.ImgFileName, request.ImgUrl, request.WarrantyUrl, request.InstructionManualUrl, request.LocationId, companyId), _putAssetPresenter);
+            await _putAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.PutAssetRequest(request.Name, request.Make, request.Model, request.SerialNumber, request.ManufacturedDate, request.PurchasedDate, request. CurrentWorkDone, request.UoM, request.ImgFileName, request.ImgUrl, request.WarrantyUrl, request.InstructionManualUrl, request.LocationId, GetCompanyId(request.CompanyId)), _putAssetPresenter);
             return _putAssetPresenter.ContentResult;
         }
     }

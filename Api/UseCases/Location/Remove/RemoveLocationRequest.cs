@@ -7,6 +7,6 @@ namespace Api.UseCases.Location.Remove
 {
     public class RemoveLocationRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

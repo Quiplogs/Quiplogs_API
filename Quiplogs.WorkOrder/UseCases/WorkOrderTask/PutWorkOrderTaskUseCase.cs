@@ -27,7 +27,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderTask
                 return true;
             }
 
-            outputPort.Handle(new PutWorkOrderTaskResponse(new[] { new Error(GlobalVariables.error_workOrderTaskFailure, "Error updating Work Order Task.") }));
+            outputPort.Handle(new PutWorkOrderTaskResponse(new[] { new Error("", "Error updating Work Order Task.") }));
             return false;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace Api.UseCases
@@ -10,9 +11,6 @@ namespace Api.UseCases
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {
-        internal string GetCompanyId()
-        {
-            return User.FindFirstValue("comId");
-        }
+        internal Guid GetCompanyId(Guid? companyId) =>  companyId.HasValue ? companyId.Value  : Guid.Parse(User.FindFirstValue("comId"));
     }
 }

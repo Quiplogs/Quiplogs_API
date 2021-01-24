@@ -27,7 +27,7 @@ namespace Quiplogs.Assets.UseCases.Asset
                 return true;
             }
 
-            outputPort.Handle(new GetAssetResponse(new[] { new Error(GlobalVariables.error_assetFailure, "Asset not Found.") }));
+            outputPort.Handle(new GetAssetResponse(new[] { new Error("", "Asset not Found.") }));
             return false;
         }
     }

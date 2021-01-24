@@ -1,7 +1,9 @@
-﻿namespace Api.UseCases.Part.Get
+﻿using System;
+
+namespace Api.UseCases.Part.Get
 {
     public class GetPartRequest
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
