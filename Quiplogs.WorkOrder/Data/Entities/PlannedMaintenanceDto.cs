@@ -6,18 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class PlannedMaintenanceDto : BaseEntityDto
+    public class PlannedMaintenanceDto : BaseLocationDto
+
     {
         public string Name { get; set; }
         public Guid AssetId { get; set; }
 
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }
-
-        public Guid LocationId { get; set; }
-
-        [ForeignKey("LocationId")]
-        public LocationDto Location { get; set; }
 
         public Guid DefaultTechnicianId { get; set; }
 

@@ -1,9 +1,8 @@
-﻿using Api.UseCases.PlannedMaintenancePart.Remove;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
-using System.Threading.Tasks;
 
-namespace Api.UseCases.PlannedMaintenancePartPart.Remove
+namespace Api.UseCases.PlannedMaintenancePart.Remove
 {
     public class PlannedMaintenancePartController : BaseApiController
     {

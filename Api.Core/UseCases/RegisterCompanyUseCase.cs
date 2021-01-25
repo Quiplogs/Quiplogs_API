@@ -1,14 +1,14 @@
-﻿using Api.Core.Domain;
-using Api.Core.Domain.Entities;
-using Api.Core.Dto.Requests.Company;
-using Api.Core.Dto.Responses.Company;
-using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.UseCases;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto.Requests.Company;
+using Quiplogs.Core.Dto.Responses.Company;
+using Quiplogs.Core.Interfaces;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Core.Interfaces.UseCases;
 
-namespace Api.Core.UseCases
+namespace Quiplogs.Core.UseCases
 {
     public class RegisterCompanyUseCase : IRegisterCompanyUseCase
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Location;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.Location;
 
 namespace Api.UseCases.Location.List
 {
@@ -23,7 +23,7 @@ namespace Api.UseCases.Location.List
                 return BadRequest(ModelState);
             }
 
-            await _listLocationUseCase.Handle(new Core.Dto.Requests.Location.ListLocationRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listLocationPresenter);
+            await _listLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.ListLocationRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listLocationPresenter);
             return _listLocationPresenter.ContentResult;
         }
     }

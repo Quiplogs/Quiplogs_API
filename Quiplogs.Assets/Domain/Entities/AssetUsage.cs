@@ -1,5 +1,5 @@
-﻿using Api.Core.Domain.Entities;
-using System;
+﻿using System;
+using Quiplogs.Core.Domain.Entities;
 
 namespace Quiplogs.Assets.Domain.Entities
 {

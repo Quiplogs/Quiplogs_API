@@ -1,4 +1,4 @@
-﻿namespace Api.Infrastructure
+﻿namespace Quiplogs.Infrastructure
 {
     public static class DbGlobals
     {

@@ -1,4 +1,4 @@
-﻿namespace Quiplogs.PMSchedule.Data.Entities
+﻿namespace Quiplogs.Schedules.Data.Entities
 {
     public class ScheduleWeeklyDto : ScheduleTime
     {

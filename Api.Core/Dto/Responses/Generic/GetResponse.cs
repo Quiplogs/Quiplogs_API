@@ -1,7 +1,6 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Api.Core.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Core.Dto.Responses.Generic
 {

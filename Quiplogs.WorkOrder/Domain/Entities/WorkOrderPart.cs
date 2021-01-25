@@ -1,6 +1,6 @@
-﻿using Api.Core.Domain.Entities;
-using Quiplogs.Inventory.Domain.Entities;
+﻿using Quiplogs.Inventory.Domain.Entities;
 using System;
+using Quiplogs.Core.Domain.Entities;
 
 namespace Quiplogs.WorkOrder.Domain.Entities
 {

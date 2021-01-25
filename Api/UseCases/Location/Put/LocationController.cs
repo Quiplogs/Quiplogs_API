@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Location;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.Location;
 
 namespace Api.UseCases.Location.Put
 {
@@ -23,7 +23,7 @@ namespace Api.UseCases.Location.Put
                 return BadRequest(ModelState);
             }
 
-            await _putLocationUseCase.Handle(new Core.Dto.Requests.Location.PutLocationRequest(request.Id, request.Name, request.City, request.Country, request.UserId, GetCompanyId(request.CompanyId), request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat.ToString(), request.Long.ToString()), _putLocationPresenter);
+            await _putLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.PutLocationRequest(request.Id, request.Name, request.City, request.Country, request.UserId, GetCompanyId(request.CompanyId), request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat.ToString(), request.Long.ToString()), _putLocationPresenter);
             return _putLocationPresenter.ContentResult;
         }
     }

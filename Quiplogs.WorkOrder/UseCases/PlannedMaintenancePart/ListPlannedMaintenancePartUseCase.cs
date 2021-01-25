@@ -1,12 +1,12 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
+﻿using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenancePart;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
 using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
-using System.Threading.Tasks;
 
-namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenancePartPart
+namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenancePart
 {
     public class ListPlannedMaintenancePartUseCase : IListPlannedMaintenancePartUseCase
     {

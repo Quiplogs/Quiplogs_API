@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenanceTask;
+﻿using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenanceTask;
 using System;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask
 {

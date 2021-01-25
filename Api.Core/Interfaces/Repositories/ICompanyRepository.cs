@@ -1,8 +1,8 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto.Repositories;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto.Repositories;
 
-namespace Api.Core.Interfaces.Repositories
+namespace Quiplogs.Core.Interfaces.Repositories
 {
     public interface ICompanyRepository
     {

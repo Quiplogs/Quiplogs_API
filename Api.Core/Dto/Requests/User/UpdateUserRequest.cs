@@ -1,8 +1,8 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto.Responses.User;
-using Api.Core.Interfaces;
+﻿using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto.Responses.User;
+using Quiplogs.Core.Interfaces;
 
-namespace Api.Core.Dto.Requests.User
+namespace Quiplogs.Core.Dto.Requests.User
 {
     public class UpdateUserRequest : IRequest<UpdateUserResponse>
     {

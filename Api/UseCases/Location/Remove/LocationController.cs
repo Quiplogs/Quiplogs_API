@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.Location;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.Location;
 
 namespace Api.UseCases.Location.Remove
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Location.Remove
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removeLocationUseCase.Handle(new Core.Dto.Requests.Location.RemoveLocationRequest(request.Id), _removeLocationPresenter);
+            await _removeLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.RemoveLocationRequest(request.Id), _removeLocationPresenter);
             return _removeLocationPresenter.ContentResult;
         }
     }

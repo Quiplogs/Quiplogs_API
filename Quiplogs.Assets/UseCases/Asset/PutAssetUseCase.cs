@@ -1,11 +1,11 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using Quiplogs.Assets.Dto.Requests.Asset;
 using Quiplogs.Assets.Dto.Responses.Asset;
 using Quiplogs.Assets.Interfaces.Repositories;
 using Quiplogs.Assets.Interfaces.UseCases.Asset;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Assets.UseCases.Asset
 {
@@ -24,12 +24,12 @@ namespace Quiplogs.Assets.UseCases.Asset
         {
             var model = _mapper.Map<Domain.Entities.Asset>(message);
 
-            var response = await _repository.Put(model);
-            if (response.Success)
-            {
-                outputPort.Handle(new PutAssetResponse(response.Asset, true));
-                return true;
-            }
+            //var response = await _repository.Put(model);
+            //if (response.Success)
+            //{
+            //    outputPort.Handle(new PutAssetResponse(response.Asset, true));
+            //    return true;
+            //}
 
             outputPort.Handle(new PutAssetResponse(new[] { new Error("", "Error updating Asset.") }));
             return false;

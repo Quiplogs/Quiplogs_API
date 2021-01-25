@@ -1,19 +1,19 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Repositories.Location;
-using Api.Core.Helpers;
-using Api.Core.Interfaces.Repositories;
-using Quiplogs.Infrastructure.SqlContext;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Repositories.Location;
+using Quiplogs.Core.Helpers;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Infrastructure.SqlContext;
 
-namespace Api.Infrastructure.Repositories
+namespace Quiplogs.Infrastructure.Repositories
 {
     public class LocationRepository : ILocationRepository
     {

@@ -1,4 +1,4 @@
-﻿using Api.Core.Interfaces;
+﻿using Quiplogs.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderTask;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask

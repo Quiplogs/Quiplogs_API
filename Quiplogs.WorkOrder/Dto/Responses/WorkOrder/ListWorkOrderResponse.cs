@@ -1,7 +1,7 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.Dto.Responses.WorkOrder
 {

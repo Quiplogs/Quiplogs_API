@@ -1,19 +1,19 @@
 ﻿using System;
-using Api.Core;
 using AutoMapper;
 using System.Linq;
-using Api.Core.Dto;
-using Api.Core.Helpers;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
-using Api.Core.Domain.Entities;
-using Api.Core.Dto.Repositories;
 using System.Collections.Generic;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Infrastructure.SqlContext;
 using Microsoft.EntityFrameworkCore;
+using Quiplogs.Core;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Repositories;
+using Quiplogs.Core.Helpers;
 using Quiplogs.Core.Interfaces.Repositories;
 
 namespace Quiplogs.Infrastructure.Repositories
@@ -35,12 +35,12 @@ namespace Quiplogs.Infrastructure.Repositories
             entities = _context.Set<T2>();
         }
 
-        public async Task<BaseModelListResponse<T1>> List(Expression<Func<T2, bool>> condition, Expression<Func<T2, T2>> include)
+        public async Task<BaseModelListResponse<T1>> List(Expression<Func<T2, bool>> condition, Expression<Func<T2, object>> include)
         {
             try
             {
                 var modelList = new List<T2>();
-                if (include == null)
+                if (include != null)
                 {
                     modelList = await entities.Include(include).Where(condition).ToListAsync();
                 } else
@@ -57,7 +57,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BasePagedResponse<T1>> PagedList(Expression<Func<T2, bool>> condition, Expression<Func<T2, T2>> include, int pageNumber, int pageSize)
+        public async Task<BasePagedResponse<T1>> PagedList(Expression<Func<T2, bool>> condition, Expression<Func<T2, object>> include, Guid companyId, int pageNumber, int pageSize)
         {
             try
             {
@@ -67,9 +67,8 @@ namespace Quiplogs.Infrastructure.Repositories
                                     .Skip((pageNumber - 1) * pageSize)
                                     .Take(pageSize).ToListAsync();
 
-
                 var mappedList = _mapper.Map<List<T1>>(modelList);
-                var total = await GetTotalRecords(modelList.FirstOrDefault().CompanyId);
+                var total = await GetTotalRecords(companyId);
                 var pagedResult = new PagedResult<T1>(mappedList, total, pageNumber, pageSize);
                 
                 return new BasePagedResponse<T1>(pagedResult, true, null);
@@ -100,9 +99,9 @@ namespace Quiplogs.Infrastructure.Repositories
             try
             {
                 var modelMapped = _mapper.Map<T2>(model);
-                if (model.Id == null)
+                if (model.Id == Guid.Empty)
                 {
-                    entities.Add(modelMapped);
+                    await entities.AddAsync(modelMapped);
                 }
                 else
                 {
@@ -145,7 +144,7 @@ namespace Quiplogs.Infrastructure.Repositories
         private async Task UpdateTotalItems(Guid companyId)
         {
             var _cacheKey = $"{typeof(T1).Name}-total-{companyId}";
-            var cachedTotal = entities.Where(x => x.CompanyId == companyId).Count();
+            var cachedTotal = entities.Count(x => x.CompanyId == companyId);
             await _cache.SetAsnyc(_cacheKey, cachedTotal);
         }
     }

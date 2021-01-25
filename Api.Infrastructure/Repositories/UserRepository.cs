@@ -1,16 +1,16 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Repositories.User;
-using Api.Core.Interfaces.Repositories;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Quiplogs.Core.Data.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Repositories.User;
+using Quiplogs.Core.Interfaces.Repositories;
 
-namespace Api.Infrastructure.Repositories
+namespace Quiplogs.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {

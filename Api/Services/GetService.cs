@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Domain.Entities;
 using Api.Presenters;
 using Api.Services.Interfaces;
 using Api.UseCases.Generic.Get;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 
 namespace Api.Services

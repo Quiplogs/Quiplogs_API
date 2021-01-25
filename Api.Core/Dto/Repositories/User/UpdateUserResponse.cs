@@ -1,7 +1,7 @@
-﻿using Api.Core.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Domain.Entities;
 
-namespace Api.Core.Dto.Repositories.User
+namespace Quiplogs.Core.Dto.Repositories.User
 {
     public class UpdateUserResponse : BaseRepositoryResponse
     {

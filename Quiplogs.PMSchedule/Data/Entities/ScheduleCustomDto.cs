@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Quiplogs.PMSchedule.Data.Entities
+namespace Quiplogs.Schedules.Data.Entities
 {
     public class ScheduleCustomDto : Schedule
     {

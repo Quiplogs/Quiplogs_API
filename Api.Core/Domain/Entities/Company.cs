@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Core.Domain.Entities
+namespace Quiplogs.Core.Domain.Entities
 {
     public class Company : BaseEntity
     {

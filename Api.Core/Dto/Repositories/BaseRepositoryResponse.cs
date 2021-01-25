@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Core.Dto.Repositories
+namespace Quiplogs.Core.Dto.Repositories
 {
     public abstract class BaseRepositoryResponse
     {

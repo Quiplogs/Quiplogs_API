@@ -1,16 +1,15 @@
-﻿using Api.Infrastructure;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.Dashboard.StoredProcedureModels;
 using Quiplogs.Inventory.Data.Entities;
-using Quiplogs.PMSchedule.Data.Entities;
 using Quiplogs.WorkOrder.Data.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Quiplogs.Schedules.Data.Entities;
 
 namespace Quiplogs.Infrastructure.SqlContext
 {

@@ -1,10 +1,10 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance;
+﻿using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance;
 using Quiplogs.WorkOrder.Dto.Responses.PlannedMaintenance;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
 using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenance
 {

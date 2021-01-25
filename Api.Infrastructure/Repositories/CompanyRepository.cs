@@ -1,16 +1,16 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Repositories;
-using Api.Core.Helpers;
-using Api.Core.Interfaces.Repositories;
-using Quiplogs.Infrastructure.SqlContext;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.Core.Data.Entities;
-using System.Linq;
-using System.Threading.Tasks;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Repositories;
+using Quiplogs.Core.Helpers;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Infrastructure.SqlContext;
 
-namespace Api.Infrastructure.Repositories
+namespace Quiplogs.Infrastructure.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {

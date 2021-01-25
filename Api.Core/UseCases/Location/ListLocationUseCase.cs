@@ -1,13 +1,13 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Requests.Location;
-using Api.Core.Dto.Responses.Location;
-using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories;
-using Api.Core.Interfaces.UseCases.Location;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Requests.Location;
+using Quiplogs.Core.Dto.Responses.Location;
+using Quiplogs.Core.Interfaces;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Core.Interfaces.UseCases.Location;
 
-namespace Api.Core.UseCases.Location
+namespace Quiplogs.Core.UseCases.Location
 {
     public class ListLocationUseCase : IListLocationUseCase
     {

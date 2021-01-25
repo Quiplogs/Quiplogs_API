@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Api.Core.Helpers
+namespace Quiplogs.Core.Helpers
 {
     public interface ICaching
     {

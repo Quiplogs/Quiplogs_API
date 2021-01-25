@@ -1,17 +1,17 @@
-﻿using Api.Core.Dto;
-using Api.Core.Helpers;
-using Quiplogs.Infrastructure.SqlContext;
-using AutoMapper;
-using Microsoft.Data.SqlClient;
-using Quiplogs.Inventory.Data.Entities;
-using Quiplogs.Inventory.Dto.Repositories.Task;
-using Quiplogs.Inventory.Interfaces.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Data.SqlClient;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Helpers;
+using Quiplogs.Infrastructure.SqlContext;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Dto.Repositories.Task;
+using Quiplogs.Inventory.Interfces.Repositories;
 
-namespace Api.Infrastructure.Repositories
+namespace Quiplogs.Infrastructure.Repositories
 {
     public class TaskRepository : ITaskRepository
     {

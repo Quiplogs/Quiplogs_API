@@ -1,8 +1,8 @@
-﻿using Api.Core.Domain.Entities;
-using AutoMapper;
+﻿using AutoMapper;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.Domain.Entities;
 
-namespace Api.Infrastructure.Data.Mapping
+namespace Quiplogs.Core.Data.Mapping
 {
     public class CoreProfile : Profile
     {

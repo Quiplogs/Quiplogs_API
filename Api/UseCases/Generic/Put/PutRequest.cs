@@ -1,4 +1,4 @@
-﻿using Api.Core.Domain.Entities;
+﻿using Quiplogs.Core.Domain.Entities;
 
 namespace Api.UseCases.Generic.Put
 {

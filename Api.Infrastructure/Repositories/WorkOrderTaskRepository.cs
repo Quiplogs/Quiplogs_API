@@ -1,6 +1,4 @@
-﻿using Api.Core.Dto;
-using Api.Core.Helpers;
-using Quiplogs.Infrastructure.SqlContext;
+﻿using Quiplogs.Infrastructure.SqlContext;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.WorkOrder.Data.Entities;
@@ -11,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Helpers;
 
 namespace Quiplogs.Infrastructure.Repositories
 {

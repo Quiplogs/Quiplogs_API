@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.PlannedMaintenance.Interfaces.UseCases.PlannedMaintenance;
+using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
 
 namespace Api.UseCases.PlannedMaintenance.List
 {

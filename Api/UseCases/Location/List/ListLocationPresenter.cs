@@ -1,8 +1,8 @@
-﻿using Api.Core.Dto.Responses.Location;
-using Api.Core.Interfaces;
-using Api.Presenters;
+﻿using Api.Presenters;
 using Api.Serialization;
 using System.Net;
+using Quiplogs.Core.Dto.Responses.Location;
+using Quiplogs.Core.Interfaces;
 
 namespace Api.UseCases.Location.List
 {

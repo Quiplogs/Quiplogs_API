@@ -1,6 +1,6 @@
-﻿using Api.Core.Dto;
-using Api.Core.Dto.Repositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Repositories;
 
 namespace Quiplogs.WorkOrder.Dto.Repositories.WorkOrderTask
 {

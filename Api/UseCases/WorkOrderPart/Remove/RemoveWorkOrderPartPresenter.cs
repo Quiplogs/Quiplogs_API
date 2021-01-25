@@ -1,10 +1,10 @@
-﻿using Api.Core.Interfaces;
+﻿using System.Net;
 using Api.Presenters;
 using Api.Serialization;
+using Quiplogs.Core.Interfaces;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderPart;
-using System.Net;
 
-namespace Api.UseCases.WorkOrderPartPart.Remove
+namespace Api.UseCases.WorkOrderPart.Remove
 {
     public class RemoveWorkOrderPartPresenter : IOutputPort<RemoveWorkOrderPartResponse>
     {

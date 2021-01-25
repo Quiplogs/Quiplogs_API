@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.User;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.User;
 
 namespace Api.UseCases.User.Fetch
 {
@@ -23,7 +23,7 @@ namespace Api.UseCases.User.Fetch
                 return BadRequest(ModelState);
             }
 
-            await _fetchUsersUseCase.Handle(new Core.Dto.Requests.User.FetchUsersRequest(GetCompanyId(request.CompanyId), request.LocationId), _fetchUsersPresenter);
+            await _fetchUsersUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.FetchUsersRequest(GetCompanyId(request.CompanyId), request.LocationId), _fetchUsersPresenter);
             return _fetchUsersPresenter.ContentResult;
         }        
     }

@@ -1,7 +1,8 @@
-﻿using Api.Core.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-namespace Api.Core.Dto.Responses.User
+using Quiplogs.Core.Interfaces;
+
+namespace Quiplogs.Core.Dto.Responses.User
 {
     public class RegisterResponse : ServiceResponseMessage
     {

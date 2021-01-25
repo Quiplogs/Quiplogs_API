@@ -1,8 +1,8 @@
-﻿using Api.Core.Dto.Repositories.Location;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto.Repositories.Location;
 
-namespace Api.Core.Interfaces.Repositories
+namespace Quiplogs.Core.Interfaces.Repositories
 {
     public interface ILocationRepository
     {

@@ -1,10 +1,10 @@
-﻿using Quiplogs.Assets.Data.Entities;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
 using Quiplogs.WorkOrder.Data.Entities;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Quiplogs.PMSchedule.Data.Entities
+namespace Quiplogs.Schedules.Data.Entities
 {
     public abstract class Schedule : BaseEntityDto
     {

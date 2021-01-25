@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Api.Core.Interfaces
+namespace Quiplogs.Core.Interfaces
 {
     public interface IRequestHandler<in TRequest, out TResponse> where TRequest : IRequest<TResponse>
     {

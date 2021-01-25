@@ -1,10 +1,10 @@
-﻿using Api.Core.Interfaces;
+﻿using System.Net;
 using Api.Presenters;
 using Api.Serialization;
 using Quiplogs.Assets.Dto.Responses.Asset;
-using System.Net;
+using Quiplogs.Core.Interfaces;
 
-namespace Api.UseCases.Asset.Fetch
+namespace Api.UseCases.Asset.List
 { 
     public class FetchAssetPresenter : IOutputPort<FetchAssetResponse>
     {

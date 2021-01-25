@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
 
-namespace Api.Core.Helpers
+namespace Quiplogs.Core.Helpers
 {
     public class Caching : ICaching
     {

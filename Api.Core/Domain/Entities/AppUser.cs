@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Api.Core.Domain.Entities
+namespace Quiplogs.Core.Domain.Entities
 {
-    public class AppUser
+    public class AppUser : BaseEntity
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -11,7 +11,7 @@ namespace Api.Core.Domain.Entities
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
-        public Guid CompanyId { get; set; }
         public Guid? LocationId { get; set; }
+        public Location Location { get; set; }
     }
 }

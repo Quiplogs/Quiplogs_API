@@ -1,10 +1,10 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart;
+﻿using Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderPart;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
 using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderPart;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
 {

@@ -1,7 +1,6 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Dto.Repositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Domain.Entities;
 
 namespace Quiplogs.Core.Dto.Repositories
 {

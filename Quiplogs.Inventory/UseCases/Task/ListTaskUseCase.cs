@@ -1,11 +1,11 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Quiplogs.Inventory.Dto.Requests.Task;
+﻿using Quiplogs.Inventory.Dto.Requests.Task;
 using Quiplogs.Inventory.Dto.Responses.Task;
-using Quiplogs.Inventory.Interfaces.Repositories;
-using Quiplogs.Inventory.Interfaces.UseCases.Task;
 using System.Threading.Tasks;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
+using Quiplogs.Inventory.Interfces.Repositories;
+using Quiplogs.Inventory.Interfces.UseCases.Task;
 
 namespace Quiplogs.Inventory.UseCases.Task
 {

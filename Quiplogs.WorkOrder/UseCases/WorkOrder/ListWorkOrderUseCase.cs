@@ -1,11 +1,11 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto;
-using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Requests.WorkOrder;
+﻿using Quiplogs.WorkOrder.Dto.Requests.WorkOrder;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
 using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrder;
 using System.Threading.Tasks;
+using Quiplogs.Core.Domain;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrder
 {

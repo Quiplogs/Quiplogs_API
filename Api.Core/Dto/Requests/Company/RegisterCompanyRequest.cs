@@ -1,7 +1,7 @@
-﻿using Api.Core.Dto.Responses.Company;
-using Api.Core.Interfaces;
+﻿using Quiplogs.Core.Dto.Responses.Company;
+using Quiplogs.Core.Interfaces;
 
-namespace Api.Core.Dto.Requests.Company
+namespace Quiplogs.Core.Dto.Requests.Company
 {
     public class RegisterCompanyRequest : IRequest<RegisterCompanyResponse>
     {

@@ -1,11 +1,11 @@
-﻿using Api.Core.Dto;
-using Api.Core.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using Quiplogs.Assets.Dto.Requests.AssetUsage;
 using Quiplogs.Assets.Dto.Responses.AssetUsage;
 using Quiplogs.Assets.Interfaces.Repositories;
 using Quiplogs.Assets.Interfaces.UseCases.AssetUsage;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Assets.UseCases.AssetUsage
 {

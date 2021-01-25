@@ -1,4 +1,4 @@
-﻿namespace Api.Core.Dto
+﻿namespace Quiplogs.Core.Dto
 {
     public class Error
     {

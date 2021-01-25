@@ -1,8 +1,8 @@
-﻿using Api.Core.Dto.Responses.User;
-using Api.Core.Interfaces;
-using Api.Presenters;
+﻿using Api.Presenters;
 using Api.Serialization;
 using System.Net;
+using Quiplogs.Core.Dto.Responses.User;
+using Quiplogs.Core.Interfaces;
 
 namespace Api.UseCases.Auth.Register
 {

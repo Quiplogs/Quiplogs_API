@@ -1,18 +1,18 @@
-﻿using Api.Core.Dto;
-using Api.Core.Helpers;
-using Quiplogs.Infrastructure.SqlContext;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Quiplogs.Core.Dto;
+using Quiplogs.Core.Helpers;
+using Quiplogs.Infrastructure.SqlContext;
 using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
 using Quiplogs.WorkOrder.Dto.Repositories.WorkOrder;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Api.Infrastructure.Repositories
+namespace Quiplogs.Infrastructure.Repositories
 {
     public class WorkOrderRepository : IWorkOrderRepository
     {

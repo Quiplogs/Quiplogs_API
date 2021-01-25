@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.Assets.Data.Entities
 {
-    public class AssetDto : BaseEntityDto
+    public class AssetDto : BaseLocationDto
     {
         public string Name { get; set; }
 
@@ -30,10 +30,5 @@ namespace Quiplogs.Assets.Data.Entities
         public string WarrantyUrl { get; set; }
 
         public string InstructionManualUrl { get; set; }
-
-        public Guid LocationId { get; set; }
-
-        [ForeignKey("LocationId")]
-        public LocationDto Location { get; set; }
     }
 }

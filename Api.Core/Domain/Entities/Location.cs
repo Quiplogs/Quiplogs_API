@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Core.Domain.Entities
+namespace Quiplogs.Core.Domain.Entities
 {
     public class Location : BaseEntity
     {
@@ -19,7 +19,5 @@ namespace Api.Core.Domain.Entities
         public string ImgFileName { get; set; }
 
         public string ImgUrl { get; set; }
-        
-        public Guid CompanyId { get; set; }
     }
 }

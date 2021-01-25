@@ -1,5 +1,5 @@
-﻿using Api.Core.Interfaces;
-using Quiplogs.Core.Dto.Responses.BlobStorage;
+﻿using Quiplogs.Core.Dto.Responses.BlobStorage;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Core.Dto.Requests.BlobStorage
 {

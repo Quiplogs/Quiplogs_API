@@ -8,9 +8,9 @@
 {
     public class LocationController : BaseApiController
     {
-        private readonly IGetService<Core.Domain.Entities.Location, LocationDto> _getService;
+        private readonly IGetService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _getService;
 
-        public LocationController(IGetService<Core.Domain.Entities.Location, LocationDto> getService)
+        public LocationController(IGetService<Quiplogs.Core.Domain.Entities.Location, LocationDto> getService)
         {
             _getService = getService;
         }

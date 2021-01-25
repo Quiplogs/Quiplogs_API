@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api.Core.Dto.Repositories
+namespace Quiplogs.Core.Dto.Repositories
 {
     public class CreateCompanyResponse : BaseRepositoryResponse
     {

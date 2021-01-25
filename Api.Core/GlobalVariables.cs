@@ -1,4 +1,4 @@
-﻿namespace Api.Core
+﻿namespace Quiplogs.Core
 {
     public static class GlobalVariables
     {

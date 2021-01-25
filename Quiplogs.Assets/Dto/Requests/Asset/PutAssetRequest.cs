@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces;
-using Quiplogs.Assets.Dto.Responses.Asset;
+﻿using Quiplogs.Assets.Dto.Responses.Asset;
 using System;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Assets.Dto.Requests.Asset
 {

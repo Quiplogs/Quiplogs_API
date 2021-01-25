@@ -1,7 +1,7 @@
-﻿using Api.Core.Dto.Requests.Company;
-using Api.Core.Dto.Responses.Company;
+﻿using Quiplogs.Core.Dto.Requests.Company;
+using Quiplogs.Core.Dto.Responses.Company;
 
-namespace Api.Core.Interfaces.UseCases
+namespace Quiplogs.Core.Interfaces.UseCases
 {
     public interface IRegisterCompanyUseCase : IRequestHandler<RegisterCompanyRequest, RegisterCompanyResponse>
     {

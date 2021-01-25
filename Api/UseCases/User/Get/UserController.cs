@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.User;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.User;
 using Quiplogs.Notifications.Send.Interfaces;
 
 namespace Api.UseCases.User.Get
@@ -45,7 +45,7 @@ namespace Api.UseCases.User.Get
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _getUserUseCase.Handle(new Core.Dto.Requests.User.GetUserRequest(request.Id), _getUserPresenter);
+            await _getUserUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.GetUserRequest(request.Id), _getUserPresenter);
             return _getUserPresenter.ContentResult;
         }
     }

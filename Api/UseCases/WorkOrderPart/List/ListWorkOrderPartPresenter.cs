@@ -1,8 +1,8 @@
-﻿using Api.Core.Interfaces;
-using Api.Presenters;
+﻿using Api.Presenters;
 using Api.Serialization;
 using Quiplogs.WorkOrder.Dto.Responses.WorkOrderPart;
 using System.Net;
+using Quiplogs.Core.Interfaces;
 
 namespace Api.UseCases.WorkOrderPart.List
 {

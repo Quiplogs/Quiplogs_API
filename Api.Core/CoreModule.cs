@@ -1,10 +1,10 @@
-﻿using Api.Core.Helpers;
+﻿using System.Reflection;
 using Autofac;
-using System.Reflection;
+using Quiplogs.Core.Helpers;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 using Quiplogs.Core.UseCases.Generic;
 
-namespace Api.Core
+namespace Quiplogs.Core
 {
     public class CoreModule : Autofac.Module
     {

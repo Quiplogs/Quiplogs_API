@@ -1,6 +1,6 @@
 ﻿using System;
-using Api.Core.Interfaces;
 using Quiplogs.Core.Dto.Responses.Generic;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Core.Dto.Requests.Generic
 {

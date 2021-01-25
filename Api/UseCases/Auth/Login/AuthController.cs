@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces.UseCases.User;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Quiplogs.Core.Interfaces.UseCases.User;
 
 namespace Api.UseCases.Auth.Login
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Auth.Login
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _loginWorkOrder.Handle(new Core.Dto.Requests.User.LoginRequest(request.Email, request.Password), _loginPresenter);
+            await _loginWorkOrder.Handle(new Quiplogs.Core.Dto.Requests.User.LoginRequest(request.Email, request.Password), _loginPresenter);
             return _loginPresenter.ContentResult;
         }
     }

@@ -1,14 +1,14 @@
-﻿using Api.Core.Interfaces;
-using Api.Core.Interfaces.Repositories;
+﻿using System;
+using System.Threading.Tasks;
 using Quiplogs.BlobStorage;
 using Quiplogs.BlobStorage.Models;
 using Quiplogs.Core.Dto.Requests.BlobStorage;
 using Quiplogs.Core.Dto.Responses.BlobStorage;
-using Quiplogs.Core.Interfaces.UseCases.FileRemove;
-using System;
-using System.Threading.Tasks;
+using Quiplogs.Core.Interfaces;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Core.Interfaces.UseCases.BlobStorage;
 
-namespace Quiplogs.Core.UseCases.FileRemove
+namespace Quiplogs.Core.UseCases.BlobStorage
 {
     public class RemoveFileUseCase : IRemoveFileUseCase
     {

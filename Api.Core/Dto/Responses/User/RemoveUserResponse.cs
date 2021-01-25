@@ -1,7 +1,7 @@
-﻿using Api.Core.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Quiplogs.Core.Interfaces;
 
-namespace Api.Core.Dto.Responses.User
+namespace Quiplogs.Core.Dto.Responses.User
 {
     public class RemoveUserResponse : ServiceResponseMessage
     {

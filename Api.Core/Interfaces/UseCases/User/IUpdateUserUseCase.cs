@@ -1,7 +1,7 @@
-﻿using Api.Core.Dto.Requests.User;
-using Api.Core.Dto.Responses.User;
+﻿using Quiplogs.Core.Dto.Requests.User;
+using Quiplogs.Core.Dto.Responses.User;
 
-namespace Api.Core.Interfaces.UseCases.User
+namespace Quiplogs.Core.Interfaces.UseCases.User
 {
     public interface IUpdateUserUseCase : IRequestHandler<UpdateUserRequest, UpdateUserResponse>
     {

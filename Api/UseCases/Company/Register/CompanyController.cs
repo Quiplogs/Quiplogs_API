@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases;
 
 namespace Api.UseCases.Company.Register
 {
@@ -26,7 +26,7 @@ namespace Api.UseCases.Company.Register
                 return BadRequest(ModelState);
             }
 
-            var company = new Core.Dto.Requests.Company.RegisterCompanyRequest
+            var company = new Quiplogs.Core.Dto.Requests.Company.RegisterCompanyRequest
             {
                 Name = request.Name,
                 TaxNumber = request.TaxNumber,

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Api.Core.Interfaces.UseCases.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Core.Interfaces.UseCases.User;
 
 namespace Api.UseCases.User.Update
 {
@@ -27,7 +27,7 @@ namespace Api.UseCases.User.Update
             { // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _updateUserUseCase.Handle(new Core.Dto.Requests.User.UpdateUserRequest(request.User), _updateUserPresenter);
+            await _updateUserUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.UpdateUserRequest(request.User), _updateUserPresenter);
             return _updateUserPresenter.ContentResult;
         }
     }

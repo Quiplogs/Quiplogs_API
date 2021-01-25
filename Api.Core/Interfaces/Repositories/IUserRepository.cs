@@ -1,9 +1,9 @@
-﻿using Api.Core.Domain.Entities;
-using Api.Core.Dto.Repositories.User;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto.Repositories.User;
 
-namespace Api.Core.Interfaces.Repositories
+namespace Quiplogs.Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {

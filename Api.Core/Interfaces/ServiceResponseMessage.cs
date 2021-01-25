@@ -1,4 +1,4 @@
-﻿namespace Api.Core.Interfaces
+﻿namespace Quiplogs.Core.Interfaces
 {
     public abstract class ServiceResponseMessage
     {

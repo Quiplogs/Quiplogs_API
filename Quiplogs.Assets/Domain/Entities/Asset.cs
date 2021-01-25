@@ -1,5 +1,5 @@
-﻿using Api.Core.Domain.Entities;
-using System;
+﻿using System;
+using Quiplogs.Core.Domain.Entities;
 
 namespace Quiplogs.Assets.Domain.Entities
 {
@@ -37,10 +37,8 @@ namespace Quiplogs.Assets.Domain.Entities
 
         public bool ShouldCaptureWorkDone { get; set; }
 
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public Location Location { get; set; }
-
-        public string CompanyId { get; set; }
     }
 }

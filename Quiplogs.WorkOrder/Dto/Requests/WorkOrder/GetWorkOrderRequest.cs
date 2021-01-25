@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces;
-using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
+﻿using Quiplogs.WorkOrder.Dto.Responses.WorkOrder;
 using System;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.Dto.Requests.WorkOrder
 {

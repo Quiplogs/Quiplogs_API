@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfaces.UseCases.Part;
 using System.Threading.Tasks;
+using Quiplogs.Inventory.Interfces.UseCases.Part;
 
 namespace Api.UseCases.Part.List
 {

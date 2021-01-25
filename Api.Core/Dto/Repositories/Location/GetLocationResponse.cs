@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Core.Dto.Repositories.Location
+namespace Quiplogs.Core.Dto.Repositories.Location
 {
     public class GetLocationResponse : BaseRepositoryResponse
     {

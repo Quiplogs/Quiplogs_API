@@ -1,4 +1,4 @@
-﻿namespace Api.Core.Domain
+﻿namespace Quiplogs.Core.Domain
 {
     public class Pager
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api.Core.Domain.Entities
+namespace Quiplogs.Core.Domain
 {
     public class PagedResult<T>
     {

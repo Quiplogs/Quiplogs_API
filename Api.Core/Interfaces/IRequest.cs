@@ -1,4 +1,4 @@
-﻿namespace Api.Core.Interfaces
+﻿namespace Quiplogs.Core.Interfaces
 {
     public interface IRequest<out TResponse>
     {

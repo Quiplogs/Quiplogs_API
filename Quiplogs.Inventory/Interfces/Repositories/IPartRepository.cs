@@ -1,8 +1,8 @@
-﻿using Quiplogs.Inventory.Dto.Repositories.Part;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Quiplogs.Inventory.Dto.Repositories.Part;
 
-namespace Quiplogs.Inventory.Interfaces.Repositories
+namespace Quiplogs.Inventory.Interfces.Repositories
 {
     public interface IPartRepository
     {

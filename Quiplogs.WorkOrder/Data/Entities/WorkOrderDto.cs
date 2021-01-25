@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quiplogs.WorkOrder.Data.Entities
 {
-    public class WorkOrderDto : BaseEntityDto
+    public class WorkOrderDto : BaseLocationDto
     {
         public string ReferenceNumber { get; set; }
 
@@ -35,11 +35,6 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }
-
-        public Guid LocationId { get; set; }
-
-        [ForeignKey("LocationId")]
-        public LocationDto Location { get; set; }
 
         public int Status { get; set; }
 

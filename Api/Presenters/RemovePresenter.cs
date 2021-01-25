@@ -1,7 +1,7 @@
-﻿using Api.Core.Interfaces;
-using Api.Serialization;
+﻿using Api.Serialization;
 using Quiplogs.Core.Dto.Responses.Generic;
 using System.Net;
+using Quiplogs.Core.Interfaces;
 
 namespace Api.Presenters
 {

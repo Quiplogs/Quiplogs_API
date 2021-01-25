@@ -1,7 +1,5 @@
-using Api.Core;
 using Api.Extensions;
 using Api.Helpers;
-using Api.Infrastructure.Data.Mapping;
 using Quiplogs.Infrastructure.SqlContext;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -38,6 +36,8 @@ using System.Text;
 using Api.Presenters;
 using Api.Services;
 using Api.Services.Interfaces;
+using Quiplogs.Core;
+using Quiplogs.Core.Data.Mapping;
 using Quiplogs.Infrastructure;
 
 namespace Api

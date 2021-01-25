@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Interfaces.UseCases.FileRemove;
 using System.Threading.Tasks;
+using Quiplogs.Core.Interfaces.UseCases.BlobStorage;
 
 namespace Api.UseCases.BlobStorage.RemoveFile
 {

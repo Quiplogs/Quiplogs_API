@@ -1,6 +1,6 @@
-﻿using Api.Core.Interfaces;
-using Quiplogs.Inventory.Dto.Responses.Task;
+﻿using Quiplogs.Inventory.Dto.Responses.Task;
 using System;
+using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.Inventory.Dto.Requests.Task
 {

@@ -1,8 +1,8 @@
-﻿using Api.Core.Dto.Responses.Location;
-using Api.Core.Interfaces;
-using System;
+﻿using System;
+using Quiplogs.Core.Dto.Responses.Location;
+using Quiplogs.Core.Interfaces;
 
-namespace Api.Core.Dto.Requests.Location
+namespace Quiplogs.Core.Dto.Requests.Location
 {
     public class RemoveLocationRequest : IRequest<RemoveLocationResponse>
     {

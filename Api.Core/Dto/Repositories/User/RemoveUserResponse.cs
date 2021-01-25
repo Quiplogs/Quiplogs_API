@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Core.Dto.Repositories.User
+namespace Quiplogs.Core.Dto.Repositories.User
 {
     public class RemoveUserResponse : BaseRepositoryResponse
     {
