@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Api.UseCases.Generic.Get
+namespace Api.UseCases.Generic.Requests
 {
-    public class GetRequest
+    public class RemoveRequest
     {
         public Guid Id { get; set; }
     }

@@ -1,6 +1,8 @@
 using Api.Extensions;
 using Api.Helpers;
-using Quiplogs.Infrastructure.SqlContext;
+using Api.Presenters;
+using Api.Services;
+using Api.Services.Interfaces;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -21,9 +23,13 @@ using Microsoft.IdentityModel.Tokens;
 using Quiplogs.Assets;
 using Quiplogs.Assets.Data.Mapping;
 using Quiplogs.BlobStorage;
+using Quiplogs.Core;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.Data.Mapping;
 using Quiplogs.Dashboard;
+using Quiplogs.Infrastructure;
 using Quiplogs.Infrastructure.Auth;
+using Quiplogs.Infrastructure.SqlContext;
 using Quiplogs.Inventory;
 using Quiplogs.Inventory.Data.Mapping;
 using Quiplogs.Notifications.Send;
@@ -33,12 +39,6 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using Api.Presenters;
-using Api.Services;
-using Api.Services.Interfaces;
-using Quiplogs.Core;
-using Quiplogs.Core.Data.Mapping;
-using Quiplogs.Infrastructure;
 
 namespace Api
 {
@@ -186,6 +186,12 @@ namespace Api
 
             builder.RegisterGeneric(typeof(GetPresenter<>)).InstancePerDependency();
             builder.RegisterGeneric(typeof(GetService<,>)).As(typeof(IGetService<,>)).InstancePerDependency();
+
+            builder.RegisterGeneric(typeof(PutPresenter<>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(PutService<,>)).As(typeof(IPutService<,>)).InstancePerDependency();
+
+            builder.RegisterGeneric(typeof(PagedListPresenter<>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(PagedListService<,>)).As(typeof(IPagedListService<,>)).InstancePerDependency();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

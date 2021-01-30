@@ -1,30 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.Asset;
 using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
+using Quiplogs.Assets.Data.Entities;
 
 namespace Api.UseCases.Asset.Put
 {
     public class AssetController : BaseApiController
     {
-        private readonly IPutAssetUseCase _putAssetUseCase;
-        private readonly PutAssetPresenter _putAssetPresenter;
+        private readonly IPutService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _putService;
 
-        public AssetController(IPutAssetUseCase putAssetUseCase, PutAssetPresenter putAssetPresenter)
+        public AssetController(IPutService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> putService)
         {
-            _putAssetUseCase = putAssetUseCase;
-            _putAssetPresenter = putAssetPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutAssetRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.Assets.Domain.Entities.Asset> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-             
-            await _putAssetUseCase.Handle(new Quiplogs.Assets.Dto.Requests.Asset.PutAssetRequest(request.Name, request.Make, request.Model, request.SerialNumber, request.ManufacturedDate, request.PurchasedDate, request. CurrentWorkDone, request.UoM, request.ImgFileName, request.ImgUrl, request.WarrantyUrl, request.InstructionManualUrl, request.LocationId, GetCompanyId(request.CompanyId)), _putAssetPresenter);
-            return _putAssetPresenter.ContentResult;
+
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

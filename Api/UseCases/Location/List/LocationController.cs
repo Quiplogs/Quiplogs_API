@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Interfaces.UseCases.Location;
+using Quiplogs.Core.Data.Entities;
+using System.Threading.Tasks;
+using Api.UseCases.Generic.Requests;
 
 namespace Api.UseCases.Location.List
 {
     public class LocationController : BaseApiController
     {
-        private readonly IListLocationUseCase _listLocationUseCase;
-        private readonly ListLocationPresenter _listLocationPresenter;
+        private readonly IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _pagedService;
 
-        public LocationController(IListLocationUseCase listLocationUseCase, ListLocationPresenter listLocationPresenter)
+        public LocationController(IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> pagedService)
         {
-            _listLocationUseCase = listLocationUseCase;
-            _listLocationPresenter = listLocationPresenter;
+            _pagedService = pagedService;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListLocationRequest request)
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Core.Domain.Entities.Location> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.ListLocationRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listLocationPresenter);
-            return _listLocationPresenter.ContentResult;
+            var result = await _pagedService.PagedList(request);
+            return result;
         }
     }
 }

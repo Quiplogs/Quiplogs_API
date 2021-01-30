@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,7 +30,10 @@ namespace Quiplogs.Infrastructure.Repositories
         {
             var appUser = _mapper.Map<UserEntity>(user);
             var identityResult = await _userManager.CreateAsync(appUser, password);
-            return new CreateUserResponse(appUser.Id, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
+            return new CreateUserResponse(appUser.Id, identityResult.Succeeded,
+                identityResult.Succeeded
+                    ? null
+                    : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
         }
 
         public async Task<AppUser> FindByName(string userName)
@@ -44,9 +48,10 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid locationId)
         {
-            var users = _userManager.Users.Where(x =>
-                x.CompanyId == companyId
-                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId));
+            var users = await _userManager.Users
+                                                .Where(x =>x.CompanyId == companyId
+                                                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
+                                                .ToListAsync();
 
             List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
             return new GetAllUsersResponse(mappedUsers, true, null);

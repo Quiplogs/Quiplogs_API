@@ -8,7 +8,7 @@ using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Core.Interfaces.UseCases;
 
-namespace Quiplogs.Core.UseCases
+namespace Quiplogs.Core.UseCases.Company
 {
     public class RegisterCompanyUseCase : IRegisterCompanyUseCase
     {
@@ -23,7 +23,7 @@ namespace Quiplogs.Core.UseCases
 
         public async Task<bool> Handle(RegisterCompanyRequest message, IOutputPort<RegisterCompanyResponse> outputPort)
         {
-            var company = new Company
+            var company = new Domain.Entities.Company
             {
                 Name = message.Name,
                 PhoneNumber = message.PhoneNumber,

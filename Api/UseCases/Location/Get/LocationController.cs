@@ -1,6 +1,6 @@
 ﻿ using System.Threading.Tasks;
  using Api.Services.Interfaces;
- using Api.UseCases.Generic.Get;
+ using Api.UseCases.Generic.Requests;
  using Microsoft.AspNetCore.Mvc;
  using Quiplogs.Core.Data.Entities;
 
@@ -16,7 +16,7 @@
         }
 
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)

@@ -13,11 +13,11 @@ namespace Quiplogs.Core.UseCases.BlobStorage
     public class RemoveFileUseCase : IRemoveFileUseCase
     {
         private readonly IBlobStorage _blobStorage;
-        private readonly ILocationRepository _locationRepository; 
-        public RemoveFileUseCase(IBlobStorage blobStorage, ILocationRepository locationRepository)
+        //private readonly ILocationRepository _locationRepository; 
+        public RemoveFileUseCase(IBlobStorage blobStorage)
         {
             _blobStorage = blobStorage;
-            _locationRepository = locationRepository;
+            //_locationRepository = locationRepository;
         }
 
         public async Task<bool> Handle(RemoveFileRequest message, IOutputPort<RemoveFileResponse> outputPort)
@@ -36,7 +36,7 @@ namespace Quiplogs.Core.UseCases.BlobStorage
 
                     if (message.ApplicationType == "location")
                     {
-                        await _locationRepository.RemoveImage(Guid.Parse(splitFileName[1]));
+                        //await _locationRepository.RemoveImage(Guid.Parse(splitFileName[1]));
                     }
 
                     outputPort.Handle(new RemoveFileResponse($"{message.FileName} has been removed succesfully", true));

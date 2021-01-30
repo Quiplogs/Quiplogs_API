@@ -147,6 +147,17 @@ namespace Quiplogs.Infrastructure.SqlContext
                 }
                 ((BaseEntityDto)entry.Entity).DateUpdated = DateTime.Now;
             }
+
+            // Company
+            var companyEntries = ChangeTracker.Entries().Where(x => x.Entity is CompanyDto && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            foreach (var entry in companyEntries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    ((CompanyDto)entry.Entity).DateCreated = DateTime.Now;
+                }
+                ((CompanyDto)entry.Entity).DateUpdated = DateTime.Now;
+            }
         }
     }
 }

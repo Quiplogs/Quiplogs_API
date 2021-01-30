@@ -1,30 +1,31 @@
 ﻿using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Interfaces.UseCases.Location;
+using Quiplogs.Core.Data.Entities;
 
 namespace Api.UseCases.Location.Put
 {
     public class LocationController : BaseApiController
     {
-        private readonly IPutLocationUseCase _putLocationUseCase;
-        private readonly PutLocationPresenter _putLocationPresenter;
+        private readonly IPutService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _putService;
 
-        public LocationController(IPutLocationUseCase putLocationUseCase, PutLocationPresenter putLocationPresenter)
+        public LocationController(IPutService<Quiplogs.Core.Domain.Entities.Location, LocationDto> putService)
         {
-            _putLocationUseCase = putLocationUseCase;
-            _putLocationPresenter = putLocationPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutLocationRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.Core.Domain.Entities.Location> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _putLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.PutLocationRequest(request.Id, request.Name, request.City, request.Country, request.UserId, GetCompanyId(request.CompanyId), request.ImageFileName, request.ImageBase64, request.ImageMimeType, request.Lat.ToString(), request.Long.ToString()), _putLocationPresenter);
-            return _putLocationPresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

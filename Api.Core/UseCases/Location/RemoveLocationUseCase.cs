@@ -8,26 +8,26 @@ using Quiplogs.Core.Interfaces.UseCases.Location;
 
 namespace Quiplogs.Core.UseCases.Location
 {
-    public class RemoveLocationUseCase : IRemoveLocationUseCase
-    {
-        private readonly ILocationRepository _repository;
+    //public class RemoveLocationUseCase : IRemoveLocationUseCase
+    //{
+    //    private readonly ILocationRepository _repository;
 
-        public RemoveLocationUseCase(ILocationRepository repository)
-        {
-            _repository = repository;
-        }
+    //    public RemoveLocationUseCase(ILocationRepository repository)
+    //    {
+    //        _repository = repository;
+    //    }
 
-        public async Task<bool> Handle(RemoveLocationRequest message, IOutputPort<RemoveLocationResponse> outputPort)
-        {
-            var response = await _repository.Remove(message.Id);
-            if (response.Success)
-            {
-                outputPort.Handle(new RemoveLocationResponse(response.Description, true));
-                return true;
-            }
+    //    public async Task<bool> Handle(RemoveLocationRequest message, IOutputPort<RemoveLocationResponse> outputPort)
+    //    {
+    //        var response = await _repository.Remove(message.Id);
+    //        if (response.Success)
+    //        {
+    //            outputPort.Handle(new RemoveLocationResponse(response.Description, true));
+    //            return true;
+    //        }
 
-            outputPort.Handle(new RemoveLocationResponse(new[] { new Error("", "Error removing Location.") }));
-            return false;
-        }
-    }
+    //        outputPort.Handle(new RemoveLocationResponse(new[] { new Error("", "Error removing Location.") }));
+    //        return false;
+    //    }
+    //}
 }

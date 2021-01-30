@@ -24,29 +24,22 @@ namespace Quiplogs.Infrastructure.Repositories
     {
         private readonly IMapper _mapper;
         private readonly SqlDbContext _context;
-        private ICaching _cache;
-        private DbSet<T2> entities;
+        private readonly ICaching _cache;
+        private readonly DbSet<T2> _entities;
 
         public BaseRepository(IMapper mapper, SqlDbContext context, ICaching cache)
         {
             _mapper = mapper;
             _context = context;
             _cache = cache;
-            entities = _context.Set<T2>();
+            _entities = _context.Set<T2>();
         }
 
-        public async Task<BaseModelListResponse<T1>> List(Expression<Func<T2, bool>> condition, Expression<Func<T2, object>> include)
+        public async Task<BaseModelListResponse<T1>> List()
         {
             try
             {
-                var modelList = new List<T2>();
-                if (include != null)
-                {
-                    modelList = await entities.Include(include).Where(condition).ToListAsync();
-                } else
-                {
-                    modelList = await entities.Where(condition).ToListAsync();
-                }
+                var modelList =  await BaseQuery().ToListAsync();
 
                 var mappedList = _mapper.Map<List<T1>>(modelList);
                 return new BaseModelListResponse<T1>(mappedList, true, null);
@@ -57,13 +50,12 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BasePagedResponse<T1>> PagedList(Expression<Func<T2, bool>> condition, Expression<Func<T2, object>> include, Guid companyId, int pageNumber, int pageSize)
+        public async Task<BasePagedResponse<T1>> PagedList(IQueryable<T2> baseQuery, Guid companyId, int pageNumber, int pageSize)
         {
             try
             {
-                var modelList = new List<T2>();
-                modelList = await entities.Include(include)
-                                    .Where(condition)
+                var modelList = await baseQuery
+                                    .Where(x => x.CompanyId == companyId)
                                     .Skip((pageNumber - 1) * pageSize)
                                     .Take(pageSize).ToListAsync();
 
@@ -83,7 +75,7 @@ namespace Quiplogs.Infrastructure.Repositories
         {
             try
             {
-                var model = await entities.FirstOrDefaultAsync(x => x.Id == id);
+                var model = await _entities.FirstOrDefaultAsync(x => x.Id == id);
 
                 var mappedModel = _mapper.Map<T1>(model);
                 return new BaseModelResponse<T1>(mappedModel, true, null);
@@ -101,11 +93,11 @@ namespace Quiplogs.Infrastructure.Repositories
                 var modelMapped = _mapper.Map<T2>(model);
                 if (model.Id == Guid.Empty)
                 {
-                    await entities.AddAsync(modelMapped);
+                    await _entities.AddAsync(modelMapped);
                 }
                 else
                 {
-                    entities.Update(modelMapped);
+                    _entities.Update(modelMapped);
                 }
 
                 await _context.SaveChangesAsync();
@@ -122,7 +114,7 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task Remove(Guid id)
         {
-            var model = await entities.FirstOrDefaultAsync(x => x.Id == id);
+            var model = await _entities.FirstOrDefaultAsync(x => x.Id == id);
 
             _context.Remove(model);
             await _context.SaveChangesAsync();
@@ -130,8 +122,8 @@ namespace Quiplogs.Infrastructure.Repositories
 
         private async Task<int> GetTotalRecords(Guid companyId)
         {
-            var _cacheKey = $"{typeof(T1).Name}-total-{companyId}";
-            var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
+            var cacheKey = $"{typeof(T1).Name}-total-{companyId}";
+            var cachedTotal = await _cache.GetAsnyc<int>(cacheKey);
 
             if (cachedTotal == 0)
             {
@@ -143,9 +135,74 @@ namespace Quiplogs.Infrastructure.Repositories
 
         private async Task UpdateTotalItems(Guid companyId)
         {
-            var _cacheKey = $"{typeof(T1).Name}-total-{companyId}";
-            var cachedTotal = entities.Count(x => x.CompanyId == companyId);
-            await _cache.SetAsnyc(_cacheKey, cachedTotal);
+            var cacheKey = $"{typeof(T1).Name}-total-{companyId}";
+            var cachedTotal = _entities.Count(x => x.CompanyId == companyId);
+            await _cache.SetAsnyc(cacheKey, cachedTotal);
+        }
+
+        //todo: Move to different class
+        public IQueryable<T2> BaseQuery(Expression<Func<T2, bool>> predicate = null, Expression<Func<T2, object>> include = null)
+        {
+            var query = _entities;
+
+            if (include != null)
+            {
+                query.Include(include);
+            }
+
+            if (predicate != null)
+            {
+                query.Where(predicate);
+            }
+
+            return query;
+        }
+
+        public IQueryable<T2> BaseQueryFilter(
+            Dictionary<string, string> filterParameters,
+            Expression<Func<T2, bool>> predicate = null, 
+            Expression<Func<T2, object>> include = null)
+        {
+            var query = _entities;
+
+            if (include != null)
+            {
+                query.Include(include);
+            }
+
+            if (predicate != null)
+            {
+                query.Where(predicate);
+            }
+
+            foreach (var keyValuePair in filterParameters)
+            {
+                query.Where(Like<T2>(keyValuePair.Key, keyValuePair.Value));
+            }
+
+            return query;
+        }
+
+        private static Func<T2, bool> GetEqualsExp<T2>(string nameOfParameter, string valueToCompare)
+        {
+            var parameter = Expression.Parameter(typeof(T2));
+            Expression predicate = Expression.Constant(true);
+            Expression property = Expression.Property(parameter, nameOfParameter);
+            Expression equal = Expression.Equal(property, Expression.Constant(valueToCompare));
+            predicate = Expression.AndAlso(predicate, equal);
+            return Expression.Lambda<Func<T2, bool>>(predicate, parameter).Compile();
+        }
+
+        private static Expression<Func<T2, bool>> Like<T2>(string propertyName, string queryText)
+        {
+            var parameter = Expression.Parameter(typeof(T2), "entity");
+            var getter = Expression.Property(parameter, propertyName);
+            if (getter.Type != typeof(string))
+                throw new ArgumentException("Property must be a string");
+            var stringContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+            var containsCall = Expression.Call(getter, stringContainsMethod,
+                Expression.Constant(queryText, typeof(string)));
+            return Expression.Lambda<Func<T2, bool>>(containsCall, parameter);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Quiplogs.Infrastructure.Repositories
     {
         private readonly IMapper _mapper;
         private readonly SqlDbContext _context;
-        private ICaching _cache;
+        private readonly ICaching _cache;
 
         public CompanyRepository(IMapper mapper, SqlDbContext context, ICaching cache)
         {
@@ -29,12 +29,12 @@ namespace Quiplogs.Infrastructure.Repositories
         {
             try
             {
-                var existingModel = _context.Companies.Find(model.Id);
+                var existingModel = await _context.Companies.FindAsync(model.Id);
                 var mappedModel = _mapper.Map<CompanyDto>(model);
 
                 if (existingModel == null)
                 {
-                    _context.Companies.Add(mappedModel);                    
+                    await _context.Companies.AddAsync(mappedModel);                    
                 }
                 else
                 {
@@ -55,8 +55,8 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task<int> GetTotalRecords()
         {
-            var _cacheKey = $"Companies-total";
-            var cachedTotal = await _cache.GetAsnyc<int>(_cacheKey);
+            var cacheKey = $"Companies-total";
+            var cachedTotal = await _cache.GetAsnyc<int>(cacheKey);
 
             if (cachedTotal == 0)
             {
