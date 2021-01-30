@@ -5,7 +5,7 @@ using Quiplogs.Core.Domain.Entities;
 
 namespace Quiplogs.WorkOrder.Domain.Entities
 {
-    public class PlannedMaintenanceEntity : BaseEntity
+    public class PlannedMaintenance : BaseEntity
     {
         public string Name { get; set; }
         public Guid AssetId { get; set; }

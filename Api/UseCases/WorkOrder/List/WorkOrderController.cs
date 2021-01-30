@@ -1,30 +1,31 @@
 ﻿using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrder;
+using Quiplogs.WorkOrder.Data.Entities;
 
 namespace Api.UseCases.WorkOrder.List
 {
     public class WorkOrderController : BaseApiController
     {
-        private readonly IListWorkOrderUseCase _listWorkOrderUseCase;
-        private readonly ListWorkOrderPresenter _listWorkOrderPresenter;
+        private readonly IPagedListService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity, WorkOrderDto> _pagedService;
 
-        public WorkOrderController(IListWorkOrderUseCase listWorkOrderUseCase, ListWorkOrderPresenter listWorkOrderPresenter)
+        public WorkOrderController(IPagedListService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity, WorkOrderDto> pagedService)
         {
-            _listWorkOrderUseCase = listWorkOrderUseCase;
-            _listWorkOrderPresenter = listWorkOrderPresenter;
+            _pagedService = pagedService;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListWorkOrderRequest request)
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listWorkOrderUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrder.ListWorkOrderRequest(GetCompanyId(request.CompanyId), request.LocationId, request.AssetId, request.PageNumber), _listWorkOrderPresenter);
-            return _listWorkOrderPresenter.ContentResult;
+            var result = await _pagedService.PagedList(request);
+            return result;
         }
     }
 }

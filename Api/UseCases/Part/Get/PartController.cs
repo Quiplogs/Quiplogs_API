@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Part;
+using Quiplogs.Inventory.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.Get
 {
     public class PartController : BaseApiController
     {
-        private readonly IGetPartUseCase _getPartUseCase;
-        private readonly GetPartPresenter _getPartPresenter;
+        private readonly IGetService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _getService;
 
-        public PartController(IGetPartUseCase getPartUseCase, GetPartPresenter getPartPresenter)
+        public PartController(IGetService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> getService)
         {
-            _getPartUseCase = getPartUseCase;
-            _getPartPresenter = getPartPresenter;
+            _getService = getService;
         }
 
-
         [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetPartRequest request)
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _getPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.GetPartRequest(request.Id), _getPartPresenter);
-            return _getPartPresenter.ContentResult;
+
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

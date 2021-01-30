@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Put
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IPutPlannedMaintenanceUseCase _putPlannedMaintenanceUseCase;
-        private readonly PutPlannedMaintenancePresenter _putPlannedMaintenancePresenter;
+        private readonly IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _putService;
 
-        public PlannedMaintenanceController(IPutPlannedMaintenanceUseCase putPlannedMaintenanceUseCase, PutPlannedMaintenancePresenter putPlannedMaintenancePresenter)
+        public PlannedMaintenanceController(IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> putService)
         {
-            _putPlannedMaintenanceUseCase = putPlannedMaintenanceUseCase;
-            _putPlannedMaintenancePresenter = putPlannedMaintenancePresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutPlannedMaintenanceRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _putPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.PutPlannedMaintenanceRequest(request.Name, request.AssetId, GetCompanyId(request.CompanyId), request.Cycles, request.IsRecurring, request.UoM), _putPlannedMaintenancePresenter);
-            return _putPlannedMaintenancePresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

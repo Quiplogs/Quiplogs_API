@@ -1,30 +1,31 @@
 ﻿using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
+using Quiplogs.WorkOrder.Data.Entities;
 
 namespace Api.UseCases.PlannedMaintenance.List
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IListPlannedMaintenanceUseCase _listPlannedMaintenanceUseCase;
-        private readonly ListPlannedMaintenancePresenter _listPlannedMaintenancePresenter;
+        private readonly IPagedListService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _pagedService;
 
-        public PlannedMaintenanceController(IListPlannedMaintenanceUseCase listPlannedMaintenanceUseCase, ListPlannedMaintenancePresenter listPlannedMaintenancePresenter)
+        public PlannedMaintenanceController(IPagedListService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> pagedService)
         {
-            _listPlannedMaintenanceUseCase = listPlannedMaintenanceUseCase;
-            _listPlannedMaintenancePresenter = listPlannedMaintenancePresenter;
+            _pagedService = pagedService;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListPlannedMaintenanceRequest request)
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.ListPlannedMaintenanceRequest(GetCompanyId(request.CompanyId), request.LocationId, request.AssetId, request.ShouldPage, request.PageNumber), _listPlannedMaintenancePresenter);
-            return _listPlannedMaintenancePresenter.ContentResult;
+            var result = await _pagedService.PagedList(request);
+            return result;
         }
     }
 }

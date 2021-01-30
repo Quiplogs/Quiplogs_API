@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Part;
+using Quiplogs.Inventory.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.Put
 {
     public class PartController : BaseApiController
     {
-        private readonly IPutPartUseCase _putPartUseCase;
-        private readonly PutPartPresenter _putPartPresenter;
+        private readonly IPutService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _putService;
 
-        public PartController(IPutPartUseCase putPartUseCase, PutPartPresenter putPartPresenter)
+        public PartController(IPutService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> putService)
         {
-            _putPartUseCase = putPartUseCase;
-            _putPartPresenter = putPartPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutPartRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.Inventory.Domain.Entities.Part> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _putPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.PutPartRequest(request.Id, request.Code, request.Name, request.Description, GetCompanyId(request.CompanyId), request.LocationId, request.ImageFileName, request.ImageBase64, request.ImageMimeType), _putPartPresenter);
-            return _putPartPresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

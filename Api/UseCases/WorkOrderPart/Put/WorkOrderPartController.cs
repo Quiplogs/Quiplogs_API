@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderPart;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrderPart.Put
 {
     public class WorkOrderPartController : BaseApiController
     {
-        private readonly IPutWorkOrderPartUseCase _putWorkOrderPartUseCase;
-        private readonly PutWorkOrderPartPresenter _putWorkOrderPartPresenter;
+        private readonly IPutService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart, WorkOrderPartDto> _putService;
 
-        public WorkOrderPartController(IPutWorkOrderPartUseCase putWorkOrderPartUseCase, PutWorkOrderPartPresenter putWorkOrderPartPresenter)
+        public WorkOrderPartController(IPutService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart, WorkOrderPartDto> putService)
         {
-            _putWorkOrderPartUseCase = putWorkOrderPartUseCase;
-            _putWorkOrderPartPresenter = putWorkOrderPartPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutWorkOrderPartRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _putWorkOrderPartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart.PutWorkOrderPartRequest(request.WorkOrderPart), _putWorkOrderPartPresenter);
-            return _putWorkOrderPartPresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Quiplogs.Inventory.Data.Mapping
             CreateMap<TaskDto, TaskEntity>();
             CreateMap<Part, PartDto>();
             CreateMap<PartDto, Part>();
-            CreateMap<PutTaskRequest, TaskEntity>();
-            CreateMap<TaskEntity, PutTaskRequest>();
+            //CreateMap<PutTaskRequest, TaskEntity>();
+            //CreateMap<TaskEntity, PutTaskRequest>();
         }
     }
 }

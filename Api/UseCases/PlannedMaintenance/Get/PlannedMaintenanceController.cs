@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Get
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IGetPlannedMaintenanceUseCase _getPlannedMaintenanceUseCase;
-        private readonly GetPlannedMaintenancePresenter _getPlannedMaintenancePresenter;
+        private readonly IGetService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _getService;
 
-        public PlannedMaintenanceController(IGetPlannedMaintenanceUseCase getPlannedMaintenanceUseCase, GetPlannedMaintenancePresenter getPlannedMaintenancePresenter)
+        public PlannedMaintenanceController(IGetService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> getService)
         {
-            _getPlannedMaintenanceUseCase = getPlannedMaintenanceUseCase;
-            _getPlannedMaintenancePresenter = getPlannedMaintenancePresenter;
+            _getService = getService;
         }
 
         [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetPlannedMaintenanceRequest request)
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _getPlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.GetPlannedMaintenanceRequest(request.Id), _getPlannedMaintenancePresenter);
-            return _getPlannedMaintenancePresenter.ContentResult;
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

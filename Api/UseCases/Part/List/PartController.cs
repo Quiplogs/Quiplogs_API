@@ -1,31 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Quiplogs.Inventory.Interfces.UseCases.Part;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
+using Quiplogs.Inventory.Data.Entities;
 
 namespace Api.UseCases.Part.List
 {
     public class PartController : BaseApiController
     {
-        private readonly IListPartUseCase _listPartUseCase;
-        private readonly ListPartPresenter _listPartPresenter;
+        private readonly IPagedListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _pagedService;
 
-        public PartController(IListPartUseCase listPartUseCase, ListPartPresenter listPartPresenter)
+        public PartController(IPagedListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> pagedService)
         {
-            _listPartUseCase = listPartUseCase;
-            _listPartPresenter = listPartPresenter;
+            _pagedService = pagedService;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListPartRequest request)
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Inventory.Domain.Entities.Part> request)
         {
             if (!ModelState.IsValid)
-            { 
+            {
                 // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listPartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.ListPartRequest(GetCompanyId(request.CompanyId), request.LocationId, request.FilterName, request.PageNumber), _listPartPresenter);
-            return _listPartPresenter.ContentResult;
+            var result = await _pagedService.PagedList(request);
+            return result;
         }
     }
 }

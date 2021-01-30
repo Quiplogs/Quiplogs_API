@@ -8,26 +8,26 @@ using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.UseCases.PlannedMaintenanceTask
 {
-    public class ListPlannedMaintenanceTaskUseCase : IListPlannedMaintenanceTaskUseCase
-    {
-        private readonly IPlannedMaintenanceTaskRepository _repository;
+    //public class ListPlannedMaintenanceTaskUseCase : IListPlannedMaintenanceTaskUseCase
+    //{
+    //    private readonly IPlannedMaintenanceTaskRepository _repository;
 
-        public ListPlannedMaintenanceTaskUseCase(IPlannedMaintenanceTaskRepository repository)
-        {
-            _repository = repository;
-        }
+    //    public ListPlannedMaintenanceTaskUseCase(IPlannedMaintenanceTaskRepository repository)
+    //    {
+    //        _repository = repository;
+    //    }
 
-        public async Task<bool> Handle(ListPlannedMaintenanceTaskRequest message, IOutputPort<ListPlannedMaintenanceTaskResponse> outputPort)
-        {
-            var response = await _repository.List(message.PlannedMaintenanceId);
-            if (response.Success)
-            {
-                outputPort.Handle(new ListPlannedMaintenanceTaskResponse(response.PlannedMaintenanceTasks, true));
-                return true;
-            }
+    //    public async Task<bool> Handle(ListPlannedMaintenanceTaskRequest message, IOutputPort<ListPlannedMaintenanceTaskResponse> outputPort)
+    //    {
+    //        var response = await _repository.List(message.PlannedMaintenanceId);
+    //        if (response.Success)
+    //        {
+    //            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(response.PlannedMaintenanceTasks, true));
+    //            return true;
+    //        }
 
-            outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error("", "No Planned Maintenances Tasks Found.") }));
-            return false;
-        }
-    }
+    //        outputPort.Handle(new ListPlannedMaintenanceTaskResponse(new[] { new Error("", "No Planned Maintenances Tasks Found.") }));
+    //        return false;
+    //    }
+    //}
 }

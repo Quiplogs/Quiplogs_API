@@ -1,31 +1,32 @@
 ﻿
-using System.Threading.Tasks;
+using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.AssetUsage;
+using Quiplogs.Assets.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.AssetUsage.Put
 {
     public class AssetUsageController : BaseApiController
     {
-        private readonly IPutAssetUsageUseCase _useCase;
-        private readonly PutAssetUsagePresenter _presenter;
+        private readonly IPutService<Quiplogs.Assets.Domain.Entities.AssetUsage, AssetUsageDto> _putService;
 
-        public AssetUsageController(IPutAssetUsageUseCase useCase, PutAssetUsagePresenter presenter)
+        public AssetUsageController(IPutService<Quiplogs.Assets.Domain.Entities.AssetUsage, AssetUsageDto> putService)
         {
-            _useCase = useCase;
-            _presenter = presenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutAssetUsageRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.Assets.Domain.Entities.AssetUsage> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _useCase.Handle(new Quiplogs.Assets.Dto.Requests.AssetUsage.PutAssetUsageRequest(request.WorkDone, request.DateCaptured, request.AssetId), _presenter);
-            return _presenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

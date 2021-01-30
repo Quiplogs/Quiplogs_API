@@ -8,15 +8,15 @@ namespace Api.UseCases.Asset.List
 {
     public class AssetController : BaseApiController
     {
-        private readonly IGetService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _getService;
+        private readonly IPagedListService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _pagedService;
 
-        public AssetController(IGetService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> getService)
+        public AssetController(IPagedListService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> pagedService)
         {
-            _getService = getService;
+            _pagedService = pagedService;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> Get([FromQuery] GetRequest request)
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Assets.Domain.Entities.Asset> request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,7 +24,7 @@ namespace Api.UseCases.Asset.List
                 return BadRequest(ModelState);
             }
 
-            var result = await _getService.Get(request);
+            var result = await _pagedService.PagedList(request);
             return result;
         }
     }

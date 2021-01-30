@@ -1,30 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrder;
+using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.WorkOrder.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrder.Get
 {
     public class WorkOrderController : BaseApiController
     {
-        private readonly IGetWorkOrderUseCase _getWorkOrderUseCase;
-        private readonly GetWorkOrderPresenter _getWorkOrderPresenter;
+        private readonly IGetService<WorkOrderEntity, WorkOrderDto> _getService;
 
-        public WorkOrderController(IGetWorkOrderUseCase getWorkOrderUseCase, GetWorkOrderPresenter getWorkOrderPresenter)
+        public WorkOrderController(IGetService<WorkOrderEntity, WorkOrderDto> getService)
         {
-            _getWorkOrderUseCase = getWorkOrderUseCase;
-            _getWorkOrderPresenter = getWorkOrderPresenter;
+            _getService = getService;
         }
 
         [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetWorkOrderRequest request)
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _getWorkOrderUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrder.GetWorkOrderRequest(request.Id), _getWorkOrderPresenter);
-            return _getWorkOrderPresenter.ContentResult;
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

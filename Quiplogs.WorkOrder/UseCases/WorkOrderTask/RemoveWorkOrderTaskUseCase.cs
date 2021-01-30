@@ -8,26 +8,26 @@ using Quiplogs.Core.Interfaces;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrderTask
 {
-    public class RemoveWorkOrderTaskUseCase : IRemoveWorkOrderTaskUseCase
-    {
-        private readonly IWorkOrderTaskRepository _repository;
+    //public class RemoveWorkOrderTaskUseCase : IRemoveWorkOrderTaskUseCase
+    //{
+    //    private readonly IWorkOrderTaskRepository _repository;
 
-        public RemoveWorkOrderTaskUseCase(IWorkOrderTaskRepository repository)
-        {
-            _repository = repository;
-        }
+    //    public RemoveWorkOrderTaskUseCase(IWorkOrderTaskRepository repository)
+    //    {
+    //        _repository = repository;
+    //    }
 
-        public async Task<bool> Handle(RemoveWorkOrderTaskRequest message, IOutputPort<RemoveWorkOrderTaskResponse> outputPort)
-        {
-            var response = await _repository.Remove(message.Id);
-            if (response.Success)
-            {
-                outputPort.Handle(new RemoveWorkOrderTaskResponse(response.Description, true));
-                return true;
-            }
+    //    public async Task<bool> Handle(RemoveWorkOrderTaskRequest message, IOutputPort<RemoveWorkOrderTaskResponse> outputPort)
+    //    {
+    //        var response = await _repository.Remove(message.Id);
+    //        if (response.Success)
+    //        {
+    //            outputPort.Handle(new RemoveWorkOrderTaskResponse(response.Description, true));
+    //            return true;
+    //        }
 
-            outputPort.Handle(new RemoveWorkOrderTaskResponse(new[] { new Error("", "Error removing Work Order Task.") }));
-            return false;
-        }
-    }
+    //        outputPort.Handle(new RemoveWorkOrderTaskResponse(new[] { new Error("", "Error removing Work Order Task.") }));
+    //        return false;
+    //    }
+    //}
 }

@@ -6,19 +6,19 @@ using Quiplogs.Core.Interfaces;
 
 namespace Api.UseCases.Task.List
 {
-    public class ListTaskPresenter : IOutputPort<ListTaskResponse>
-    {
-        public JsonContentResult ContentResult { get; }
+    //public class ListTaskPresenter : IOutputPort<ListTaskResponse>
+    //{
+    //    public JsonContentResult ContentResult { get; }
 
-        public ListTaskPresenter()
-        {
-            ContentResult = new JsonContentResult();
-        }
+    //    public ListTaskPresenter()
+    //    {
+    //        ContentResult = new JsonContentResult();
+    //    }
 
-        public void Handle(ListTaskResponse response)
-        {
-            ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
-            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.PagedResult) : JsonSerializer.SerializeObject(response.Errors);
-        }
-    }
+    //    public void Handle(ListTaskResponse response)
+    //    {
+    //        ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
+    //        ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.PagedResult) : JsonSerializer.SerializeObject(response.Errors);
+    //    }
+    //}
 }

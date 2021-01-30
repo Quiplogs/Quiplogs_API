@@ -1,30 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Task;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Task.Get
 {
     public class TaskController : BaseApiController
     {
-        private readonly IGetTaskUseCase _getTaskUseCase;
-        private readonly GetTaskPresenter _getTaskPresenter;
+        private readonly IGetService<TaskEntity, TaskDto> _getService;
 
-        public TaskController(IGetTaskUseCase getTaskUseCase, GetTaskPresenter getTaskPresenter)
+        public TaskController(IGetService<TaskEntity, TaskDto> getService)
         {
-            _getTaskUseCase = getTaskUseCase;
-            _getTaskPresenter = getTaskPresenter;
+            _getService = getService;
         }
 
-
         [HttpGet()]
-        public async Task<ActionResult> Get([FromQuery] GetTaskRequest request)
+        public async Task<ActionResult> Get([FromQuery] GetRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _getTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.GetTaskRequest(request.Id), _getTaskPresenter);
-            return _getTaskPresenter.ContentResult;
+
+            var result = await _getService.Get(request);
+            return result;
         }
     }
 }

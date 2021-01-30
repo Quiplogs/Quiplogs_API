@@ -1,35 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Task;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Task.Put
 {
     public class TaskController : BaseApiController
     {
-        private readonly IPutTaskUseCase _putTaskUseCase;
-        private readonly PutTaskPresenter _putTaskPresenter;
+        private readonly IPutService<TaskEntity, TaskDto> _putService;
 
-        public TaskController(IPutTaskUseCase putTaskUseCase, PutTaskPresenter putTaskPresenter)
+        public TaskController(IPutService<TaskEntity, TaskDto> putService)
         {
-            _putTaskUseCase = putTaskUseCase;
-            _putTaskPresenter = putTaskPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutTaskRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<TaskEntity> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            if(request == null)
-            {
-                return BadRequest();
-            }
-
-            await _putTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.PutTaskRequest(request.Id, request.Name, request.Description, GetCompanyId(request.CompanyId)), _putTaskPresenter);
-            return _putTaskPresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }

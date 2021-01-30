@@ -1,31 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenancePart.Put
 {
     public class PlannedMaintenancePartController : BaseApiController
     {
-        private readonly IPutPlannedMaintenancePartUseCase _putPlannedMaintenancePartUseCase;
-        private readonly PutPlannedMaintenancePartPresenter _putPlannedMaintenancePartPresenter;
+        private readonly IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenancePart, PlannedMaintenancePartDto> _putService;
 
-        public PlannedMaintenancePartController(IPutPlannedMaintenancePartUseCase putPlannedMaintenancePartUseCase, PutPlannedMaintenancePartPresenter putPlannedMaintenancePartPresenter)
+        public PlannedMaintenancePartController(IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenancePart, PlannedMaintenancePartDto> putService)
         {
-            _putPlannedMaintenancePartUseCase = putPlannedMaintenancePartUseCase;
-            _putPlannedMaintenancePartPresenter = putPlannedMaintenancePartPresenter;
+            _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutPlannedMaintenancePartRequest request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenancePart> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _putPlannedMaintenancePartUseCase.Handle(new PutPlannedMaintenancePartDtoRequest(GetCompanyId(request.CompanyId), request.PlannedMaintenanceId, request.PartId, request.Quantity, request.UoM), _putPlannedMaintenancePartPresenter);
-            return _putPlannedMaintenancePartPresenter.ContentResult;
+            var result = await _putService.Put(request);
+            return result;
         }
     }
 }
