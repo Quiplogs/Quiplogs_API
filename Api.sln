@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.BlobStorage", "Qui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Dashboard", "Quiplogs.Dashboard\Quiplogs.Dashboard.csproj", "{99A01CBF-A817-4ED2-9077-94A2F9891E67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Schedules", "Quiplogs.PMSchedule\Quiplogs.Schedules.csproj", "{CA2A38DB-BA20-4B32-A665-AF59A77A4722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiplogs.Schedules", "Quiplogs.Schedules\Quiplogs.Schedules.csproj", "{CA2A38DB-BA20-4B32-A665-AF59A77A4722}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiplogs.PlannedMaintenance", "Quiplogs.PlannedMaintenance\Quiplogs.PlannedMaintenance.csproj", "{48740F60-4B79-4E90-9E1D-DBB6E0EB9643}"
 EndProject
