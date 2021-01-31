@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Data.Entities;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.PlannedMaintenance.Data.Entities;
 
 namespace Quiplogs.Schedules.Data.Entities
 {

@@ -1,29 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Task;
+using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Task.Remove
 {
     public class TaskController : BaseApiController
     {
-        private readonly IRemoveTaskUseCase _removeTaskUseCase;
-        private readonly RemoveTaskPresenter _removeTaskPresenter;
+        private readonly IRemoveService<TaskEntity, TaskDto> _removeService;
 
-        public TaskController(IRemoveTaskUseCase removeTaskUseCase, RemoveTaskPresenter removeTaskPresenter)
+        public TaskController(IRemoveService<TaskEntity, TaskDto> removeService)
         {
-            _removeTaskUseCase = removeTaskUseCase;
-            _removeTaskPresenter = removeTaskPresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromQuery] RemoveTaskRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removeTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.RemoveTaskRequest(request.Id), _removeTaskPresenter);
-            return _removeTaskPresenter.ContentResult;
+
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

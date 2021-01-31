@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Task;
+using Quiplogs.Inventory.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Task.List
 {
     public class TaskController : BaseApiController
     {
-        //private readonly IListTaskUseCase _listTaskUseCase;
-        //private readonly ListTaskPresenter _listTaskPresenter;
+        private readonly IPagedListService<Quiplogs.Inventory.Domain.Entities.TaskEntity, TaskDto> _pagedService;
 
-        //public TaskController(IListTaskUseCase listTaskUseCase, ListTaskPresenter listTaskPresenter)
-        //{
-        //    _listTaskUseCase = listTaskUseCase;
-        //    _listTaskPresenter = listTaskPresenter;
-        //}
+        public TaskController(IPagedListService<Quiplogs.Inventory.Domain.Entities.TaskEntity, TaskDto> pagedService)
+        {
+            _pagedService = pagedService;
+        }
 
-        //[HttpGet("List")]
-        //public async Task<ActionResult> List([FromQuery] ListTaskRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    { // re-render the view when validation failed.
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost("PagedList")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Inventory.Domain.Entities.TaskEntity> request)
+        {
+            if (!ModelState.IsValid)
+            {
+                // re-render the view when validation failed.
+                return BadRequest(ModelState);
+            }
 
-        //    await _listTaskUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Task.ListTaskRequest(GetCompanyId(request.CompanyId), request.PageNumber, request.FilterName), _listTaskPresenter);
-        //    return _listTaskPresenter.ContentResult;
-        //}
+            var result = await _pagedService.PagedList(request);
+            return result;
+        }
     }
 }

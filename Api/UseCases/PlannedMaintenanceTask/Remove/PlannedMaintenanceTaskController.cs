@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenanceTask;
+using Quiplogs.PlannedMaintenance.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenanceTask.Remove
 {
     public class PlannedMaintenanceTaskController : BaseApiController
     {
-        private readonly IRemovePlannedMaintenanceTaskUseCase _removePlannedMaintenanceTaskUseCase;
-        private readonly RemovePlannedMaintenanceTaskPresenter _removePlannedMaintenanceTaskPresenter;
+        private readonly IRemoveService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenanceTask, PlannedMaintenanceTaskDto> _removeService;
 
-        public PlannedMaintenanceTaskController(IRemovePlannedMaintenanceTaskUseCase removePlannedMaintenanceTaskUseCase, RemovePlannedMaintenanceTaskPresenter removePlannedMaintenanceTaskPresenter)
+        public PlannedMaintenanceTaskController(IRemoveService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenanceTask, PlannedMaintenanceTaskDto> removeService)
         {
-            _removePlannedMaintenanceTaskUseCase = removePlannedMaintenanceTaskUseCase;
-            _removePlannedMaintenanceTaskPresenter = removePlannedMaintenanceTaskPresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromQuery] RemovePlannedMaintenanceTaskRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _removePlannedMaintenanceTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenanceTask.RemovePlannedMaintenanceTaskRequest(request.Id), _removePlannedMaintenanceTaskPresenter);
-            return _removePlannedMaintenanceTaskPresenter.ContentResult;
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

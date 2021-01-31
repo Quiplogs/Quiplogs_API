@@ -39,6 +39,8 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Quiplogs.PlannedMaintenance;
+using Quiplogs.PlannedMaintenance.Data.Mapping;
 
 namespace Api
 {
@@ -152,6 +154,7 @@ namespace Api
                 mc.AddProfile(new InventoryProfile());
                 mc.AddProfile(new WorkOrderProfile());
                 mc.AddProfile(new AssetProfile());
+                mc.AddProfile(new PlannedMaintenanceProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
@@ -178,20 +181,24 @@ namespace Api
             builder.RegisterModule(new InventoryModule());
             builder.RegisterModule(new WorkOrderModule());
             builder.RegisterModule(new DashboardModule());
+            builder.RegisterModule(new PlannedMaintenanceModule());
 
             builder.RegisterModule(new SendNotificationModule(Configuration));
 
             // Presenters
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(GetPresenter<>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof(GetService<,>)).As(typeof(IGetService<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(GetPresenter<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(GetService<,>)).As(typeof(IGetService<,>)).InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(PutPresenter<>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof(PutService<,>)).As(typeof(IPutService<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(PutService<,>)).As(typeof(IPutService<,>)).InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(PagedListPresenter<>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof(PagedListService<,>)).As(typeof(IPagedListService<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(PagedListPresenter<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(PagedListService<,>)).As(typeof(IPagedListService<,>)).InstancePerLifetimeScope();
+
+            builder.RegisterType<RemovePresenter>().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(RemoveService<,>)).As(typeof(IRemoveService<,>)).InstancePerLifetimeScope();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

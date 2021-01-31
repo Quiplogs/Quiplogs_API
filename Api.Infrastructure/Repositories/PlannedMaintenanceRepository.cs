@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
-using Quiplogs.WorkOrder.Dto.Repositories.PlannedMaintenance;
 using Quiplogs.WorkOrder.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;

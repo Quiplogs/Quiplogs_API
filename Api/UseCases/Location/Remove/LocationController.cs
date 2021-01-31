@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Interfaces.UseCases.Location;
+using Quiplogs.Core.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Location.Remove
 {
@@ -10,24 +12,24 @@ namespace Api.UseCases.Location.Remove
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly IRemoveLocationUseCase _removeLocationUseCase;
-        private readonly RemoveLocationPresenter _removeLocationPresenter;
+        private readonly IRemoveService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _removeService;
 
-        public LocationController(IRemoveLocationUseCase removeLocationUseCase, RemoveLocationPresenter removeLocationPresenter)
+        public LocationController(IRemoveService<Quiplogs.Core.Domain.Entities.Location, LocationDto> removeService)
         {
-            _removeLocationUseCase = removeLocationUseCase;
-            _removeLocationPresenter = removeLocationPresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromQuery] RemoveLocationRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removeLocationUseCase.Handle(new Quiplogs.Core.Dto.Requests.Location.RemoveLocationRequest(request.Id), _removeLocationPresenter);
-            return _removeLocationPresenter.ContentResult;
+
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

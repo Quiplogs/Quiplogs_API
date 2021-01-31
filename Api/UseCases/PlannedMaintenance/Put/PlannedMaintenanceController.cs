@@ -1,22 +1,22 @@
 ﻿using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.PlannedMaintenance.Data.Entities;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Put
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _putService;
+        private readonly IPutService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _putService;
 
-        public PlannedMaintenanceController(IPutService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> putService)
+        public PlannedMaintenanceController(IPutService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> putService)
         {
             _putService = putService;
         }
 
         [HttpPut()]
-        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance> request)
+        public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> request)
         {
             if (!ModelState.IsValid)
             {

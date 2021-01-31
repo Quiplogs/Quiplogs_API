@@ -1,29 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenance;
+using Quiplogs.PlannedMaintenance.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Remove
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IRemovePlannedMaintenanceUseCase _removePlannedMaintenanceUseCase;
-        private readonly RemovePlannedMaintenancePresenter _removePlannedMaintenancePresenter;
+        private readonly IRemoveService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _removeService;
 
-        public PlannedMaintenanceController(IRemovePlannedMaintenanceUseCase removePlannedMaintenanceUseCase, RemovePlannedMaintenancePresenter removePlannedMaintenancePresenter)
+        public PlannedMaintenanceController(IRemoveService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> removeService)
         {
-            _removePlannedMaintenanceUseCase = removePlannedMaintenanceUseCase;
-            _removePlannedMaintenancePresenter = removePlannedMaintenancePresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromBody] RemovePlannedMaintenanceRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removePlannedMaintenanceUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenance.RemovePlannedMaintenanceRequest(request.Id), _removePlannedMaintenancePresenter);
-            return _removePlannedMaintenancePresenter.ContentResult;
+
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

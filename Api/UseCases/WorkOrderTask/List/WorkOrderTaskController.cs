@@ -1,30 +1,33 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderTask;
+using Quiplogs.Core.Dto.Requests.Generic;
+using Quiplogs.WorkOrder.UseCases.WorkOrderTask;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrderTask.List
 {
     public class WorkOrderTaskController : BaseApiController
     {
-        private readonly IListWorkOrderTaskUseCase _listWorkOrderTaskUseCase;
-        private readonly ListWorkOrderTaskPresenter _listWorkOrderTaskPresenter;
+        private readonly ListWorkOrderTaskUseCase _listUseCase;
+        private readonly ListPresenter<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask> _listPresenter;
 
-        public WorkOrderTaskController(IListWorkOrderTaskUseCase listWorkOrderTaskUseCase, ListWorkOrderTaskPresenter listWorkOrderTaskPresenter)
+        public WorkOrderTaskController(ListWorkOrderTaskUseCase listUseCase, ListPresenter<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask> listPresenter)
         {
-            _listWorkOrderTaskUseCase = listWorkOrderTaskUseCase;
-            _listWorkOrderTaskPresenter = listWorkOrderTaskPresenter;
+            _listUseCase = listUseCase;
+            _listPresenter = listPresenter;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListWorkOrderTaskRequest request)
+        [HttpPost("ListByParent")]
+        public async Task<ActionResult> PagedList([FromBody] ListRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listWorkOrderTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask.ListWorkOrderTaskRequest(request.WordOrderId, request.PageNumber), _listWorkOrderTaskPresenter);
-            return _listWorkOrderTaskPresenter.ContentResult;
+            await _listUseCase.Handle(new ListRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask>(request.CompanyId, request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
+            return _listPresenter.ContentResult;
         }
     }
 }

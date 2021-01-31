@@ -23,7 +23,7 @@ namespace Quiplogs.Core.UseCases.Generic
 
         public async Task<bool> Handle(PagedRequest<T1> request, IOutputPort<PagedResponse<T1>> outputPort)
         {
-            var response = await _baseRepository.PagedList(_baseRepository.BaseQueryFilter(request.FilterParameters), request.CompanyId, request.PageNumber, request.PageSize);
+            var response = await _baseRepository.PagedList( request.CompanyId, request.PageNumber, request.PageSize, request.FilterParameters);
             if (response.Success)
             {
                 outputPort.Handle(new PagedResponse<T1>(response.PagedResult, true));

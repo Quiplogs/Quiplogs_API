@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Quiplogs.Assets.UseCases.Asset;
+using Quiplogs.Assets.UseCases.AssetUsage;
 using System.Reflection;
 
 namespace Quiplogs.Assets
@@ -8,6 +10,9 @@ namespace Quiplogs.Assets
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<AssetPagedListUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<AssetUsagePagedListUseCase>().InstancePerLifetimeScope();
         }
     }
 }

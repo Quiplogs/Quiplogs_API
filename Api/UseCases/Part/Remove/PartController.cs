@@ -1,29 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Interfces.UseCases.Part;
+using Quiplogs.Inventory.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.Remove
 {
     public class PartController : BaseApiController
     {
-        private readonly IRemovePartUseCase _removePartUseCase;
-        private readonly RemovePartPresenter _removePartPresenter;
+        private readonly IRemoveService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _removeService;
 
-        public PartController(IRemovePartUseCase removePartUseCase, RemovePartPresenter removePartPresenter)
+        public PartController(IRemoveService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> removeService)
         {
-            _removePartUseCase = removePartUseCase;
-            _removePartPresenter = removePartPresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromQuery] RemovePartRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removePartUseCase.Handle(new Quiplogs.Inventory.Dto.Requests.Part.RemovePartRequest(request.Id), _removePartPresenter);
-            return _removePartPresenter.ContentResult;
+
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

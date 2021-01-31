@@ -1,29 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderTask;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrderTask.Remove
 {
     public class WorkOrderTaskController : BaseApiController
     {
-        private readonly IRemoveWorkOrderTaskUseCase _removeWorkOrderTaskUseCase;
-        private readonly RemoveWorkOrderTaskPresenter _removeWorkOrderTaskPresenter;
+        private readonly IRemoveService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask, WorkOrderTaskDto> _removeService;
 
-        public WorkOrderTaskController(IRemoveWorkOrderTaskUseCase removeWorkOrderTaskUseCase, RemoveWorkOrderTaskPresenter removeWorkOrderTaskPresenter)
+        public WorkOrderTaskController(IRemoveService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderTask, WorkOrderTaskDto> removeService)
         {
-            _removeWorkOrderTaskUseCase = removeWorkOrderTaskUseCase;
-            _removeWorkOrderTaskPresenter = removeWorkOrderTaskPresenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromBody] RemoveWorkOrderTaskRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _removeWorkOrderTaskUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.WorkOrderTask.RemoveWorkOrderTaskRequest(request.Id), _removeWorkOrderTaskPresenter);
-            return _removeWorkOrderTaskPresenter.ContentResult;
+
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

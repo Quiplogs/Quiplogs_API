@@ -19,7 +19,7 @@ namespace Quiplogs.Assets.Domain.Entities
 
         public decimal CurrentWorkDone { get; set; }
 
-        public int UoM { get; set; }
+        public string UoM { get; set; }
 
         public string ImgFileName { get; set; }
 

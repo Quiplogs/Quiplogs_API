@@ -1,40 +1,39 @@
-﻿using Quiplogs.WorkOrder.Dto.Requests.WorkOrderPart;
-using Quiplogs.WorkOrder.Dto.Responses.WorkOrderPart;
-using Quiplogs.WorkOrder.Interfaces.Repositories;
-using Quiplogs.WorkOrder.Interfaces.UseCases.WorkOrderPart;
-using System.Threading.Tasks;
-using Quiplogs.Core.Domain;
-using Quiplogs.Core.Dto;
+﻿using Quiplogs.Core.Dto;
+using Quiplogs.Core.Dto.Requests.Generic;
+using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
+using Quiplogs.Core.Interfaces.Repositories;
+using Quiplogs.Core.Interfaces.UseCases.Generic;
+using Quiplogs.WorkOrder.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
 {
-    //public class ListWorkOrderPartUseCase : IListWorkOrderPartUseCase
-    //{
-    //    private readonly IWorkOrderPartRepository _repository;
+    public class ListWorkOrderPartUseCase : IListUseCase<Domain.Entities.WorkOrderPart, WorkOrderPartDto>
+    {
+        private readonly IBaseRepository<Domain.Entities.WorkOrderPart, WorkOrderPartDto> _baseRepository;
 
-    //    public ListWorkOrderPartUseCase(IWorkOrderPartRepository repository)
-    //    {
-    //        _repository = repository;
-    //    }
+        public ListWorkOrderPartUseCase(IBaseRepository<Domain.Entities.WorkOrderPart, WorkOrderPartDto> baseRepository)
+        {
+            _baseRepository = baseRepository;
+        }
 
-    //    public async Task<bool> Handle(ListWorkOrderPartRequest message, IOutputPort<ListWorkOrderPartResponse> outputPort)
-    //    {
-    //        //temp var
-    //        var pageSize = 20;
+        public async Task<bool> Handle(ListRequest<Domain.Entities.WorkOrderPart> request,
+            IOutputPort<ListResponse<Domain.Entities.WorkOrderPart>> outputPort)
+        {
+            var response = await _baseRepository.List(
+                request.FilterParameters,
+                model => model.WorkOrderId == request.ParentId);
 
-    //        var response = await _repository.List(message.WorkOrderId, message.PageNumber, pageSize);
-    //        if (response.Success)
-    //        {
-    //            var total = _repository.GetTotalRecords(message.WorkOrderId);
-    //            var pagedResult = new PagedResult<Domain.Entities.WorkOrderPart>(response.WorkOrderParts, total, message.PageNumber, pageSize);
+            if (response.Success)
+            {
+                outputPort.Handle(new ListResponse<Domain.Entities.WorkOrderPart>(response.Models, true));
+                return true;
+            }
 
-    //            outputPort.Handle(new ListWorkOrderPartResponse(pagedResult, true));
-    //            return true;
-    //        }
-
-    //        outputPort.Handle(new ListWorkOrderPartResponse(new[] { new Error("", "No WorkOrder Parts Found.") }));
-    //        return false;
-    //    }
-    //}
+            outputPort.Handle(
+                new ListResponse<Domain.Entities.WorkOrderPart>(new[] {new Error("", "Model not Found.")}));
+            return false;
+        }
+    }
 }

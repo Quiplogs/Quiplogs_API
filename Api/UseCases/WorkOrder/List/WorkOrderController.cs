@@ -1,22 +1,26 @@
-﻿using System.Threading.Tasks;
-using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.Core.Dto.Requests.Generic;
+using Quiplogs.WorkOrder.Domain.Entities;
+using Quiplogs.WorkOrder.UseCases.WorkOrder;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrder.List
 {
     public class WorkOrderController : BaseApiController
     {
-        private readonly IPagedListService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity, WorkOrderDto> _pagedService;
+        private readonly WorkOrderPagedListUseCase _pagedListUseCase;
+        private readonly PagedListPresenter<WorkOrderEntity> _pagedListPresenter;
 
-        public WorkOrderController(IPagedListService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity, WorkOrderDto> pagedService)
+        public WorkOrderController(WorkOrderPagedListUseCase pagedListUseCase, PagedListPresenter<WorkOrderEntity> pagedListPresenter)
         {
-            _pagedService = pagedService;
+            _pagedListUseCase = pagedListUseCase;
+            _pagedListPresenter = pagedListPresenter;
         }
 
         [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderEntity> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<WorkOrderEntity> request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,8 +28,8 @@ namespace Api.UseCases.WorkOrder.List
                 return BadRequest(ModelState);
             }
 
-            var result = await _pagedService.PagedList(request);
-            return result;
+            await _pagedListUseCase.Handle(new PagedRequest<WorkOrderEntity>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            return _pagedListPresenter.ContentResult;
         }
     }
 }

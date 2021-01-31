@@ -1,30 +1,33 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Interfaces.UseCases.PlannedMaintenancePart;
+using Quiplogs.Core.Dto.Requests.Generic;
+using Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenancePart;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenancePart.List
 {
     public class PlannedMaintenancePartController : BaseApiController
     {
-        private readonly IListPlannedMaintenancePartUseCase _listPlannedMaintenancePartUseCase;
-        private readonly ListPlannedMaintenancePartPresenter _listPlannedMaintenancePartPresenter;
+        private readonly ListPlannedMaintenancePartUseCase _listUseCase;
+        private readonly ListPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart> _listPresenter;
 
-        public PlannedMaintenancePartController(IListPlannedMaintenancePartUseCase listPlannedMaintenancePartUseCase, ListPlannedMaintenancePartPresenter listPlannedMaintenancePartPresenter)
+        public PlannedMaintenancePartController(ListPlannedMaintenancePartUseCase listUseCase, ListPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart> listPresenter)
         {
-            _listPlannedMaintenancePartUseCase = listPlannedMaintenancePartUseCase;
-            _listPlannedMaintenancePartPresenter = listPlannedMaintenancePartPresenter;
+            _listUseCase = listUseCase;
+            _listPresenter = listPresenter;
         }
 
-        [HttpGet("List")]
-        public async Task<ActionResult> List([FromQuery] ListPlannedMaintenancePartRequest request)
+        [HttpPost("ListByParent")]
+        public async Task<ActionResult> PagedList([FromBody] ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart> request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _listPlannedMaintenancePartUseCase.Handle(new Quiplogs.WorkOrder.Dto.Requests.PlannedMaintenancePart.ListPlannedMaintenancePartRequest(request.PlannedMaintenanceId), _listPlannedMaintenancePartPresenter);
-            return _listPlannedMaintenancePartPresenter.ContentResult;
+            await _listUseCase.Handle(new ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart>(request.CompanyId, request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
+            return _listPresenter.ContentResult;
         }
     }
 }

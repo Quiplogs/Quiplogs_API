@@ -11,9 +11,11 @@ namespace Quiplogs.Core
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(GetUseCase<,>)).As(typeof(IGetUseCase<,>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof(PutUseCase<,>)).As(typeof(IPutUseCase<,>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof(PagedListUseCase<,>)).As(typeof(IPagedListUseCase<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(GetUseCase<,>)).As(typeof(IGetUseCase<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(PutUseCase<,>)).As(typeof(IPutUseCase<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(PagedListUseCase<,>)).As(typeof(IPagedListUseCase<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ListUseCase<,>)).As(typeof(IListUseCase<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(RemoveUseCase<,>)).As(typeof(IRemoveUseCase<,>)).InstancePerLifetimeScope();
 
             builder.RegisterType<Caching>().As<ICaching>().InstancePerLifetimeScope();
         }

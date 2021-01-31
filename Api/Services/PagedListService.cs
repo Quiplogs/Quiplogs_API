@@ -24,7 +24,7 @@ namespace Api.Services
 
         public async Task<JsonContentResult> PagedList(PagedListRequest<T1> request)
         {
-            await _pagedListUseCase.Handle(new PagedRequest<T1>(request.CompanyId, request.LocationId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            await _pagedListUseCase.Handle(new PagedRequest<T1>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
     }

@@ -1,16 +1,16 @@
 ﻿using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.PlannedMaintenance.Data.Entities;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Get
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IGetService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _getService;
+        private readonly IGetService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _getService;
 
-        public PlannedMaintenanceController(IGetService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> getService)
+        public PlannedMaintenanceController(IGetService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> getService)
         {
             _getService = getService;
         }

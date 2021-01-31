@@ -1,22 +1,25 @@
-﻿using System.Threading.Tasks;
-using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.Core.Dto.Requests.Generic;
+using Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.List
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IPagedListService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _pagedService;
+        private readonly PlannedMaintenancePagedListUseCase _pagedListUseCase;
+        private readonly PagedListPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> _pagedListPresenter;
 
-        public PlannedMaintenanceController(IPagedListService<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> pagedService)
+        public PlannedMaintenanceController(PlannedMaintenancePagedListUseCase pagedListUseCase, PagedListPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> pagedListPresenter)
         {
-            _pagedService = pagedService;
+            _pagedListUseCase = pagedListUseCase;
+            _pagedListPresenter = pagedListPresenter;
         }
 
         [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.WorkOrder.Domain.Entities.PlannedMaintenance> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,8 +27,8 @@ namespace Api.UseCases.PlannedMaintenance.List
                 return BadRequest(ModelState);
             }
 
-            var result = await _pagedService.PagedList(request);
-            return result;
+            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            return _pagedListPresenter.ContentResult;
         }
     }
 }

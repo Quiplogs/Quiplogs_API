@@ -1,30 +1,34 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Presenters;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.AssetUsage;
+using Quiplogs.Assets.UseCases.AssetUsage;
+using Quiplogs.Core.Dto.Requests.Generic;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.AssetUsage.List
 {
     public class AssetUsageController : BaseApiController
     {
-        //private readonly IListAssetUsageUseCase _useCase;
-        //private readonly ListAssetUsagePresenter _presenter;
+        private readonly AssetUsagePagedListUseCase _pagedListUseCase;
+        private readonly PagedListPresenter<Quiplogs.Assets.Domain.Entities.AssetUsage> _pagedListPresenter;
 
-        //public AssetUsageController(IListAssetUsageUseCase useCase, ListAssetUsagePresenter presenter)
-        //{
-        //    _useCase = useCase;
-        //    _presenter = presenter;
-        //}
+        public AssetUsageController(AssetUsagePagedListUseCase pagedListUseCase, PagedListPresenter<Quiplogs.Assets.Domain.Entities.AssetUsage> pagedListPresenter)
+        {
+            _pagedListUseCase = pagedListUseCase;
+            _pagedListPresenter = pagedListPresenter;
+        }
 
-        //[HttpGet("List")]
-        //public async Task<ActionResult> List([FromQuery] ListAssetUsageRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    { // re-render the view when validation failed.
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost("ListByParent")]
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Assets.Domain.Entities.AssetUsage> request)
+        {
+            if (!ModelState.IsValid)
+            {
+                // re-render the view when validation failed.
+                return BadRequest(ModelState);
+            }
 
-        //    await _useCase.Handle(new Quiplogs.Assets.Dto.Requests.AssetUsage.ListAssetUsageRequest(request.AssetId, request.PageNumber), _presenter);
-        //    return _presenter.ContentResult;
-        //}
+            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.Assets.Domain.Entities.AssetUsage>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            return _pagedListPresenter.ContentResult;
+        }
     }
 }

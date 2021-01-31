@@ -1,30 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Assets.Interfaces.UseCases.AssetUsage;
+using Quiplogs.Assets.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.AssetUsage.Remove
 {
     public class AssetUsageController : BaseApiController
     {
-        private readonly IRemoveAssetUsageUseCase _useCase;
-        private readonly RemoveAssetUsagePresenter _presenter;
+        private readonly IRemoveService<Quiplogs.Assets.Domain.Entities.AssetUsage, AssetUsageDto> _removeService;
 
-        public AssetUsageController(IRemoveAssetUsageUseCase useCase, RemoveAssetUsagePresenter presenter)
+        public AssetUsageController(IRemoveService<Quiplogs.Assets.Domain.Entities.AssetUsage, AssetUsageDto> removeService)
         {
-            _useCase = useCase;
-            _presenter = presenter;
+            _removeService = removeService;
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Remove([FromQuery] RemoveAssetUsageRequest request)
+        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
 
-            await _useCase.Handle(new Quiplogs.Assets.Dto.Requests.AssetUsage.RemoveAssetUsageRequest(request.Id), _presenter);
-            return _presenter.ContentResult;
+            var result = await _removeService.Put(request);
+            return result;
         }
     }
 }

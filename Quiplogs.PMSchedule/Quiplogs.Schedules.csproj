@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Api.Core\Quiplogs.Core.csproj" />
+    <ProjectReference Include="..\Quiplogs.PlannedMaintenance\Quiplogs.PlannedMaintenance.csproj" />
     <ProjectReference Include="..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj" />
   </ItemGroup>
 

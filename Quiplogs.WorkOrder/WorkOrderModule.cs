@@ -1,5 +1,7 @@
 ﻿using Autofac;
-using System.Reflection;
+using Quiplogs.WorkOrder.UseCases.WorkOrder;
+using Quiplogs.WorkOrder.UseCases.WorkOrderPart;
+using Quiplogs.WorkOrder.UseCases.WorkOrderTask;
 
 namespace Quiplogs.WorkOrder
 {
@@ -7,7 +9,9 @@ namespace Quiplogs.WorkOrder
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<WorkOrderPagedListUseCase>().InstancePerDependency();
+            builder.RegisterType<ListWorkOrderPartUseCase>().InstancePerDependency();
+            builder.RegisterType<ListWorkOrderTaskUseCase>().InstancePerDependency();
         }
     }
 }

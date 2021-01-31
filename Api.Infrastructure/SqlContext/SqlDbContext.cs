@@ -9,6 +9,7 @@ using Quiplogs.WorkOrder.Data.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Quiplogs.PlannedMaintenance.Data.Entities;
 using Quiplogs.Schedules.Data.Entities;
 
 namespace Quiplogs.Infrastructure.SqlContext
@@ -32,7 +33,7 @@ namespace Quiplogs.Infrastructure.SqlContext
         public DbSet<ScheduleCustomDto> ScheduleCustom { get; set; }
         public DbSet<ScheduleDailyDto> ScheduleDaily { get; set; }
         public DbSet<ScheduleWeeklyDto> ScheduleWeekly { get; set; }
-        public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }        
+        public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }
         public DbSet<ScheduleYearlyDto> ScheduleYearly { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
