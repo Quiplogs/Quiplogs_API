@@ -16,10 +16,10 @@ namespace Quiplogs.WorkOrder.Domain.Entities
         public AppUser Technician { get; set; }
         public string TechnicianName { get; set; }
         public Guid AssetId { get; set; }
-        public Asset Asset { get; set; }
+        public string AssetName { get; set; }
         public int Status { get; set; }
         public Guid LocationId { get; set; }
-        public Location Location { get; set; }
+        public string LocationName { get; set; }
         public List<WorkOrderPart> WorkOrderParts { get; set; }
         public List<WorkOrderTask> WorkOrderTasks { get; set; }
     }

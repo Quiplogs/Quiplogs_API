@@ -1,22 +1,22 @@
 ﻿using Api.Services.Interfaces;
+using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Core.Data.Entities;
 using System.Threading.Tasks;
-using Api.UseCases.Generic.Requests;
 
 namespace Api.UseCases.Location.List
 {
     public class LocationController : BaseApiController
     {
-        private readonly IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _pagedService;
+        private readonly IListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _listService;
 
-        public LocationController(IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> pagedService)
+        public LocationController(IListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> listService)
         {
-            _pagedService = pagedService;
+            _listService = listService;
         }
 
-        [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Core.Domain.Entities.Location> request)
+        [HttpPost("List")]
+        public async Task<ActionResult> PagedList([FromBody] ListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,7 +24,7 @@ namespace Api.UseCases.Location.List
                 return BadRequest(ModelState);
             }
 
-            var result = await _pagedService.PagedList(request);
+            var result = await _listService.List(request, GetCompanyId(request.CompanyId));
             return result;
         }
     }

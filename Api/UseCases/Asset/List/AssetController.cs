@@ -19,7 +19,7 @@ namespace Api.UseCases.Asset.List
         }
 
         [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Assets.Domain.Entities.Asset> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -27,28 +27,8 @@ namespace Api.UseCases.Asset.List
                 return BadRequest(ModelState);
             }
 
-            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.Assets.Domain.Entities.Asset>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.Assets.Domain.Entities.Asset>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
-
-        //private readonly IPagedListService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _pagedService;
-
-        //public AssetController(IPagedListService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> pagedService)
-        //{
-        //    _pagedService = pagedService;
-        //}
-
-        //[HttpPost("PagedList")]
-        //public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Assets.Domain.Entities.Asset> request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        // re-render the view when validation failed.
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var result = await _pagedService.PagedList(request);
-        //    return result;
-        //}
     }
 }

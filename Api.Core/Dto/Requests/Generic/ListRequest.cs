@@ -8,12 +8,12 @@ namespace Quiplogs.Core.Dto.Requests.Generic
 {
     public class ListRequest<T> : IRequest<ListResponse<T>> where T : BaseEntity
     {
-        public Guid CompanyId { get; }
+        public Guid? CompanyId { get; }
         public Guid? LocationId { get; }
         public Guid? ParentId { get; }
         public Dictionary<string, string> FilterParameters { get; set; }
 
-        public ListRequest(Guid companyId, Guid? locationId, Guid? parentId, Dictionary<string, string> filterParameters)
+        public ListRequest(Guid? companyId, Guid? locationId, Guid? parentId, Dictionary<string, string> filterParameters)
         {
             CompanyId = companyId;
             LocationId = locationId;

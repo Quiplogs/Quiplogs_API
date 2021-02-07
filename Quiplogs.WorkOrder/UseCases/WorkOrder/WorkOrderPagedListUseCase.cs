@@ -23,17 +23,13 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
 
         public async Task<bool> Handle(PagedRequest<Domain.Entities.WorkOrderEntity> request, IOutputPort<PagedResponse<Domain.Entities.WorkOrderEntity>> outputPort)
         {
-            var includes = new List<Expression<Func<WorkOrderDto, object>>>();
-            includes.Add(model => model.WorkOrderParts);
-            includes.Add(model => model.WorkOrderTasks);
-
             var response = await _baseRepository.PagedList(
                 request.CompanyId,
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                includes);
+                model => model.WorkOrderTasks, model => model.WorkOrderParts);
 
             if (response.Success)
             {

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Api.Presenters;
 using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
@@ -22,9 +23,9 @@ namespace Api.Services
             _pagedListPresenter = pagedListPresenter;
         }
 
-        public async Task<JsonContentResult> PagedList(PagedListRequest<T1> request)
+        public async Task<JsonContentResult> PagedList(PagedListRequest request, Guid companyId)
         {
-            await _pagedListUseCase.Handle(new PagedRequest<T1>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            await _pagedListUseCase.Handle(new PagedRequest<T1>(companyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
     }

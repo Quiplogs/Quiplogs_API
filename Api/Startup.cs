@@ -197,6 +197,9 @@ namespace Api
             builder.RegisterGeneric(typeof(PagedListPresenter<>)).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(PagedListService<,>)).As(typeof(IPagedListService<,>)).InstancePerLifetimeScope();
 
+            builder.RegisterGeneric(typeof(ListPresenter<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ListService<,>)).As(typeof(IListService<,>)).InstancePerLifetimeScope();
+
             builder.RegisterType<RemovePresenter>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(RemoveService<,>)).As(typeof(IRemoveService<,>)).InstancePerLifetimeScope();
         }

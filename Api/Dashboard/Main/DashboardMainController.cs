@@ -22,14 +22,14 @@ namespace Api.Dashboard.Main
                 return BadRequest(ModelState);
             }
 
-            var analyticsReuqest = new AnalyticsRequest
+            var analyticsRequest = new AnalyticsRequest
             {
                 CompanyId = GetCompanyId(request.CompanyId),
                 LocationId = request.LocationId,
                 StoredProcedure = request.QueryName
             };
 
-            var data = _repo.GetDashboardData(analyticsReuqest);
+            var data = _repo.GetDashboardData(analyticsRequest);
             return new JsonResult(data);
         }
     }

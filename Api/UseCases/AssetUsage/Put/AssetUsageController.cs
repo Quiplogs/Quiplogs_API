@@ -16,7 +16,7 @@ namespace Api.UseCases.AssetUsage.Put
             _putService = putService;
         }
 
-        [HttpPut()]
+        [HttpPut]
         public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.Assets.Domain.Entities.AssetUsage> request)
         {
             if (!ModelState.IsValid)
@@ -25,7 +25,7 @@ namespace Api.UseCases.AssetUsage.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request);
+            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
             return result;
         }
     }

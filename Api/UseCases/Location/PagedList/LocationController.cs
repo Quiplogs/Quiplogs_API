@@ -1,16 +1,16 @@
-﻿using Api.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Data.Entities;
-using System.Threading.Tasks;
+using Quiplogs.Core.Data.Entities;
 
-namespace Api.UseCases.Task.List
+namespace Api.UseCases.Location.PagedList
 {
-    public class TaskController : BaseApiController
+    public class LocationController : BaseApiController
     {
-        private readonly IPagedListService<Quiplogs.Inventory.Domain.Entities.TaskEntity, TaskDto> _pagedService;
+        private readonly IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _pagedService;
 
-        public TaskController(IPagedListService<Quiplogs.Inventory.Domain.Entities.TaskEntity, TaskDto> pagedService)
+        public LocationController(IPagedListService<Quiplogs.Core.Domain.Entities.Location, LocationDto> pagedService)
         {
             _pagedService = pagedService;
         }

@@ -25,7 +25,7 @@ namespace Api.UseCases.WorkOrder.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request);
+            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
             return result;
         }
     }

@@ -46,15 +46,24 @@ namespace Quiplogs.Infrastructure.Repositories
             return await _userManager.CheckPasswordAsync(_mapper.Map<UserEntity>(user), password);
         }
 
-        public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid locationId)
+        public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid? locationId)
         {
-            var users = await _userManager.Users
-                                                .Where(x =>x.CompanyId == companyId
-                                                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
-                                                .ToListAsync();
+            try
+            {
+                var users = _userManager.Users
+                    .Where(x => x.CompanyId == companyId
+                                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
+                    .ToList();
 
-            List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
-            return new GetAllUsersResponse(mappedUsers, true, null);
+                List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
+                return new GetAllUsersResponse(mappedUsers, true, null);
+            }
+            catch (Exception ex)
+            {
+                var t = ex;
+            }
+
+            return null;
         }
 
         public async Task<GetUserResponse> Get(Guid id)

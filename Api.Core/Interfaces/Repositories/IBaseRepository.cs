@@ -13,9 +13,9 @@ namespace Quiplogs.Core.Interfaces.Repositories
         where T1 : BaseEntity
         where T2 : BaseEntityDto
     {
-        Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, List<Expression<Func<T2, object>>> includes = null);
+        Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including);
 
-        Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, List<Expression<Func<T2, object>>> includes = null);
+        Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including);
 
         Task<BaseModelResponse<T1>> GetById(Guid id);
 

@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Api.Services.Interfaces;
+﻿using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
+using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Inventory.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.List
 {
     public class PartController : BaseApiController
     {
-        private readonly IPagedListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _pagedService;
+        private readonly IListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _listService;
 
-        public PartController(IPagedListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> pagedService)
+        public PartController(IListService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> listService)
         {
-            _pagedService = pagedService;
+            _listService = listService;
         }
 
-        [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Inventory.Domain.Entities.Part> request)
+        [HttpPost("List")]
+        public async Task<ActionResult> PagedList([FromBody] ListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,7 +24,7 @@ namespace Api.UseCases.Part.List
                 return BadRequest(ModelState);
             }
 
-            var result = await _pagedService.PagedList(request);
+            var result = await _listService.List(request, GetCompanyId(request.CompanyId));
             return result;
         }
     }

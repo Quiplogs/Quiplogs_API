@@ -18,15 +18,13 @@ namespace Quiplogs.Infrastructure.Helper
             return source;
         }
 
-        public static IQueryable<T> CustomInclude<T>(this IQueryable<T> source, List<Expression<Func<T, object>>> includes = null)
+        public static IQueryable<T> CustomInclude<T>(this IQueryable<T> source, params Expression<Func<T, object>>[] including)
         {
-            if (includes.Any())
+            including?.ToList().ForEach(include =>
             {
-                includes.ForEach(include =>
-                {
-                    source.Include(include);
-                });
-            }
+                if (include != null)
+                    source = source.Include(include);
+            });
 
             return source;
         }

@@ -36,14 +36,14 @@ namespace Quiplogs.Infrastructure.Repositories
             _entities = _context.Set<T2>();
         }
 
-        public async Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters = null, Expression<Func<T2, bool>> predicate = null, List<Expression<Func<T2, object>>> includes = null)
+        public async Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters = null, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including)
         {
             try
             {
                 var modelList = await _entities
                                         .AsQueryable()
                                         .CustomWhere(predicate)
-                                        .CustomInclude(includes)
+                                        .CustomInclude(including)
                                         .FilterByString(filterParameters)
                                         .ToListAsync();
 
@@ -56,14 +56,13 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, List<Expression<Func<T2, object>>> includes = null)
+        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including)
         {
             try
             {
                 var modelList = await _entities
-                                    .AsQueryable()
                                     .CustomWhere(predicate)
-                                    .CustomInclude(includes)
+                                    .CustomInclude(including)
                                     .FilterByString(filterParameters)
                                     .Where(x => x.CompanyId == companyId)
                                     .Skip((pageNumber - 1) * pageSize)
@@ -116,7 +115,7 @@ namespace Quiplogs.Infrastructure.Repositories
                 var mappedUpdatedModel = _mapper.Map<T1>(modelMapped);
                 return new BaseModelResponse<T1>(mappedUpdatedModel, true, null);
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 return new BaseModelResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_upsert, $"Error updating model-({typeof(T1).Name}). {ex.Message}") });
             }

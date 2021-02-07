@@ -23,17 +23,13 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance
 
         public async Task<bool> Handle(PagedRequest<Domain.Entities.PlannedMaintenance> request, IOutputPort<PagedResponse<Domain.Entities.PlannedMaintenance>> outputPort)
         {
-            var includes = new List<Expression<Func<PlannedMaintenanceDto, object>>>();
-            includes.Add(model => model.PlannedMaintenanceParts);
-            includes.Add(model => model.PlannedMaintenanceTasks);
-
             var response = await _baseRepository.PagedList(
                 request.CompanyId,
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                includes);
+                model => model.PlannedMaintenanceParts, model => model.PlannedMaintenanceTasks);
 
             if (response.Success)
             {

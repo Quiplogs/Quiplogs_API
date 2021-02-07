@@ -19,7 +19,7 @@ namespace Api.UseCases.AssetUsage.List
         }
 
         [HttpPost("ListByParent")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.Assets.Domain.Entities.AssetUsage> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -27,7 +27,7 @@ namespace Api.UseCases.AssetUsage.List
                 return BadRequest(ModelState);
             }
 
-            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.Assets.Domain.Entities.AssetUsage>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.Assets.Domain.Entities.AssetUsage>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
     }

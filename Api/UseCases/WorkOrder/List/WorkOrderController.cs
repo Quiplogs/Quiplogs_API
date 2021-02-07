@@ -20,7 +20,7 @@ namespace Api.UseCases.WorkOrder.List
         }
 
         [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<WorkOrderEntity> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -28,7 +28,7 @@ namespace Api.UseCases.WorkOrder.List
                 return BadRequest(ModelState);
             }
 
-            await _pagedListUseCase.Handle(new PagedRequest<WorkOrderEntity>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            await _pagedListUseCase.Handle(new PagedRequest<WorkOrderEntity>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
     }

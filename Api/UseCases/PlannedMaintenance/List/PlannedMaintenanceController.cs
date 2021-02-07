@@ -19,7 +19,7 @@ namespace Api.UseCases.PlannedMaintenance.List
         }
 
         [HttpPost("PagedList")]
-        public async Task<ActionResult> PagedList([FromBody] PagedListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> request)
+        public async Task<ActionResult> PagedList([FromBody] PagedListRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -27,7 +27,9 @@ namespace Api.UseCases.PlannedMaintenance.List
                 return BadRequest(ModelState);
             }
 
-            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance>(request.CompanyId, request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
+            request.CompanyId = GetCompanyId(request.CompanyId);
+
+            await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }
     }

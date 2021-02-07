@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Api.Presenters;
 using Api.Services.Interfaces;
 using Api.UseCases.Generic.Requests;
@@ -21,8 +22,10 @@ namespace Api.Services
             _putPresenter = putPresenter;
         }
 
-        public async Task<JsonContentResult> Put(PutRequest<T1> request)
+        public async Task<JsonContentResult> Put(PutRequest<T1> request, Guid companyId)
         {
+            request.Model.CompanyId = companyId;
+
             await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<T1>(request.Model), _putPresenter);
             return _putPresenter.ContentResult;
         }

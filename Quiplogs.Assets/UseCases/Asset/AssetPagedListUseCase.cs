@@ -23,16 +23,13 @@ namespace Quiplogs.Assets.UseCases.Asset
 
         public async Task<bool> Handle(PagedRequest<Domain.Entities.Asset> request, IOutputPort<PagedResponse<Domain.Entities.Asset>> outputPort)
         {
-            var includes = new List<Expression<Func<AssetDto, object>>>();
-            includes.Add(model => model.Location);
-
             var response = await _baseRepository.PagedList(
                 request.CompanyId, 
                 request.PageNumber, 
                 request.PageSize,
                 request.FilterParameters, 
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                includes);
+                model => model.Location);
 
             if (response.Success)
             {

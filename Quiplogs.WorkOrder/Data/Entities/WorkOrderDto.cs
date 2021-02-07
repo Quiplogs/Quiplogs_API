@@ -36,6 +36,10 @@ namespace Quiplogs.WorkOrder.Data.Entities
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }
 
+        public string AssetName { get; set; }
+
+        public string LocationName { get; set; }
+
         public int Status { get; set; }
 
         public int Priority { get; set; }
