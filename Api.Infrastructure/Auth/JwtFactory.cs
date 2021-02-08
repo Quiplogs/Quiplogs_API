@@ -54,11 +54,8 @@ namespace Quiplogs.Infrastructure.Auth
 
         private static ClaimsIdentity GenerateClaimsIdentity(GenerateJwtTokenRequest request)
         {
-            if (request.CompanyId == null)
-                request.CompanyId = string.Empty;
-
-            if (request.LocationId == null)
-                request.LocationId = string.Empty;
+            request.CompanyId ??= string.Empty;
+            request.LocationId ??= string.Empty;
 
             return new ClaimsIdentity(new GenericIdentity(request.UserName, "Token"), new[]
             {

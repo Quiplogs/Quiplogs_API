@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.Domain;
 using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Repositories.User;
 using Quiplogs.Core.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Quiplogs.Infrastructure.Repositories
 {
@@ -48,22 +48,26 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid? locationId)
         {
-            try
-            {
-                var users = _userManager.Users
-                    .Where(x => x.CompanyId == companyId
-                                && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
-                    .ToList();
+            var users = _userManager.Users
+                .Where(x => x.CompanyId == companyId
+                            && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
+                .ToList();
 
-                List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
-                return new GetAllUsersResponse(mappedUsers, true, null);
-            }
-            catch (Exception ex)
-            {
-                var t = ex;
-            }
+            List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
+            return new GetAllUsersResponse(mappedUsers, true, null);
+        }
 
-            return null;
+        public async Task<GetAllUsersResponse> GetAllTechnicians(Guid companyId, Guid? locationId)
+        {
+            var users = _userManager.Users
+                .Where(x => 
+                    x.CompanyId == companyId
+                    && x.Role == Role.Technician
+                    && (string.IsNullOrEmpty(locationId.ToString()) || x.LocationId == locationId))
+                .ToList();
+
+            List<AppUser> mappedUsers = _mapper.Map<List<AppUser>>(users);
+            return new GetAllUsersResponse(mappedUsers, true, null);
         }
 
         public async Task<GetUserResponse> Get(Guid id)

@@ -10,13 +10,13 @@ using Quiplogs.Core.Interfaces.UseCases.Generic;
 
 namespace Quiplogs.Core.UseCases.Generic
 {
-    public class ListUseCase<T1, T2> : IListUseCase<T1, T2>
+    public class ITechnicianListUseCase<T1, T2> : IListUseCase<T1, T2>
         where T1 : BaseEntity
         where T2 : BaseEntityDto
     {
         private readonly IBaseRepository<T1, T2> _repository;
 
-        public ListUseCase(IBaseRepository<T1, T2> repository)
+        public ITechnicianListUseCase(IBaseRepository<T1, T2> repository)
         {
             _repository = repository;
         }
