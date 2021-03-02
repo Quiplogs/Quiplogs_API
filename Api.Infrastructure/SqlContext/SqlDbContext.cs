@@ -10,7 +10,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Quiplogs.PlannedMaintenance.Data.Entities;
-//using Quiplogs.Schedules.Data.Entities;
+using Quiplogs.Schedules.Data.Entities;
 
 namespace Quiplogs.Infrastructure.SqlContext
 {
@@ -30,11 +30,11 @@ namespace Quiplogs.Infrastructure.SqlContext
         public DbSet<TaskDto> Tasks { get; set; }
         public DbSet<WorkOrderTaskDto> WorkOrderTasks { get; set; }
         public DbSet<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }
-        //public DbSet<ScheduleCustomDto> ScheduleCustom { get; set; }
-        //public DbSet<ScheduleDailyDto> ScheduleDaily { get; set; }
-        //public DbSet<ScheduleWeeklyDto> ScheduleWeekly { get; set; }
-        //public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }
-        //public DbSet<ScheduleYearlyDto> ScheduleYearly { get; set; }
+        public DbSet<ScheduleCustomDto> ScheduleCustom { get; set; }
+        public DbSet<ScheduleDailyDto> ScheduleDaily { get; set; }
+        public DbSet<ScheduleWeeklyDto> ScheduleWeekly { get; set; }
+        public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }
+        public DbSet<ScheduleYearlyDto> ScheduleYearly { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,25 +92,25 @@ namespace Quiplogs.Infrastructure.SqlContext
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
-            //modelBuilder.Entity<ScheduleCustomDto>()
-            //    .Property(e => e.Id)
-            //    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<ScheduleCustomDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
-            //modelBuilder.Entity<ScheduleDailyDto>()
-            //    .Property(e => e.Id)
-            //    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<ScheduleDailyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
-            //modelBuilder.Entity<ScheduleWeeklyDto>()
-            //    .Property(e => e.Id)
-            //    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<ScheduleWeeklyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
-            //modelBuilder.Entity<ScheduleMonthlyDto>()
-            //    .Property(e => e.Id)
-            //    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<ScheduleMonthlyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
-            //modelBuilder.Entity<ScheduleYearlyDto>()
-            //    .Property(e => e.Id)
-            //    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<ScheduleYearlyDto>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
