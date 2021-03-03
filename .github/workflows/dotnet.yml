@@ -10,9 +10,15 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.100'
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+        dotnet-version: '3.1.301'
+    - name: Add private GitHub registry to NuGet
+      run: dotnet nuget add source https://nuget.pkg.github.com/quiplogs/index.json --name "nuget" --username nuget --password 45a74283c1ec66bd76af621671ef23145b7a43a0 --store-password-in-clear-text
+    - name: Restore dependencies
+      run: dotnet restore   
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
     - name: dotnet publish 
       run: |
                 dotnet publish --configuration Release -o outputDirectory
