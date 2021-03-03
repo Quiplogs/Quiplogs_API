@@ -21,7 +21,7 @@ namespace Api
                     //webBuilder.UseIISIntegration();
                     webBuilder.UseKestrel();
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://*:5024");
+                    webBuilder.UseUrls("https://localhost:5024");
                 });
     }
 }
