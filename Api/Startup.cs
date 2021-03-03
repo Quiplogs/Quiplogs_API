@@ -39,6 +39,7 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.HttpOverrides;
 using Quiplogs.PlannedMaintenance;
 using Quiplogs.PlannedMaintenance.Data.Mapping;
 
@@ -212,6 +213,11 @@ namespace Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             lifetime.ApplicationStarted.Register(() =>
             {
