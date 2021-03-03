@@ -18,8 +18,8 @@ namespace Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
-                    //webBuilder.UseIISIntegration();
-                    webBuilder.UseKestrel();
+                    webBuilder.UseIISIntegration();
+                    //webBuilder.UseKestrel();
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseUrls("http://localhost:5024");
                 });
