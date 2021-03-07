@@ -37,5 +37,23 @@
     <ProjectReference Include="..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Schedule\Custom\List\" />
+    <Folder Include="UseCases\Schedule\Custom\Put\" />
+    <Folder Include="UseCases\Schedule\Custom\Remove\" />
+    <Folder Include="UseCases\Schedule\Daily\List\" />
+    <Folder Include="UseCases\Schedule\Daily\Remove\" />
+    <Folder Include="UseCases\Schedule\Daily\Put\" />
+    <Folder Include="UseCases\Schedule\Monthly\List\" />
+    <Folder Include="UseCases\Schedule\Monthly\Put\" />
+    <Folder Include="UseCases\Schedule\Monthly\Remove\" />
+    <Folder Include="UseCases\Schedule\Weekly\List\" />
+    <Folder Include="UseCases\Schedule\Weekly\Put\" />
+    <Folder Include="UseCases\Schedule\Weekly\Remove\" />
+    <Folder Include="UseCases\Schedule\Yearly\List\" />
+    <Folder Include="UseCases\Schedule\Yearly\Put\" />
+    <Folder Include="UseCases\Schedule\Yearly\Remove\" />
+  </ItemGroup>
+
 
 </Project>

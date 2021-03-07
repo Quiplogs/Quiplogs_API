@@ -42,6 +42,7 @@ using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using Quiplogs.PlannedMaintenance;
 using Quiplogs.PlannedMaintenance.Data.Mapping;
+using Quiplogs.Schedules.Data.Mapping;
 
 namespace Api
 {
@@ -156,6 +157,7 @@ namespace Api
                 mc.AddProfile(new WorkOrderProfile());
                 mc.AddProfile(new AssetProfile());
                 mc.AddProfile(new PlannedMaintenanceProfile());
+                mc.AddProfile(new ScheduleProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
