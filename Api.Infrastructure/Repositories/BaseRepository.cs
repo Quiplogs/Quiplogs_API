@@ -84,7 +84,7 @@ namespace Quiplogs.Infrastructure.Repositories
         {
             try
             {
-                var model = await _entities.FirstOrDefaultAsync(x => x.Id == id);
+                var model = await _entities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
                 var mappedModel = _mapper.Map<T1>(model);
                 return new BaseModelResponse<T1>(mappedModel, true, null);
@@ -106,7 +106,8 @@ namespace Quiplogs.Infrastructure.Repositories
                 }
                 else
                 {
-                    _entities.Update(modelMapped);
+                    var entry = _entities.First(e => e.Id == model.Id);
+                    _context.Entry(entry).CurrentValues.SetValues(model);
                 }
 
                 await _context.SaveChangesAsync();

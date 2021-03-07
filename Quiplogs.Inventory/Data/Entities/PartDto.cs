@@ -1,10 +1,8 @@
-﻿using System;
-using Quiplogs.Core.Data.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Quiplogs.Core.Data.Entities;
 
 namespace Quiplogs.Inventory.Data.Entities
 {
-    public class PartDto : BaseLocationDto
+    public class PartDto : BaseEntityDto
     {
         public string Code { get; set; }
 
@@ -12,8 +10,8 @@ namespace Quiplogs.Inventory.Data.Entities
 
         public string Description { get; set; }
 
-        public string ImgFileName { get; set; }
+        public string ImageFileName { get; set; }
 
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

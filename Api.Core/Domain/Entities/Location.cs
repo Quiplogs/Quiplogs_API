@@ -16,8 +16,12 @@ namespace Quiplogs.Core.Domain.Entities
 
         public Guid? UserId { get; set; }
 
-        public string ImgFileName { get; set; }
+        public string ImageFileName { get; set; }
 
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
+
+        public string ImageBase64 { get; set; }
+
+        public string ImageMimeType { get; set; }
     }
 }

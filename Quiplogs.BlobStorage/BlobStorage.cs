@@ -38,9 +38,11 @@ namespace Quiplogs.BlobStorage
             var result = new SaveFileResponse();
 
             var cloudBlobContainer = CloudBlobClient.GetContainerReference($"{documentType}");
+
             if (await cloudBlobContainer.CreateIfNotExistsAsync())
             {
-                await cloudBlobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+                await cloudBlobContainer.SetPermissionsAsync(new BlobContainerPermissions
+                { PublicAccess = BlobContainerPublicAccessType.Blob });
             }
 
             try

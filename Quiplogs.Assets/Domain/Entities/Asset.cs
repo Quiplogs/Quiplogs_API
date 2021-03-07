@@ -21,9 +21,7 @@ namespace Quiplogs.Assets.Domain.Entities
 
         public string UoM { get; set; }
 
-        public string ImgFileName { get; set; }
-
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         public string WarrantyUrl { get; set; }
 
@@ -40,5 +38,11 @@ namespace Quiplogs.Assets.Domain.Entities
         public Guid LocationId { get; set; }
 
         public Location Location { get; set; }
+
+        public string ImageFileName { get; set; }
+
+        public string ImageBase64 { get; set; }
+
+        public string ImageMimeType { get; set; }
     }
 }

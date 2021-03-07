@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
-using Quiplogs.Assets.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Quiplogs.Assets.UseCases.Asset;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Asset.Put
 {
     public class AssetController : BaseApiController
     {
-        private readonly IPutService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> _putService;
+        private readonly PutAssetUseCase _putUseCase;
+        private readonly PutPresenter<Quiplogs.Assets.Domain.Entities.Asset> _putPresenter;
 
-        public AssetController(IPutService<Quiplogs.Assets.Domain.Entities.Asset, AssetDto> putService)
+        public AssetController(PutAssetUseCase putUseCase, PutPresenter<Quiplogs.Assets.Domain.Entities.Asset> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
         [HttpPut()]
@@ -24,8 +26,10 @@ namespace Api.UseCases.Asset.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<Quiplogs.Assets.Domain.Entities.Asset>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

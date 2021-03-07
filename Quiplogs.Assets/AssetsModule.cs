@@ -12,6 +12,7 @@ namespace Quiplogs.Assets
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<AssetPagedListUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<PutAssetUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<AssetUsagePagedListUseCase>().InstancePerLifetimeScope();
         }
     }

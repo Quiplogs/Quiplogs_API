@@ -1,18 +1,20 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.UseCases.Part;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.Put
 {
     public class PartController : BaseApiController
     {
-        private readonly IPutService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _putService;
+        private readonly PutPartUseCase _putUseCase;
+        private readonly PutPresenter<Quiplogs.Inventory.Domain.Entities.Part> _putPresenter;
 
-        public PartController(IPutService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> putService)
+        public PartController(PutPartUseCase putUseCase, PutPresenter<Quiplogs.Inventory.Domain.Entities.Part> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
         [HttpPut()]
@@ -24,8 +26,10 @@ namespace Api.UseCases.Part.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<Quiplogs.Inventory.Domain.Entities.Part>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

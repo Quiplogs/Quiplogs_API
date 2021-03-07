@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using System.Reflection;
+using Quiplogs.Inventory.UseCases.Part;
 
 namespace Quiplogs.Inventory
 {
@@ -8,6 +9,8 @@ namespace Quiplogs.Inventory
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<PutPartUseCase>().InstancePerLifetimeScope();
         }
     }
 }

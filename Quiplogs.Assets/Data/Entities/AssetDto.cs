@@ -23,9 +23,9 @@ namespace Quiplogs.Assets.Data.Entities
 
         public string UoM { get; set; }
 
-        public string ImgFileName { get; set; }
+        public string ImageFileName { get; set; }
 
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         public string WarrantyUrl { get; set; }
 
