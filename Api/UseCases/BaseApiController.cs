@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Cors;
 
 namespace Api.UseCases
 {
@@ -9,6 +10,7 @@ namespace Api.UseCases
     [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize]
     [ApiController]
+    [EnableCors("CorsPolicy")]
     public abstract class BaseApiController : ControllerBase
     {
         internal Guid GetCompanyId(Guid? companyId)
