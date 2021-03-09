@@ -48,8 +48,6 @@ namespace Api
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -66,18 +64,7 @@ namespace Api
             // Add Entity framework Core.
             services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Api.Infrastructure")));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder
-                            .WithOrigins("https://portal-staging.quiplogs.com")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
-
+            services.AddCors();
             services.AddControllers()
                 .AddNewtonsoftJson();
 
@@ -267,12 +254,10 @@ namespace Api
                 });
 
             // global cors policy
-            //app.UseCors(x => x
-            //    .AllowAnyOrigin()
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader());
-
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
