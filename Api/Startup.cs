@@ -238,7 +238,7 @@ namespace Api
 
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseExceptionHandler(
