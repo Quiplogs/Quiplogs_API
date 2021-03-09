@@ -67,10 +67,13 @@ namespace Api
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                    builder => builder
                         .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
+
             services.AddControllers()
                 .AddNewtonsoftJson();
 
@@ -222,11 +225,6 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
             lifetime.ApplicationStarted.Register(() =>
             {
                 var currentTimeUtc = DateTime.UtcNow.ToString();
@@ -261,6 +259,11 @@ namespace Api
 
             // global cors policy
             app.UseCors("CorsPolicy");
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
