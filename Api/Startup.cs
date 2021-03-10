@@ -48,8 +48,6 @@ namespace Api
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -68,14 +66,12 @@ namespace Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder
-                            .WithOrigins("https://portal-staging.quiplogs.com")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
             });
 
             services.AddControllers()
@@ -229,11 +225,6 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
             lifetime.ApplicationStarted.Register(() =>
             {
                 var currentTimeUtc = DateTime.UtcNow.ToString();
@@ -245,7 +236,7 @@ namespace Api
 
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseExceptionHandler(
@@ -267,12 +258,12 @@ namespace Api
                 });
 
             // global cors policy
-            //app.UseCors(x => x
-            //    .AllowAnyOrigin()
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader());
+            app.UseCors("CorsPolicy");
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
