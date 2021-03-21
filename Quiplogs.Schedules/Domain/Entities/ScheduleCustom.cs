@@ -4,7 +4,7 @@
     {
         public decimal RecurEvery { get; set; }
 
-        public decimal CycleNextDue { get; set; }
+        public decimal? CycleNextDue { get; set; }
 
         public decimal StartingAt { get; set; }
     }

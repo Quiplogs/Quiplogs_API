@@ -1,19 +1,22 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Schedules.Data.Entities;
 using Quiplogs.Schedules.Domain.Entities;
+using Quiplogs.Schedules.UseCases.ScheduleWeekly;
+using System;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Weekly.Put
 {
     public class ScheduleWeeklyController : BaseApiController
     {
-        private readonly IPutService<ScheduleWeekly, ScheduleWeeklyDto> _putService;
+        private readonly PutScheduleWeeklyUseCase _putUseCase;
+        private readonly PutPresenter<ScheduleWeekly> _putPresenter;
 
-        public ScheduleWeeklyController(IPutService<ScheduleWeekly, ScheduleWeeklyDto> putService)
+        public ScheduleWeeklyController(PutScheduleWeeklyUseCase putUseCase, PutPresenter<ScheduleWeekly> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
         [HttpPut()]
@@ -25,8 +28,11 @@ namespace Api.UseCases.Schedule.Weekly.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            if (request.Model.DateNextDue == null)
+                request.Model.DateNextDue = DateTime.Now;
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleWeekly>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

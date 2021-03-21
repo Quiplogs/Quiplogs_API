@@ -1,9 +1,8 @@
-﻿using Quiplogs.Core.Domain.Entities;
-using System;
+﻿using System;
 
 namespace Quiplogs.Schedules.Domain.Entities
 {
-    public class ScheduleTime : BaseEntity
+    public class ScheduleTime : Schedule
     {
         public int RecurEvery { get; set; }
         

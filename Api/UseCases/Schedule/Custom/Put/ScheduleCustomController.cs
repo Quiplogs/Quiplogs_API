@@ -1,20 +1,23 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Schedules.Data.Entities;
 using Quiplogs.Schedules.Domain.Entities;
+using Quiplogs.Schedules.UseCases.ScheduleCustom;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Custom.Put
 {
     public class ScheduleCustomController : BaseApiController
     {
-        private readonly IPutService<ScheduleCustom, ScheduleCustomDto> _putService;
+        private readonly PutScheduleCustomUseCase _putUseCase;
+        private readonly PutPresenter<ScheduleCustom> _putPresenter;
 
-        public ScheduleCustomController(IPutService<ScheduleCustom, ScheduleCustomDto> putService)
+        public ScheduleCustomController(PutScheduleCustomUseCase putUseCase, PutPresenter<ScheduleCustom> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
+
 
         [HttpPut()]
         public async Task<ActionResult> Put([FromBody] PutRequest<ScheduleCustom> request)
@@ -25,8 +28,11 @@ namespace Api.UseCases.Schedule.Custom.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            if (request.Model.CycleNextDue == null)
+                request.Model.CycleNextDue = 0;
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleCustom>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

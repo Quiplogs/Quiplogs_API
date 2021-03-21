@@ -1,19 +1,22 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Schedules.Data.Entities;
 using Quiplogs.Schedules.Domain.Entities;
+using Quiplogs.Schedules.UseCases.ScheduleDaily;
+using System;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Daily.Put
 {
     public class ScheduleDailyController : BaseApiController
     {
-        private readonly IPutService<ScheduleDaily, ScheduleDailyDto> _putService;
+        private readonly PutScheduleDailyUseCase _putUseCase;
+        private readonly PutPresenter<ScheduleDaily> _putPresenter;
 
-        public ScheduleDailyController(IPutService<ScheduleDaily, ScheduleDailyDto> putService)
+        public ScheduleDailyController(PutScheduleDailyUseCase putUseCase, PutPresenter<ScheduleDaily> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
         [HttpPut()]
@@ -25,8 +28,11 @@ namespace Api.UseCases.Schedule.Daily.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            if (request.Model.DateNextDue == null)
+                request.Model.DateNextDue = DateTime.Now;
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleDaily>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }
