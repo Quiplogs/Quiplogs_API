@@ -30,7 +30,7 @@ namespace Quiplogs.Core.UseCases.Generic
                 return true;
             }
 
-            outputPort.Handle(new PutResponse<T1>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new PutResponse<T1>(response.Errors));
             return false;
         }
     }

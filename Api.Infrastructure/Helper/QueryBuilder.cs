@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -18,13 +19,12 @@ namespace Quiplogs.Infrastructure.Helper
             return source;
         }
 
-        public static IQueryable<T> CustomInclude<T>(this IQueryable<T> source, params Expression<Func<T, object>>[] including)
+        public static IQueryable<T> CustomInclude<T>(this IQueryable<T> source, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
-            including?.ToList().ForEach(include =>
+            if (include != null)
             {
-                if (include != null)
-                    source = source.Include(include);
-            });
+                source = include(source);
+            }
 
             return source;
         }

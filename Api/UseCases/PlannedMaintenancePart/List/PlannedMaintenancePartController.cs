@@ -18,7 +18,7 @@ namespace Api.UseCases.PlannedMaintenancePart.List
         }
 
         [HttpPost("ListByParent")]
-        public async Task<ActionResult> PagedList([FromBody] ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart> request)
+        public async Task<ActionResult> List([FromBody] ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart> request)
         {
             if (!ModelState.IsValid)
             {

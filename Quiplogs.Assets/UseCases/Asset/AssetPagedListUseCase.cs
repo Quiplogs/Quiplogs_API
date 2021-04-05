@@ -1,4 +1,5 @@
-﻿using Quiplogs.Assets.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiplogs.Assets.Data.Entities;
 using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
@@ -26,7 +27,7 @@ namespace Quiplogs.Assets.UseCases.Asset
                 request.PageSize,
                 request.FilterParameters, 
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                model => model.Location);
+                including: source => source.Include(model => model.Location));
 
             if (response.Success)
             {

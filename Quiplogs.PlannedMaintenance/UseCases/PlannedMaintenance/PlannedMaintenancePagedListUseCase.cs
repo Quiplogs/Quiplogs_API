@@ -1,4 +1,5 @@
-﻿using Quiplogs.Core.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
@@ -29,7 +30,7 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance
                 request.PageSize,
                 request.FilterParameters,
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                model => model.PlannedMaintenanceParts, model => model.PlannedMaintenanceTasks);
+                including: source => source.Include(model => model.PlannedMaintenanceParts).Include(model => model.PlannedMaintenanceTasks));
 
             if (response.Success)
             {

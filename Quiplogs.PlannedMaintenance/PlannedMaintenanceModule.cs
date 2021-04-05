@@ -5,13 +5,15 @@ using Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenanceTask;
 
 namespace Quiplogs.PlannedMaintenance
 {
-    public class PlannedMaintenanceModule : Autofac.Module
+    public class PlannedMaintenanceModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<PlannedMaintenancePagedListUseCase>().InstancePerDependency();
-            builder.RegisterType<ListPlannedMaintenancePartUseCase>().InstancePerDependency();
-            builder.RegisterType<ListPlannedMaintenanceTaskUseCase>().InstancePerDependency();
+            builder.RegisterType<PlannedMaintenancePagedListUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<ListPlannedMaintenancePartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<ListPlannedMaintenanceTaskUseCase>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PutPlannedMaintenancePartUseCase>().InstancePerLifetimeScope();
         }
     }
 }

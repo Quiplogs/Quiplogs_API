@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
@@ -22,7 +23,8 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenancePart
         {
             var response = await _baseRepository.List(
                 request.FilterParameters,
-                model => model.PlannedMaintenanceId == request.ParentId);
+                model => model.PlannedMaintenanceId == request.ParentId,
+                including: model => model.Include(a => a.Part));
 
             if (response.Success)
             {
@@ -30,7 +32,7 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenancePart
                 return true;
             }
 
-            outputPort.Handle(new ListResponse<Domain.Entities.PlannedMaintenancePart>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new ListResponse<Domain.Entities.PlannedMaintenancePart>(response.Errors));
             return false;
         }
     }

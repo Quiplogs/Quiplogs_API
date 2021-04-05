@@ -16,6 +16,8 @@ using Quiplogs.Core.Dto.Repositories;
 using Quiplogs.Core.Helpers;
 using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Infrastructure.Helper;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Quiplogs.Infrastructure.Repositories
 {
@@ -36,7 +38,7 @@ namespace Quiplogs.Infrastructure.Repositories
             _entities = _context.Set<T2>();
         }
 
-        public async Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters = null, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including)
+        public async Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters = null, Expression<Func<T2, bool>> predicate = null, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
         {
             try
             {
@@ -56,7 +58,7 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, params Expression<Func<T2, object>>[] including)
+        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
         {
             try
             {
@@ -80,11 +82,14 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BaseModelResponse<T1>> GetById(Guid id)
+        public async Task<BaseModelResponse<T1>> GetById(Guid id, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
         {
             try
             {
-                var model = await _entities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+                var model = await _entities.AsNoTracking()
+                    .Where(x => x.Id == id)
+                    .CustomInclude(including)
+                    .FirstOrDefaultAsync();
 
                 var mappedModel = _mapper.Map<T1>(model);
                 return new BaseModelResponse<T1>(mappedModel, true, null);
@@ -109,7 +114,7 @@ namespace Quiplogs.Infrastructure.Repositories
                     var entry = _entities.First(e => e.Id == model.Id);
                     _context.Entry(entry).CurrentValues.SetValues(model);
                 }
-
+                
                 await _context.SaveChangesAsync();
                 await UpdateTotalItems(modelMapped.CompanyId);
 

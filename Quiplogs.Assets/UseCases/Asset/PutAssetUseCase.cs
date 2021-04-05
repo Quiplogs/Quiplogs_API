@@ -1,8 +1,6 @@
 ﻿using Quiplogs.Assets.Data.Entities;
 using Quiplogs.BlobStorage;
 using Quiplogs.BlobStorage.Models;
-using Quiplogs.Core.Data.Entities;
-using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
@@ -33,29 +31,29 @@ namespace Quiplogs.Assets.UseCases.Asset
             if (responseImageUnsaved.Success)
             {
                 //persist to blob storage
-                var saveBlobRequest = new SaveFileRequest
+                var persistedBlob = await _blobStorage.UploadImageAsync(new SaveFileRequest
                 {
                     Container = responseImageUnsaved.Model.CompanyId.ToString(),
                     SubContainer = responseImageUnsaved.Model.Id.ToString(),
                     FileName = request.Model.ImageFileName,
                     FileBase64 = request.Model.ImageBase64,
                     MimeType = request.Model.ImageMimeType
-                };
-
-                var persistedBlob = await _blobStorage.UploadImageAsync(saveBlobRequest);
+                });
 
                 responseImageUnsaved.Model.ImageUrl = persistedBlob.FileUrl;
+                var responseImageSaved = await _baseRepository.Put(responseImageUnsaved.Model);
 
-                var responseImage = await _baseRepository.Put(responseImageUnsaved.Model);
-
-                if (responseImage.Success)
+                if (responseImageSaved.Success)
                 {
-                    outputPort.Handle(new PutResponse<Domain.Entities.Asset>(responseImage.Model, true));
+                    outputPort.Handle(new PutResponse<Domain.Entities.Asset>(responseImageSaved.Model, true));
                     return true;
                 }
+
+                outputPort.Handle(new PutResponse<Domain.Entities.Asset>(responseImageSaved.Errors));
+                return false;
             }
 
-            outputPort.Handle(new PutResponse<Domain.Entities.Asset>(new[] { new Error("", "Error Updating Model.") }));
+            outputPort.Handle(new PutResponse<Domain.Entities.Asset>(responseImageUnsaved.Errors));
             return false;
         }
     }

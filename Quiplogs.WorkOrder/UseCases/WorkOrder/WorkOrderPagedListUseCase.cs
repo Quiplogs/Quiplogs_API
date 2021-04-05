@@ -1,4 +1,5 @@
-﻿using Quiplogs.Core.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
@@ -29,7 +30,9 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 request.PageSize,
                 request.FilterParameters,
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                model => model.WorkOrderTasks, model => model.WorkOrderParts);
+                including: source => source
+                    .Include(model => model.WorkOrderParts)
+                    .Include(model => model.WorkOrderTasks));
 
             if (response.Success)
             {
