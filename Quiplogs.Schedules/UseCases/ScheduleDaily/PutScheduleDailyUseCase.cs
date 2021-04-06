@@ -33,7 +33,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleDaily
             }
 
             outputPort.Handle(
-                new PutResponse<Domain.Entities.ScheduleDaily>(new[] {new Error("", "Errors Updating Model.")}));
+                new PutResponse<Domain.Entities.ScheduleDaily>(response.Errors));
             return false;
         }
 
@@ -45,6 +45,11 @@ namespace Quiplogs.Schedules.UseCases.ScheduleDaily
             if (model.RecurrenceTime.HasValue)
             {
                 hour = model.RecurrenceTime.Value.Hour;
+            }
+
+            if (model.StartDate.HasValue)
+            {
+                return model.StartDate.Value.AddDays(model.RecurEvery).AddHours(hour);
             }
 
             return DateTime.Today.AddDays(model.RecurEvery).AddHours(hour);

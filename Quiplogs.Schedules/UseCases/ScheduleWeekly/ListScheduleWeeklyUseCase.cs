@@ -28,12 +28,13 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
 
             if (response.Success)
             {
+                response.Models.ForEach(x => x.Type = "Weekly");
                 outputPort.Handle(new ListResponse<Domain.Entities.ScheduleWeekly>(response.Models, true));
                 return true;
             }
 
             outputPort.Handle(
-                new ListResponse<Domain.Entities.ScheduleWeekly>(new[] { new Error("", "Model not Found.") }));
+                new ListResponse<Domain.Entities.ScheduleWeekly>(response.Errors));
             return false;
         }
     }

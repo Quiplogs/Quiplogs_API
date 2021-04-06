@@ -30,7 +30,10 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance
                 request.PageSize,
                 request.FilterParameters,
                 model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                including: source => source.Include(model => model.PlannedMaintenanceParts).Include(model => model.PlannedMaintenanceTasks));
+                including: source => source
+                .Include(model => model.PlannedMaintenanceParts)
+                .Include(model => model.PlannedMaintenanceTasks)
+                .Include(model => model.Asset));
 
             if (response.Success)
             {
@@ -38,7 +41,7 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance
                 return true;
             }
 
-            outputPort.Handle(new PagedResponse<Domain.Entities.PlannedMaintenance>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new PagedResponse<Domain.Entities.PlannedMaintenance>(response.Errors));
             return false;
         }
     }

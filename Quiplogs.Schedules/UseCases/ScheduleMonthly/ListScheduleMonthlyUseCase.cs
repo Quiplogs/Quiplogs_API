@@ -28,12 +28,13 @@ namespace Quiplogs.Schedules.UseCases.ScheduleMonthly
 
             if (response.Success)
             {
+                response.Models.ForEach(x => x.Type = "Monthly");
                 outputPort.Handle(new ListResponse<Domain.Entities.ScheduleMonthly>(response.Models, true));
                 return true;
             }
 
             outputPort.Handle(
-                new ListResponse<Domain.Entities.ScheduleMonthly>(new[] {new Error("", "Model not Found.")}));
+                new ListResponse<Domain.Entities.ScheduleMonthly>(response.Errors));
             return false;
         }
     }

@@ -28,12 +28,13 @@ namespace Quiplogs.Schedules.UseCases.ScheduleYearly
 
             if (response.Success)
             {
+                response.Models.ForEach(x => x.Type = "Yearly");
                 outputPort.Handle(new ListResponse<Domain.Entities.ScheduleYearly>(response.Models, true));
                 return true;
             }
 
             outputPort.Handle(
-                new ListResponse<Domain.Entities.ScheduleYearly>(new[] { new Error("", "Model not Found.") }));
+                new ListResponse<Domain.Entities.ScheduleYearly>(response.Errors));
             return false;
         }
     }

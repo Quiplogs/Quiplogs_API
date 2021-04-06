@@ -53,6 +53,11 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
                 nextProcessDay += model.RecurEvery * 7;
             }
 
+            if (model.StartDate.HasValue)
+            {
+                return model.StartDate.Value.AddDays(nextProcessDay).AddHours(hour);
+            }
+
             return DateTime.Today.AddDays(nextProcessDay).AddHours(hour);
         }
 

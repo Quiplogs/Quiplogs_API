@@ -26,11 +26,12 @@ namespace Quiplogs.Schedules.UseCases.ScheduleCustom
 
             if (response.Success)
             {
+                response.Models.ForEach(x => x.Type = "Custom");
                 outputPort.Handle(new ListResponse<Domain.Entities.ScheduleCustom>(response.Models, true));
                 return true;
             }
 
-            outputPort.Handle(new ListResponse<Domain.Entities.ScheduleCustom>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new ListResponse<Domain.Entities.ScheduleCustom>(response.Errors));
             return false;
         }
     }

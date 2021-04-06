@@ -28,8 +28,8 @@ namespace Api.UseCases.Schedule.Daily.Put
                 return BadRequest(ModelState);
             }
 
-            if (request.Model.DateNextDue == null)
-                request.Model.DateNextDue = DateTime.Now;
+            request.Model.DateNextDue ??= DateTime.Now;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
 
             await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleDaily>(request.Model), _putPresenter);
             return _putPresenter.ContentResult;

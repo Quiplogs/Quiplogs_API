@@ -48,7 +48,11 @@ namespace Quiplogs.Schedules.UseCases.ScheduleYearly
                 hour = model.RecurrenceTime.Value.Hour;
             }
 
-            var dateWithYearsAdded = DateTime.Today.AddYears(model.RecurEvery);
+            var dateWithYearsAdded = DateTime.Today.AddMonths(model.RecurEvery);
+            if (model.StartDate.HasValue)
+            {
+                dateWithYearsAdded = model.StartDate.Value.AddDays(model.RecurEvery).AddHours(hour);
+            }
             return new DateTime(dateWithYearsAdded.Year, model.RecurrenceMonth, model.RecurrenceDay).AddHours(hour);
         }
     }

@@ -42,6 +42,7 @@ using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using Quiplogs.PlannedMaintenance;
 using Quiplogs.PlannedMaintenance.Data.Mapping;
+using Quiplogs.Schedules;
 using Quiplogs.Schedules.Data.Mapping;
 
 namespace Api
@@ -194,6 +195,7 @@ namespace Api
             builder.RegisterModule(new WorkOrderModule());
             builder.RegisterModule(new DashboardModule());
             builder.RegisterModule(new PlannedMaintenanceModule());
+            builder.RegisterModule(new ScheduleModule());
 
             builder.RegisterModule(new SendNotificationModule(Configuration));
 

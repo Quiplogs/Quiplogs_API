@@ -26,11 +26,12 @@ namespace Quiplogs.Schedules.UseCases.ScheduleDaily
 
             if (response.Success)
             {
+                response.Models.ForEach(x => x.Type = "Daily");
                 outputPort.Handle(new ListResponse<Domain.Entities.ScheduleDaily>(response.Models, true));
                 return true;
             }
 
-            outputPort.Handle(new ListResponse<Domain.Entities.ScheduleDaily>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new ListResponse<Domain.Entities.ScheduleDaily>(response.Errors));
             return false;
         }
     }

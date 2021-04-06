@@ -8,6 +8,6 @@ namespace Quiplogs.Schedules.Domain.Entities
         
         public DateTime? RecurrenceTime { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

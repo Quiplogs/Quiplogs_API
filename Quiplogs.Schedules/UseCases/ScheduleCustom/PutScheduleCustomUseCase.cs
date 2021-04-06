@@ -31,7 +31,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleCustom
                 return true;
             }
 
-            outputPort.Handle(new PutResponse<Domain.Entities.ScheduleCustom>(new[] { new Error("", "Errors Updating Model.") }));
+            outputPort.Handle(new PutResponse<Domain.Entities.ScheduleCustom>(response.Errors));
             return false;
         }
 

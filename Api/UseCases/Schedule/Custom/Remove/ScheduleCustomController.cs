@@ -16,8 +16,8 @@ namespace Api.UseCases.Schedule.Custom.Remove
             _removeService = removeService;
         }
 
-        [HttpDelete()]
-        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromQuery] RemoveRequest request)
         {
             if (!ModelState.IsValid)
             {
