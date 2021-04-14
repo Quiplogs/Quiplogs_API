@@ -16,7 +16,7 @@ namespace Quiplogs.Core
             builder.RegisterGeneric(typeof(GetUseCase<,>)).As(typeof(IGetUseCase<,>)).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(PutUseCase<,>)).As(typeof(IPutUseCase<,>)).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(PagedListUseCase<,>)).As(typeof(IPagedListUseCase<,>)).InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(ITechnicianListUseCase<,>)).As(typeof(IListUseCase<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(TechnicianListUseCase<,>)).As(typeof(IListUseCase<,>)).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(RemoveUseCase<,>)).As(typeof(IRemoveUseCase<,>)).InstancePerLifetimeScope();
             
             builder.RegisterType<PutLocationUseCase>().InstancePerLifetimeScope();

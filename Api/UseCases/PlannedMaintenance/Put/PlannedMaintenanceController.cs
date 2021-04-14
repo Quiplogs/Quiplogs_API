@@ -1,21 +1,23 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.PlannedMaintenance.Data.Entities;
+using Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.PlannedMaintenance.Put
 {
     public class PlannedMaintenanceController : BaseApiController
     {
-        private readonly IPutService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> _putService;
+        private readonly PutPlannedMaintenanceUseCase _putUseCase;
+        private readonly PutPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> _putPresenter;
 
-        public PlannedMaintenanceController(IPutService<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance, PlannedMaintenanceDto> putService)
+        public PlannedMaintenanceController(PutPlannedMaintenanceUseCase putUseCase, PutPresenter<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
-        [HttpPut()]
+        [HttpPut]
         public async Task<ActionResult> Put([FromBody] PutRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance> request)
         {
             if (!ModelState.IsValid)
@@ -24,8 +26,10 @@ namespace Api.UseCases.PlannedMaintenance.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

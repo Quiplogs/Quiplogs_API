@@ -21,8 +21,8 @@ namespace Quiplogs.Schedules.UseCases.ScheduleDaily
         public async Task<bool> Handle(ListRequest<Domain.Entities.ScheduleDaily> request, IOutputPort<ListResponse<Domain.Entities.ScheduleDaily>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
-                model => model.PlannedMaintenanceId == request.ParentId);
+                model => model.PlannedMaintenanceId == request.ParentId, 
+                request.FilterParameters);
 
             if (response.Success)
             {

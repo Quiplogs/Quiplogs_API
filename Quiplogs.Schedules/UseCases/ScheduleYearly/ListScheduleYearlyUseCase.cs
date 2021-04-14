@@ -23,8 +23,8 @@ namespace Quiplogs.Schedules.UseCases.ScheduleYearly
             IOutputPort<ListResponse<Domain.Entities.ScheduleYearly>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
-                model => model.PlannedMaintenanceId == request.ParentId);
+                model => model.PlannedMaintenanceId == request.ParentId,
+                request.FilterParameters);
 
             if (response.Success)
             {

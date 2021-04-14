@@ -12,10 +12,8 @@ namespace Quiplogs.PlannedMaintenance.Domain.Entities
         public Asset Asset { get; set; }
         public Guid DefaultTechnicianId { get; set; }
         public AppUser DefaultTechnician { get; set; }
-        public string DefaultTechnicianName { get; set; }
         public string Notes { get; set; }
         public bool IsDeleted { get; set; }
-        public string UoM { get; set; }
         public Guid LocationId { get; set; }
         public Location Location { get; set; }
         public List<PlannedMaintenancePart> PlannedMaintenanceParts { get; set; }

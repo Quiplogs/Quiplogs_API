@@ -21,8 +21,8 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderTask
         public async Task<bool> Handle(ListRequest<Domain.Entities.WorkOrderTask> request, IOutputPort<ListResponse<Domain.Entities.WorkOrderTask>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
-                model => model.WorkOrderId == request.ParentId);
+                model => model.WorkOrderId == request.ParentId,
+                request.FilterParameters);
 
             if (response.Success)
             {

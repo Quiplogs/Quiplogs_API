@@ -22,8 +22,8 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenancePart
         public async Task<bool> Handle(ListRequest<Domain.Entities.PlannedMaintenancePart> request, IOutputPort<ListResponse<Domain.Entities.PlannedMaintenancePart>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
                 model => model.PlannedMaintenanceId == request.ParentId,
+                request.FilterParameters,
                 including: model => model.Include(a => a.Part));
 
             if (response.Success)

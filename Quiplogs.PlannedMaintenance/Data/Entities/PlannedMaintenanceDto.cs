@@ -10,14 +10,14 @@ namespace Quiplogs.PlannedMaintenance.Data.Entities
     {
         public string Name { get; set; }
         public Guid AssetId { get; set; }
+
         [ForeignKey("AssetId")]
         public AssetDto Asset { get; set; }
         public Guid DefaultTechnicianId { get; set; }
+
         [ForeignKey("DefaultTechnicianId")]
         public UserEntity DefaultTechnician { get; set; }
-        public string DefaultTechnicianName { get; set; }
         public string Notes { get; set; }
-        public string UoM { get; set; }
         public bool IsDeleted { get; set; }
         public List<PlannedMaintenancePartDto> PlannedMaintenanceParts { get; set; }
         public List<PlannedMaintenanceTaskDto> PlannedMaintenanceTasks { get; set; }

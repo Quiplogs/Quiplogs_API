@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -9,16 +8,6 @@ namespace Quiplogs.Infrastructure.Helper
 {
     public static class QueryBuilder
     {
-        public static IQueryable<T> CustomWhere<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate = null)
-        {
-            if (predicate != null)
-            {
-                source.Where(predicate);
-            }
-
-            return source;
-        }
-
         public static IQueryable<T> CustomInclude<T>(this IQueryable<T> source, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             if (include != null)

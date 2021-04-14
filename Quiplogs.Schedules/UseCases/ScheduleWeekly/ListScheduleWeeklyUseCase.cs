@@ -23,8 +23,8 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
             IOutputPort<ListResponse<Domain.Entities.ScheduleWeekly>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
-                model => model.PlannedMaintenanceId == request.ParentId);
+                model => model.PlannedMaintenanceId == request.ParentId,
+                request.FilterParameters);
 
             if (response.Success)
             {

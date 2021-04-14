@@ -14,6 +14,7 @@ namespace Quiplogs.PlannedMaintenance
             builder.RegisterType<ListPlannedMaintenanceTaskUseCase>().InstancePerLifetimeScope();
 
             builder.RegisterType<PutPlannedMaintenancePartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<PutPlannedMaintenanceUseCase>().InstancePerLifetimeScope();
         }
     }
 }

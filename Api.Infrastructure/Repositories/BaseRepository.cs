@@ -1,14 +1,8 @@
-﻿using System;
-using AutoMapper;
-using System.Linq;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using Quiplogs.Core.Data.Entities;
-using Quiplogs.Infrastructure.SqlContext;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Quiplogs.Core;
+using Quiplogs.Core.Data.Entities;
 using Quiplogs.Core.Domain;
 using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.Dto;
@@ -16,8 +10,13 @@ using Quiplogs.Core.Dto.Repositories;
 using Quiplogs.Core.Helpers;
 using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Infrastructure.Helper;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore.Query;
+using Quiplogs.Infrastructure.SqlContext;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Quiplogs.Infrastructure.Repositories
 {
@@ -38,13 +37,13 @@ namespace Quiplogs.Infrastructure.Repositories
             _entities = _context.Set<T2>();
         }
 
-        public async Task<BaseModelListResponse<T1>> List(Dictionary<string, string> filterParameters = null, Expression<Func<T2, bool>> predicate = null, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
+        public async Task<BaseModelListResponse<T1>> List(Expression<Func<T2, bool>> predicate, Dictionary<string, string> filterParameters = null, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
         {
             try
             {
                 var modelList = await _entities
                                         .AsQueryable()
-                                        .CustomWhere(predicate)
+                                        .Where(predicate)
                                         .CustomInclude(including)
                                         .FilterByString(filterParameters)
                                         .ToListAsync();
@@ -58,17 +57,17 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
-        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate = null, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
+        public async Task<BasePagedResponse<T1>> PagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Expression<Func<T2, bool>> predicate, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
         {
             try
             {
                 var modelList = await _entities
-                                    .CustomWhere(predicate)
-                                    .CustomInclude(including)
-                                    .FilterByString(filterParameters)
-                                    .Where(x => x.CompanyId == companyId)
-                                    .Skip((pageNumber - 1) * pageSize)
-                                    .Take(pageSize).ToListAsync();
+                                        .AsQueryable()
+                                        .Where(predicate)
+                                        .CustomInclude(including)
+                                        .FilterByString(filterParameters)
+                                        .Skip((pageNumber - 1) * pageSize)
+                                        .Take(pageSize).ToListAsync();
 
                 var mappedList = _mapper.Map<List<T1>>(modelList);
                 var total = await GetTotalRecords(companyId);

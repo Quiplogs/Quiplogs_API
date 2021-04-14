@@ -1,5 +1,4 @@
-﻿using Quiplogs.Core.Dto;
-using Quiplogs.Core.Dto.Requests.Generic;
+﻿using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
@@ -21,8 +20,8 @@ namespace Quiplogs.Schedules.UseCases.ScheduleCustom
         public async Task<bool> Handle(ListRequest<Domain.Entities.ScheduleCustom> request, IOutputPort<ListResponse<Domain.Entities.ScheduleCustom>> outputPort)
         {
             var response = await _baseRepository.List(
-                request.FilterParameters,
-                model => model.PlannedMaintenanceId == request.ParentId);
+                model => model.PlannedMaintenanceId == request.ParentId,
+                request.FilterParameters);
 
             if (response.Success)
             {
