@@ -28,8 +28,8 @@ namespace Api.UseCases.Schedule.Custom.Put
                 return BadRequest(ModelState);
             }
 
-            if (request.Model.CycleNextDue == null)
-                request.Model.CycleNextDue = 0;
+            request.Model.CycleNextDue ??= 0;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
 
             await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleCustom>(request.Model), _putPresenter);
             return _putPresenter.ContentResult;

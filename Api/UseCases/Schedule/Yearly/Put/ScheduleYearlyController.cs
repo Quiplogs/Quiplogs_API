@@ -1,12 +1,10 @@
-﻿using System;
-using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Schedules.Data.Entities;
 using Quiplogs.Schedules.Domain.Entities;
-using System.Threading.Tasks;
-using Api.Presenters;
 using Quiplogs.Schedules.UseCases.ScheduleYearly;
+using System;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Yearly.Put
 {
@@ -30,8 +28,8 @@ namespace Api.UseCases.Schedule.Yearly.Put
                 return BadRequest(ModelState);
             }
 
-            if (request.Model.DateNextDue == null)
-                request.Model.DateNextDue = DateTime.Now;
+            request.Model.DateNextDue ??= DateTime.Now;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
 
             await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<ScheduleYearly>(request.Model), _putPresenter);
             return _putPresenter.ContentResult;
