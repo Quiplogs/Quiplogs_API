@@ -18,7 +18,7 @@ namespace Api.UseCases.User.Fetch
         public void Handle(FetchUsersResponse response)
         {
             ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
-            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.Users) : JsonSerializer.SerializeObject(response.Errors);
+            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.PagedResult) : JsonSerializer.SerializeObject(response.Errors);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Monthly.Get
 {
-    public class ScheduleMonthlyController : Controller
+    public class ScheduleMonthlyController : BaseApiController
     {
         private readonly IGetService<Quiplogs.Schedules.Domain.Entities.ScheduleMonthly, ScheduleMonthlyDto> _getService;
 

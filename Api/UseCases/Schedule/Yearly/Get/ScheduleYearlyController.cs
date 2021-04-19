@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api.UseCases.Schedule.Yearly.Get
 {
-    public class ScheduleYearlyController : Controller
+    public class ScheduleYearlyController : BaseApiController
     {
         private readonly IGetService<Quiplogs.Schedules.Domain.Entities.ScheduleYearly, ScheduleYearlyDto> _getService;
 

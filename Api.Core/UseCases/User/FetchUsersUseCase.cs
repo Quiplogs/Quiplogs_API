@@ -17,16 +17,16 @@ namespace Quiplogs.Core.UseCases.User
             _userRepository = userRepository;
         }
 
-        public async Task<bool> Handle(FetchUsersRequest message, IOutputPort<FetchUsersResponse> outputPort)
+        public async Task<bool> Handle(FetchUsersRequest request, IOutputPort<FetchUsersResponse> outputPort)
         {
-            var response = await _userRepository.GetAll(message.CompanyId, message.LocationId);
+            var response = await _userRepository.GetPagedList(request.CompanyId, request.PageNumber, request.PageSize, request.LocationId);
             if (response.Success)
             {
-                outputPort.Handle(new FetchUsersResponse(response.Users, true));
+                outputPort.Handle(new FetchUsersResponse(response.PagedResult, true));
                 return true;
             }
 
-            outputPort.Handle(new FetchUsersResponse(new[] { new Error("", "No Users Found.") }));
+            outputPort.Handle(new FetchUsersResponse(response.Errors));
             return false;
         }
     }

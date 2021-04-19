@@ -8,10 +8,14 @@ namespace Quiplogs.Core.Dto.Requests.User
     {
         public Guid CompanyId { get; }
         public Guid? LocationId { get; }
-        public FetchUsersRequest(Guid companyId, Guid? locationId)
+        public int PageSize { get; }
+        public int PageNumber { get; }
+        public FetchUsersRequest(Guid companyId, Guid? locationId, int pageSize, int pageNumber)
         {
             CompanyId = companyId;
             LocationId = locationId;
+            PageSize = pageSize;
+            PageNumber = pageNumber;
         }
     }
 }

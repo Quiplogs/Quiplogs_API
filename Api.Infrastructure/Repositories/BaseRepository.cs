@@ -150,7 +150,7 @@ namespace Quiplogs.Infrastructure.Repositories
         private async Task UpdateTotalItems(Guid companyId)
         {
             var cacheKey = $"{typeof(T1).Name}-total-{companyId}";
-            var cachedTotal = _entities.Count(x => x.CompanyId == companyId);
+            var cachedTotal = _entities.Where(x => x.CompanyId == companyId).Count();
             await _cache.SetAsnyc(cacheKey, cachedTotal);
         }
     }
