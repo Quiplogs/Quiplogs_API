@@ -1,15 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Core.Interfaces.UseCases.User;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.User.Update
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly IUpdateUserUseCase _updateUserUseCase;
         private readonly UpdateUserPresenter _updateUserPresenter;
@@ -20,14 +15,18 @@ namespace Api.UseCases.User.Update
             _updateUserPresenter = updateUserPresenter;
         }
 
-        [HttpPost("Update")]
+        [HttpPut]
         public async Task<ActionResult> Update([FromBody] UpdateUserRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            { 
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-            await _updateUserUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.UpdateUserRequest(request.User), _updateUserPresenter);
+
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
+
+            await _updateUserUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.UpdateUserRequest(request.Model), _updateUserPresenter);
             return _updateUserPresenter.ContentResult;
         }
     }

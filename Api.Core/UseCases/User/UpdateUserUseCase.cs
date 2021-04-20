@@ -19,6 +19,11 @@ namespace Quiplogs.Core.UseCases.User
 
         public async Task<bool> Handle(UpdateUserRequest message, IOutputPort<UpdateUserResponse> outputPort)
         {
+            // Set Username to email address
+            message.User.UserName = message.User.Email;
+
+            //if(message.User.Password)
+
             var response = await _userRepository.Update(message.User);
             if (response.Success)
             {
@@ -26,7 +31,7 @@ namespace Quiplogs.Core.UseCases.User
                 return true;
             }
 
-            outputPort.Handle(new UpdateUserResponse(new[] { new Error("", "Error removing user.") }));
+            outputPort.Handle(new UpdateUserResponse(response.Errors));
             return false;
         }
     }

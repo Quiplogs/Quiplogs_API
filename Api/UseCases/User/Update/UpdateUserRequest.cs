@@ -4,6 +4,6 @@ namespace Api.UseCases.User.Update
 {
     public class UpdateUserRequest
     {
-        public AppUser User { get; set; }
+        public AppUser Model { get; set; }
     }
 }

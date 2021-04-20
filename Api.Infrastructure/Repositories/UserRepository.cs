@@ -48,6 +48,11 @@ namespace Quiplogs.Infrastructure.Repositories
             return await _userManager.CheckPasswordAsync(_mapper.Map<UserEntity>(user), password);
         }
 
+        //public async Task<bool> UpdatePassword(AppUser user, string password)
+        //{
+        //    return await _userManager.ChangePasswordAsync(_mapper.Map<UserEntity>(user), oldUser.);
+        //}
+
         public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid? locationId)
         {
             var users = await _userManager.Users

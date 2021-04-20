@@ -1,48 +1,27 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Core.Interfaces.UseCases.User;
-using Quiplogs.Notifications.Send.Interfaces;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.User.Get
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly IGetUserUseCase _getUserUseCase;
         private readonly GetUserPresenter _getUserPresenter;
-        private readonly ISendService _sendService;
 
-        public UserController(IGetUserUseCase getUserUseCase, GetUserPresenter getUserPresenter, ISendService sendService)
+        public UserController(IGetUserUseCase getUserUseCase, GetUserPresenter getUserPresenter)
         {
             _getUserUseCase = getUserUseCase;
             _getUserPresenter = getUserPresenter;
-            _sendService = sendService;
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet]
         public async Task<ActionResult> Get([FromQuery] GetUserRequest request)
         {
-            //var tags = new Dictionary<string, string>();
-            //tags.Add("firstName", "Jonathan");
-
-            //var mail = new EmailWithTemplate
-            //{
-            //    TemplateId = "12345667",
-            //    FromEmailAddress = "test@from.com",
-            //    FromName = "Busy Dev",
-            //    ToEmailAddress = "test.to.com",
-            //    ToName = "Another Busy Dev",
-            //    ReplacementTags = tags
-            //};
-
-            //await _sendService.SendNotification(mail);
-
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
+                // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
             await _getUserUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.GetUserRequest(request.Id), _getUserPresenter);
