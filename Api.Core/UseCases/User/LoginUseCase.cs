@@ -28,7 +28,7 @@ namespace Quiplogs.Core.UseCases.User
                 if (user != null)
                 {
                     // validate password
-                    if (await _userRepository.CheckPassword(user, message.Password))
+                    if (await _userRepository.CheckPassword(user.Id, message.Password))
                     {
                         var jwtRequest = new GenerateJwtTokenRequest()
                         {

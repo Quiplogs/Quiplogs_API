@@ -46,9 +46,10 @@ namespace Quiplogs.Infrastructure.Repositories
             return _mapper.Map<AppUser>(await _userManager.FindByEmailAsync(userName));
         }
 
-        public async Task<bool> CheckPassword(AppUser user, string password)
+        public async Task<bool> CheckPassword(Guid id, string password)
         {
-            return await _userManager.CheckPasswordAsync(_mapper.Map<UserEntity>(user), password);
+            var user = await _userManager.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _userManager.CheckPasswordAsync(user, password);
         }
 
         public async Task<GetAllUsersResponse> GetAll(Guid companyId, Guid? locationId)
@@ -93,22 +94,23 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task<GetUserResponse> Get(Guid id)
         {
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userManager.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             AppUser mappedUser = _mapper.Map<AppUser>(user);
             return new GetUserResponse(mappedUser, true, null);
         }
 
         public async Task<UpdateUserResponse> Update(AppUser user)
         {
-            var currentUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == user.Id);
-
-            var appUser = _mapper.Map<UserEntity>(user);
+            var currentUser = await _userManager.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == user.Id);
+            var appUser = _mapper.Map(user, currentUser);
 
             _context.Entry(currentUser).State = EntityState.Modified;
             appUser.SecurityStamp = Guid.NewGuid().ToString();
             appUser.ConcurrencyStamp = currentUser.ConcurrencyStamp;
 
-            //Update Password
+            var identityResult = await _userManager.UpdateAsync(appUser);
+
+            // Update Password
             if (!string.IsNullOrWhiteSpace(user.CurrentPassword) && !string.IsNullOrWhiteSpace(user.Password))
             {
                 if (user.Password.Equals(user.ReenteredPassword))
@@ -120,8 +122,6 @@ namespace Quiplogs.Infrastructure.Repositories
                     }
                 }
             }
-
-            var identityResult = await _userManager.UpdateAsync(appUser);
             AppUser mappedUser = _mapper.Map<AppUser>(appUser);
             return new UpdateUserResponse(mappedUser, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
         }

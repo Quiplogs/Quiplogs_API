@@ -9,7 +9,7 @@ namespace Quiplogs.Core.Interfaces.Repositories
     {
         Task<CreateUserResponse> Create(AppUser user, string password);
         Task<AppUser> FindByName(string userName);
-        Task<bool> CheckPassword(AppUser user, string password);
+        Task<bool> CheckPassword(Guid id, string password);
         Task<GetAllUsersResponse> GetAll(Guid companyId, Guid? locationId);
         Task<PagedUserResponse> GetPagedList(Guid companyId, int pageNumber, int pageSize, Guid? locationId);
         Task<GetAllUsersResponse> GetAllTechnicians(Guid companyId, Guid? locationId);
