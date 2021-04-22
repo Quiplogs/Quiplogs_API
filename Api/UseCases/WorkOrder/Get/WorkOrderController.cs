@@ -1,19 +1,22 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
 using Quiplogs.WorkOrder.Domain.Entities;
+using Quiplogs.WorkOrder.UseCases.WorkOrder;
 using System.Threading.Tasks;
+using Quiplogs.Core.Dto.Requests.Generic;
 
 namespace Api.UseCases.WorkOrder.Get
 {
     public class WorkOrderController : BaseApiController
     {
-        private readonly IGetService<WorkOrderEntity, WorkOrderDto> _getService;
+        private readonly GetWorkOrderUseCase _getUseCase;
+        private readonly GetPresenter<WorkOrderEntity> _presenter;
 
-        public WorkOrderController(IGetService<WorkOrderEntity, WorkOrderDto> getService)
+        public WorkOrderController(GetWorkOrderUseCase getUseCase, GetPresenter<WorkOrderEntity> presenter)
         {
-            _getService = getService;
+            _getUseCase = getUseCase;
+            _presenter = presenter;
         }
 
         [HttpGet()]
@@ -25,8 +28,8 @@ namespace Api.UseCases.WorkOrder.Get
                 return BadRequest(ModelState);
             }
 
-            var result = await _getService.Get(request);
-            return result;
+            await _getUseCase.Handle(new GetRequest<WorkOrderEntity>(request.Id), _presenter);
+            return _presenter.ContentResult;
         }
     }
 }

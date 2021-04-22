@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Quiplogs.Core.Dto;
-using Quiplogs.Core.Dto.Requests.Generic;
+﻿using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 using Quiplogs.WorkOrder.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrder
@@ -29,10 +24,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
-                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
-                including: source => source
-                    .Include(model => model.WorkOrderParts)
-                    .Include(model => model.WorkOrderTasks));
+                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value);
 
             if (response.Success)
             {
@@ -40,7 +32,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 return true;
             }
 
-            outputPort.Handle(new PagedResponse<Domain.Entities.WorkOrderEntity>(new[] { new Error("", "Model not Found.") }));
+            outputPort.Handle(new PagedResponse<Domain.Entities.WorkOrderEntity>(response.Errors));
             return false;
         }
     }
