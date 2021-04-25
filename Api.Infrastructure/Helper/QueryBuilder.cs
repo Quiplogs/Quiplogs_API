@@ -24,23 +24,40 @@ namespace Quiplogs.Infrastructure.Helper
             {
                 foreach (var keyValuePair in filterParameters)
                 {
-                    source.Where(Like<T>(keyValuePair.Key, keyValuePair.Value));
+                    source = source.Where(Filter<T>(keyValuePair.Key, keyValuePair.Value));
                 }
             }
 
             return source;
         }
 
-        private static Expression<Func<T, bool>> Like<T>(string propertyName, string queryText)
+        private static Expression<Func<T, bool>> Filter<T>(string propertyName, string queryText)
         {
             var parameter = Expression.Parameter(typeof(T), "entity");
             var getter = Expression.Property(parameter, propertyName);
-            if (getter.Type != typeof(string))
-                throw new ArgumentException("Property must be a string");
-            var stringContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-            var containsCall = Expression.Call(getter, stringContainsMethod,
-                Expression.Constant(queryText, typeof(string)));
-            return Expression.Lambda<Func<T, bool>>(containsCall, parameter);
+            if (getter.Type == typeof(string))
+            {
+                var stringContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                var containsCall = Expression.Call(getter, stringContainsMethod,
+                    Expression.Constant(queryText, typeof(string)));
+                return Expression.Lambda<Func<T, bool>>(containsCall, parameter);
+            }
+            if (getter.Type == typeof(int))
+            {
+                var stringEqualsMethod = typeof(int).GetMethod("Equals", new[] { typeof(int) });
+                var equalsCall = Expression.Call(getter, stringEqualsMethod,
+                    Expression.Constant(value: Int32.Parse(queryText), typeof(Int32)));
+                return Expression.Lambda<Func<T, bool>>(equalsCall, parameter);
+            }
+            if (getter.Type == typeof(bool))
+            {
+                var stringEqualsMethod = typeof(bool).GetMethod("Equals", new[] { typeof(bool) });
+                var equalsCall = Expression.Call(getter, stringEqualsMethod,
+                    Expression.Constant(value: bool.Parse(queryText), typeof(bool)));
+                return Expression.Lambda<Func<T, bool>>(equalsCall, parameter);
+            }
+
+            throw new Exception("No proper type defined for Filter Parameter. Supports only String, Int and Boolean");
         }
     }
 }

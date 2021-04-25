@@ -26,6 +26,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                     .Include(model => model.Asset)
                     .Include(model => model.WorkOrderTasks)
                     .Include(model => model.WorkOrderParts)
+                        .ThenInclude(model => model.Part)
                     .Include(model => model.Technician));
 
             if (response.Success)

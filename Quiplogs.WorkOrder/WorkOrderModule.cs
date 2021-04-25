@@ -13,6 +13,8 @@ namespace Quiplogs.WorkOrder
             builder.RegisterType<ListWorkOrderPartUseCase>().InstancePerDependency();
             builder.RegisterType<ListWorkOrderTaskUseCase>().InstancePerDependency();
             builder.RegisterType<GetWorkOrderUseCase>().InstancePerDependency();
+
+            builder.RegisterType<PutWorkOrderPartUseCase>().InstancePerLifetimeScope();
         }
     }
 }

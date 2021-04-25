@@ -1,18 +1,20 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.WorkOrder.Data.Entities;
+using Quiplogs.WorkOrder.UseCases.WorkOrderPart;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.WorkOrderPart.Put
 {
     public class WorkOrderPartController : BaseApiController
     {
-        private readonly IPutService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart, WorkOrderPartDto> _putService;
+        private readonly PutWorkOrderPartUseCase _putUseCase;
+        private readonly PutPresenter<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart> _putPresenter;
 
-        public WorkOrderPartController(IPutService<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart, WorkOrderPartDto> putService)
+        public WorkOrderPartController(PutWorkOrderPartUseCase putUseCase, PutPresenter<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart> putPresenter)
         {
-            _putService = putService;
+            _putUseCase = putUseCase;
+            _putPresenter = putPresenter;
         }
 
         [HttpPut()]
@@ -24,8 +26,10 @@ namespace Api.UseCases.WorkOrderPart.Put
                 return BadRequest(ModelState);
             }
 
-            var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
-            return result;
+            request.Model.CompanyId = GetCompanyId(request.Model.CompanyId);
+
+            await _putUseCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.PutRequest<Quiplogs.WorkOrder.Domain.Entities.WorkOrderPart>(request.Model), _putPresenter);
+            return _putPresenter.ContentResult;
         }
     }
 }

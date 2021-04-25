@@ -23,7 +23,6 @@ namespace Api.UseCases.WorkOrderTask.Put
                 // re-render the view when validation failed.
                 return BadRequest(ModelState);
             }
-
             var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
             return result;
         }

@@ -1,5 +1,4 @@
 ﻿using Quiplogs.Core.Data.Entities;
-using Quiplogs.Inventory.Data.Entities;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,10 +10,8 @@ namespace Quiplogs.WorkOrder.Data.Entities
 
         [ForeignKey("WorkOrderId")]
         public WorkOrderDto WorkOrder { get; set; }
-        public Guid TaskId { get; set; }
-
-        [ForeignKey("TaskId")]
-        public TaskDto Task { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
         public decimal QuantityRequired { get; set; }
