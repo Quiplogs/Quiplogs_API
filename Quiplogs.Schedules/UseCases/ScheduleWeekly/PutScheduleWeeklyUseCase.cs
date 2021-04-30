@@ -34,7 +34,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
             }
 
             outputPort.Handle(
-                new PutResponse<Domain.Entities.ScheduleWeekly>(new[] {new Error("", "Errors Updating Model.")}));
+                new PutResponse<Domain.Entities.ScheduleWeekly>(response.Errors));
             return false;
         }
 

@@ -5,18 +5,18 @@ namespace Quiplogs.Dashboard
     public class AnalyticsRequest
     {
         public Guid CompanyId { get; set; }
-
         public Guid? LocationId { get; set; }
+        public Guid? AssetId { get; set; }
 
-        private string storedProcedure;
+        private string _storedProcedure;
         public string StoredProcedure
         {
-            get => storedProcedure;
+            get => _storedProcedure;
             set
             {
                 if (StoredProceduresDashboard.Procedures.ContainsKey(value))
                 {
-                    storedProcedure = StoredProceduresDashboard.Procedures[value];
+                    _storedProcedure = StoredProceduresDashboard.Procedures[value];
                 }
             }
 

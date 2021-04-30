@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Quiplogs.Schedules.UseCases.ScheduleYearly
 {
-    public class PutScheduleYearlyUseCase : IPutUseCase<Domain.Entities.ScheduleYearly, ScheduleWeeklyDto>
+    public class PutScheduleYearlyUseCase : IPutUseCase<Domain.Entities.ScheduleYearly, ScheduleYearlyDto>
     {
-        private readonly IBaseRepository<Domain.Entities.ScheduleYearly, ScheduleWeeklyDto> _baseRepository;
+        private readonly IBaseRepository<Domain.Entities.ScheduleYearly, ScheduleYearlyDto> _baseRepository;
 
         public PutScheduleYearlyUseCase(
-            IBaseRepository<Domain.Entities.ScheduleYearly, ScheduleWeeklyDto> baseRepository)
+            IBaseRepository<Domain.Entities.ScheduleYearly, ScheduleYearlyDto> baseRepository)
         {
             _baseRepository = baseRepository;
         }
@@ -34,7 +34,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleYearly
             }
 
             outputPort.Handle(
-                new PutResponse<Domain.Entities.ScheduleYearly>(new[] { new Error("", "Errors Updating Model.") }));
+                new PutResponse<Domain.Entities.ScheduleYearly>(response.Errors));
             return false;
         }
 

@@ -26,6 +26,7 @@ namespace Api.Dashboard.Main
             {
                 CompanyId = GetCompanyId(request.CompanyId),
                 LocationId = request.LocationId,
+                AssetId = request.AssetId,
                 StoredProcedure = request.QueryName
             };
 

@@ -9,8 +9,8 @@ namespace Quiplogs.BlobStorage
 
         Task<SaveFileResponse> UploadDocumentAsync(SaveFileRequest request);
 
-        void DeleteBlobImage(DeleteFileRequest request);
+        Task DeleteBlobImage(DeleteFileRequest request);
 
-        void DeleteBlobDocument(DeleteFileRequest request);
+        Task DeleteBlobDocument(DeleteFileRequest request);
     }
 }

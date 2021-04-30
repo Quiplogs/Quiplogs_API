@@ -11,6 +11,7 @@ namespace Quiplogs.Dashboard
             {"WorkOrderPlannedVUnplanned", "Analytics_WorkOrderPlannedVUnplanned"},
             {"WorkOrderPriority", "Analytics_WorkOrderPriority"},
             {"WorkOrdersCompletedByDayForWeek", "Analytics_WorkOrdersCompletedByDayForWeek"},
+            {"AssetWorkOrders", "Asset_WorkOrderValues" }
         };
     }
 }

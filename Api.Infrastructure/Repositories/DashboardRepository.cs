@@ -18,7 +18,11 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public IEnumerable<dynamic> GetDashboardData(AnalyticsRequest request)
         {
-            if (request.LocationId == null)
+            if (request.AssetId.HasValue)
+            {
+                return GetDynamicResult($"EXEC {request.StoredProcedure} @AssetId ", new SqlParameter("@AssetId", request.AssetId.Value));
+            }
+            else if (request.LocationId == null)
             {
                 return GetDynamicResult($"EXEC {request.StoredProcedure} @CompanyId ", new SqlParameter("@CompanyId", request.CompanyId));
             }

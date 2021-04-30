@@ -54,7 +54,7 @@ namespace Quiplogs.Inventory.UseCases.Part
                 }
             }
 
-            outputPort.Handle(new PutResponse<Domain.Entities.Part>(new[] { new Error("", "Error Updating Model.") }));
+            outputPort.Handle(new PutResponse<Domain.Entities.Part>(responseImageUnsaved.Errors));
             return false;
         }
     }

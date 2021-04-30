@@ -69,12 +69,12 @@ namespace Quiplogs.BlobStorage
             return result;
         }
 
-        public async void DeleteBlobImage(DeleteFileRequest request)
+        public async Task DeleteBlobImage(DeleteFileRequest request)
         {
             await DeleteBlobData(request, "images");
         }
 
-        public async void DeleteBlobDocument(DeleteFileRequest request)
+        public async Task DeleteBlobDocument(DeleteFileRequest request)
         {
             await DeleteBlobData(request, "documents");
         }
