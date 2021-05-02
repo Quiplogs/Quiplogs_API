@@ -35,6 +35,7 @@ namespace Quiplogs.Infrastructure.SqlContext
         public DbSet<ScheduleWeeklyDto> ScheduleWeekly { get; set; }
         public DbSet<ScheduleMonthlyDto> ScheduleMonthly { get; set; }
         public DbSet<ScheduleYearlyDto> ScheduleYearly { get; set; }
+        public DbSet<BlobEntity> BlobEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -11,6 +11,7 @@ namespace Quiplogs.Inventory
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("UseCase")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<PutPartUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePartUseCase>().InstancePerLifetimeScope();
         }
     }
 }

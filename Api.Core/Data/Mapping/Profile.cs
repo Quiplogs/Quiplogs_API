@@ -14,6 +14,8 @@ namespace Quiplogs.Core.Data.Mapping
             CreateMap<CompanyDto, Company>();
             CreateMap<Location, LocationDto>();
             CreateMap<LocationDto, Location>();
+            CreateMap<Blob, BlobEntity>();
+            CreateMap<BlobEntity, Blob>();
         }
     }
 }

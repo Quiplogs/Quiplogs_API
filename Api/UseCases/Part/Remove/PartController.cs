@@ -1,22 +1,24 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Inventory.Data.Entities;
+using Quiplogs.Inventory.UseCases.Part;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Part.Remove
 {
     public class PartController : BaseApiController
     {
-        private readonly IRemoveService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> _removeService;
+        private readonly RemovePartUseCase _useCase;
+        private readonly RemovePresenter _presenter;
 
-        public PartController(IRemoveService<Quiplogs.Inventory.Domain.Entities.Part, PartDto> removeService)
+        public PartController(RemovePartUseCase useCase, RemovePresenter presenter)
         {
-            _removeService = removeService;
+            _useCase = useCase;
+            _presenter = presenter;
         }
 
-        [HttpDelete()]
-        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
+        [HttpDelete]
+        public async Task<ActionResult> Put([FromQuery] RemoveRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -24,8 +26,8 @@ namespace Api.UseCases.Part.Remove
                 return BadRequest(ModelState);
             }
 
-            var result = await _removeService.Put(request);
-            return result;
+            await _useCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.RemoveRequest(request.Id), _presenter);
+            return _presenter.ContentResult;
         }
     }
 }

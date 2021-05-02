@@ -22,13 +22,5 @@ namespace Quiplogs.Assets.Data.Entities
         public decimal CurrentWorkDone { get; set; }
 
         public string UoM { get; set; }
-
-        public string ImageFileName { get; set; }
-
-        public string ImageUrl { get; set; }
-
-        public string WarrantyUrl { get; set; }
-
-        public string InstructionManualUrl { get; set; }
     }
 }

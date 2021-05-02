@@ -4,6 +4,7 @@ using Quiplogs.Core.Interfaces.UseCases.Generic;
 using Quiplogs.Core.UseCases.Generic;
 using Quiplogs.Core.UseCases.User;
 using System.Reflection;
+using Quiplogs.Core.UseCases.BlobStorage;
 using Quiplogs.Core.UseCases.Location;
 
 namespace Quiplogs.Core
@@ -21,6 +22,11 @@ namespace Quiplogs.Core
             
             builder.RegisterType<PutLocationUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<TechnicianListUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<GetBlobUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<PutBlobUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<RemoveBlobUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<RemoveLocationUseCase>().InstancePerLifetimeScope();
+
             builder.RegisterType<Caching>().As<ICaching>().InstancePerLifetimeScope();
         }
     }

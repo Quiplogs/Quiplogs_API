@@ -41,10 +41,6 @@ namespace Quiplogs.Core.Data.Entities
 
         public string LockedReason { get; set; }
 
-        public string LogoFileName { get; set; }
-
-        public string LogoUrl { get; set; }
-
         public List<UserEntity> Users { get; set; } = new List<UserEntity>();
     }
 }

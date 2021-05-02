@@ -14,6 +14,7 @@ namespace Quiplogs.Assets
             builder.RegisterType<AssetPagedListUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<PutAssetUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<AssetUsagePagedListUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<RemoveAssetUseCase>().InstancePerLifetimeScope();
         }
     }
 }

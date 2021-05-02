@@ -1,26 +1,24 @@
-﻿using Api.Services.Interfaces;
+﻿using Api.Presenters;
 using Api.UseCases.Generic.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Data.Entities;
+using Quiplogs.Core.UseCases.Location;
 using System.Threading.Tasks;
 
 namespace Api.UseCases.Location.Remove
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
-    [ApiController]
-    public class LocationController : ControllerBase
+    public class LocationController : BaseApiController
     {
-        private readonly IRemoveService<Quiplogs.Core.Domain.Entities.Location, LocationDto> _removeService;
+        private readonly RemoveLocationUseCase _useCase;
+        private readonly RemovePresenter _presenter;
 
-        public LocationController(IRemoveService<Quiplogs.Core.Domain.Entities.Location, LocationDto> removeService)
+        public LocationController(RemoveLocationUseCase useCase, RemovePresenter presenter)
         {
-            _removeService = removeService;
+            _useCase = useCase;
+            _presenter = presenter;
         }
 
-        [HttpDelete()]
-        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
+        [HttpDelete]
+        public async Task<ActionResult> Put([FromQuery] RemoveRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -28,8 +26,8 @@ namespace Api.UseCases.Location.Remove
                 return BadRequest(ModelState);
             }
 
-            var result = await _removeService.Put(request);
-            return result;
+            await _useCase.Handle(new Quiplogs.Core.Dto.Requests.Generic.RemoveRequest(request.Id), _presenter);
+            return _presenter.ContentResult;
         }
     }
 }

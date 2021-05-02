@@ -1,5 +1,4 @@
-﻿using Quiplogs.BlobStorage;
-using Quiplogs.BlobStorage.Models;
+﻿using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
@@ -7,6 +6,7 @@ using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 using Quiplogs.Inventory.Data.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace Quiplogs.Inventory.UseCases.Part
@@ -14,47 +14,49 @@ namespace Quiplogs.Inventory.UseCases.Part
     public class PutPartUseCase : IPutUseCase<Domain.Entities.Part, PartDto>
     {
         private readonly IBaseRepository<Domain.Entities.Part, PartDto> _baseRepository;
-        private readonly IBlobStorage _blobStorage;
+        private readonly IBlobRepository _blobRepository;
 
         public PutPartUseCase(
             IBaseRepository<Domain.Entities.Part,
                 PartDto> baseRepository,
-            IBlobStorage blobStorage)
+            IBlobRepository blobRepository)
         {
             _baseRepository = baseRepository;
-            _blobStorage = blobStorage;
+            _blobRepository = blobRepository;
         }
 
         public async Task<bool> Handle(PutRequest<Domain.Entities.Part> request, IOutputPort<PutResponse<Domain.Entities.Part>> outputPort)
         {
-            var responseImageUnsaved = await _baseRepository.Put(request.Model);
+            var persistedModel = await _baseRepository.Put(request.Model);
 
-            if (responseImageUnsaved.Success)
+            if (persistedModel.Success)
             {
-                //persist to blob storage
-                var saveBlobRequest = new SaveFileRequest
+                try
                 {
-                    Container = responseImageUnsaved.Model.CompanyId.ToString(),
-                    SubContainer = responseImageUnsaved.Model.Id.ToString(),
-                    FileName = request.Model.ImageFileName,
-                    FileBase64 = request.Model.ImageBase64,
-                    MimeType = request.Model.ImageMimeType
-                };
+                    //persist to blob storage
+                    var blob = new Blob
+                    {
+                        ApplicationType = "part",
+                        Base64 = request.Model.ImageBase64,
+                        CompanyId = request.Model.CompanyId,
+                        FileName = request.Model.ImageFileName,
+                        ForeignKeyId = persistedModel.Model.Id,
+                        MimeType = request.Model.ImageMimeType
+                    };
 
-                var persistedBlob = await _blobStorage.UploadImageAsync(saveBlobRequest);
-
-                responseImageUnsaved.Model.ImageUrl = persistedBlob.FileUrl;
-
-                var responseImage = await _baseRepository.Put(responseImageUnsaved.Model);
-
-                if (responseImage.Success)
-                {
-                    outputPort.Handle(new PutResponse<Domain.Entities.Part>(responseImage.Model, true));
-                    return true;
+                    await _blobRepository.PersistBlob(blob);
                 }
+                catch (Exception ex)
+                {
+                    outputPort.Handle(new PutResponse<Domain.Entities.Part>(new Error[] { new Error("blob_persist", $"{ex.Message}") }));
+                    return false;
+                }
+
+                outputPort.Handle(new PutResponse<Domain.Entities.Part>(persistedModel.Model, true));
+                return true;
             }
 
-            outputPort.Handle(new PutResponse<Domain.Entities.Part>(responseImageUnsaved.Errors));
+            outputPort.Handle(new PutResponse<Domain.Entities.Part>(persistedModel.Errors));
             return false;
         }
     }
