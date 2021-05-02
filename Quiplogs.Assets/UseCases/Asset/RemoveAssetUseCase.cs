@@ -26,8 +26,6 @@ namespace Quiplogs.Assets.UseCases.Asset
         {
             try
             {
-                var getRequest = await _baseRepository.GetById(request.Id);
-
                 await _blobRepository.RemoveBlob(request.Id, "asset");
                 await _baseRepository.Remove(request.Id);
 

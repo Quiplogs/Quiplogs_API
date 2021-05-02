@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Requests.User;
 using Quiplogs.Core.Dto.Responses.User;
@@ -22,17 +23,30 @@ namespace Quiplogs.Core.UseCases.User
             // Set Username to email address
             message.User.UserName = message.User.Email;
 
-            //if(message.User.Password)
-
-            var response = await _userRepository.Update(message.User);
-            if (response.Success)
+            if (message.User.Id == Guid.Empty)
             {
-                outputPort.Handle(new UpdateUserResponse(response.User, true));
-                return true;
-            }
+                var response = await _userRepository.Create(message.User, message.User.Password);
+                if (response.Success)
+                {
+                    outputPort.Handle(new UpdateUserResponse(message.User, true));
+                    return true;
+                }
 
-            outputPort.Handle(new UpdateUserResponse(response.Errors));
-            return false;
+                outputPort.Handle(new UpdateUserResponse(response.Errors));
+                return false;
+            }
+            else
+            {
+                var response = await _userRepository.Update(message.User);
+                if (response.Success)
+                {
+                    outputPort.Handle(new UpdateUserResponse(response.User, true));
+                    return true;
+                }
+
+                outputPort.Handle(new UpdateUserResponse(response.Errors));
+                return false;
+            }
         }
     }
 }

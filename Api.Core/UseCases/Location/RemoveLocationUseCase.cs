@@ -28,8 +28,6 @@ namespace Quiplogs.Core.UseCases.Location
         {
             try
             {
-                var getRequest = await _baseRepository.GetById(request.Id);
-
                 await _blobRepository.RemoveBlob(request.Id, "location");
                 await _baseRepository.Remove(request.Id);
 

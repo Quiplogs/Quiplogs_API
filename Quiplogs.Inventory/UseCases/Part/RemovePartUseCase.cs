@@ -29,8 +29,6 @@ namespace Quiplogs.Inventory.UseCases.Part
         {
             try
             {
-                var getRequest = await _baseRepository.GetById(request.Id);
-
                 await _blobRepository.RemoveBlob(request.Id, "part");
                 await _baseRepository.Remove(request.Id);
 
