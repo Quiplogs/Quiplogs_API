@@ -1,6 +1,4 @@
-﻿using System;
-using Quiplogs.Core.Dto;
-using Quiplogs.Core.Dto.Requests.Generic;
+﻿using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
@@ -37,16 +35,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleCustom
 
         private decimal? CalculcateWhenToProcessNext(Domain.Entities.ScheduleCustom model)
         {
-            var lapsedCycles = Math.Round(model.StartingAt / model.RecurEvery, 0);
-
-            if (lapsedCycles == 0 || lapsedCycles % 10 == 0)
-            {
-                return model.StartingAt + model.RecurEvery;
-            }
-
-            var overLastCycleDue = (lapsedCycles * model.RecurEvery) - model.StartingAt;
-
-            return model.StartingAt + overLastCycleDue;
+            return model.StartingAt + model.RecurEvery;
         }
     }
 }

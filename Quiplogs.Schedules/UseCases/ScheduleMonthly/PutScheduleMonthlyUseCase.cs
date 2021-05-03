@@ -50,7 +50,7 @@ namespace Quiplogs.Schedules.UseCases.ScheduleMonthly
             var dateWithMonthsAdded = DateTime.Today.AddMonths(model.RecurEvery);
             if (model.StartDate.HasValue)
             {
-                dateWithMonthsAdded = model.StartDate.Value.AddDays(model.RecurEvery).AddHours(hour);
+                dateWithMonthsAdded = model.StartDate.Value.AddMonths(model.RecurEvery);
             }
             
             return new DateTime(dateWithMonthsAdded.Year, dateWithMonthsAdded.Month, model.RecurrenceDay).AddHours(hour);

@@ -17,7 +17,7 @@ namespace Api.UseCases.Schedule.Daily.Remove
         }
 
         [HttpDelete()]
-        public async Task<ActionResult> Delete([FromBody] RemoveRequest request)
+        public async Task<ActionResult> Delete([FromQuery] RemoveRequest request)
         {
             if (!ModelState.IsValid)
             {
