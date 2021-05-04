@@ -25,7 +25,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
-                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
+                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value && model.CompanyId == request.CompanyId,
                 source => source
                     .Include(model => model.Asset)
                     .Include(model => model.Location)

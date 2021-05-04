@@ -17,7 +17,7 @@ namespace Quiplogs.Assets.Domain.Entities
 
         public DateTime? PurchasedDate { get; set; }
 
-        public decimal CurrentWorkDone { get; set; }
+        public decimal? CurrentWorkDone { get; set; }
 
         public string UoM { get; set; }
 

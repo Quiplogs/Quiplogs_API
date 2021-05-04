@@ -22,7 +22,8 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
             IOutputPort<ListResponse<Domain.Entities.WorkOrderPart>> outputPort)
         {
             var response = await _baseRepository.List(
-                model => model.WorkOrderId == request.ParentId,
+                request.CompanyId,
+                model => model.WorkOrderId == request.ParentId && model.CompanyId == request.CompanyId,
                 request.FilterParameters);
 
             if (response.Success)

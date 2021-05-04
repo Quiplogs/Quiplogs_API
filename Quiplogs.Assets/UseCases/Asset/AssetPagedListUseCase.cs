@@ -26,7 +26,7 @@ namespace Quiplogs.Assets.UseCases.Asset
                 request.PageNumber, 
                 request.PageSize,
                 request.FilterParameters, 
-                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
+                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value && model.CompanyId == request.CompanyId,
                 including: source => source.Include(model => model.Location));
 
             if (response.Success)

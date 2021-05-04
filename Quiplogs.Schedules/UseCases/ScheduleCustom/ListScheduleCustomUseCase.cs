@@ -20,7 +20,8 @@ namespace Quiplogs.Schedules.UseCases.ScheduleCustom
         public async Task<bool> Handle(ListRequest<Domain.Entities.ScheduleCustom> request, IOutputPort<ListResponse<Domain.Entities.ScheduleCustom>> outputPort)
         {
             var response = await _baseRepository.List(
-                model => model.PlannedMaintenanceId == request.ParentId,
+                request.CompanyId,
+                model => model.PlannedMaintenanceId == request.ParentId && model.CompanyId == request.CompanyId,
                 request.FilterParameters);
 
             if (response.Success)

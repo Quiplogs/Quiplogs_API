@@ -20,7 +20,7 @@ namespace Quiplogs.Core.UseCases.User
 
         public async Task<bool> Handle(ListRequest<AppUser> request, IOutputPort<ListResponse<AppUser>> outputPort)
         {
-            var response = await _userRepository.GetAllTechnicians(request.CompanyId.Value, request.LocationId);
+            var response = await _userRepository.GetAllTechnicians(request.CompanyId, request.LocationId);
             if (response.Success)
             {
                 outputPort.Handle(new ListResponse<AppUser>(response.Users, true));

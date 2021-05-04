@@ -29,7 +29,8 @@ namespace Quiplogs.PlannedMaintenance.UseCases.PlannedMaintenance
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
-                model => !request.LocationId.HasValue || model.LocationId == request.LocationId.Value,
+                model => (!request.LocationId.HasValue || model.LocationId == request.LocationId.Value) && model.AssetId == request.ParentId
+                    && model.CompanyId == request.CompanyId,
                 including: source => source
                 .Include(model => model.PlannedMaintenanceParts)
                 .Include(model => model.PlannedMaintenanceTasks)

@@ -27,7 +27,7 @@ namespace Api.UseCases.Schedule.Weekly.List
                 return BadRequest(ModelState);
             }
 
-            await _listUseCase.Handle(new ListRequest<ScheduleWeekly>(request.CompanyId, request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
+            await _listUseCase.Handle(new ListRequest<ScheduleWeekly>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
             return _listPresenter.ContentResult;
         }
     }

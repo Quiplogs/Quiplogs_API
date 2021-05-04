@@ -27,8 +27,6 @@ namespace Api.UseCases.PlannedMaintenance.List
                 return BadRequest(ModelState);
             }
 
-            request.CompanyId = GetCompanyId(request.CompanyId);
-
             await _pagedListUseCase.Handle(new PagedRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenance>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.PageNumber, request.PageSize, request.FilterParameters), _pagedListPresenter);
             return _pagedListPresenter.ContentResult;
         }

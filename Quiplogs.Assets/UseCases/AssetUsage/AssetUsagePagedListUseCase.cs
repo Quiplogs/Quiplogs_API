@@ -25,7 +25,7 @@ namespace Quiplogs.Assets.UseCases.AssetUsage
                 request.PageNumber,
                 request.PageSize,
                 request.FilterParameters,
-                model => model.AssetId == request.ParentId);
+                model => model.AssetId == request.ParentId && model.CompanyId == request.CompanyId);
 
             if (response.Success)
             {

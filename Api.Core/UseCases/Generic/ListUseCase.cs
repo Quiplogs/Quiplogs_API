@@ -23,7 +23,7 @@ namespace Quiplogs.Core.UseCases.Generic
 
         public async Task<bool> Handle(ListRequest<T1> request, IOutputPort<ListResponse<T1>> outputPort)
         {
-            var response = await _repository.List(predicate: model => model.CompanyId == request.CompanyId, null);
+            var response = await _repository.List(request.CompanyId, model => model.CompanyId == request.CompanyId, null, null);
             if (response.Success)
             {
                 outputPort.Handle(new ListResponse<T1>(response.Models, true));

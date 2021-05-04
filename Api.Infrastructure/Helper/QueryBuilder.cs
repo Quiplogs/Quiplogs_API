@@ -31,6 +31,16 @@ namespace Quiplogs.Infrastructure.Helper
             return source;
         }
 
+        public static IQueryable<T> CustomWhere<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate = null)
+        {
+            if (predicate != null)
+            {
+                source = source.Where(predicate);
+            }
+
+            return source;
+        }
+
         private static Expression<Func<T, bool>> Filter<T>(string propertyName, string queryText)
         {
             var parameter = Expression.Parameter(typeof(T), "entity");
