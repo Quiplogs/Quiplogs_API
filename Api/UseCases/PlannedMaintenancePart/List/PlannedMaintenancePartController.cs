@@ -26,7 +26,7 @@ namespace Api.UseCases.PlannedMaintenancePart.List
                 return BadRequest(ModelState);
             }
 
-            await _listUseCase.Handle(new ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart>(request.CompanyId, request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
+            await _listUseCase.Handle(new ListRequest<Quiplogs.PlannedMaintenance.Domain.Entities.PlannedMaintenancePart>(GetCompanyId(request.CompanyId), request.LocationId, request.ParentId, request.FilterParameters), _listPresenter);
             return _listPresenter.ContentResult;
         }
     }
