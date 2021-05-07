@@ -47,81 +47,53 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
             {
                 hour = model.RecurrenceTime.Value.Hour;
             }
-            var nextProcessDay = DetermineNextWorkDay(model);
-            if (nextProcessDay == 0 || model.RecurEvery > 1)
-            {
-                nextProcessDay += model.RecurEvery * 7;
-            }
 
             if (model.StartDate.HasValue)
             {
-                return model.StartDate.Value.AddDays(nextProcessDay).AddHours(hour);
+                return model.StartDate.Value.AddDays(GetNextWeekday(model)).AddHours(hour);
             }
 
-            return DateTime.Today.AddDays(nextProcessDay).AddHours(hour);
+            return DateTime.Today.AddDays(GetNextWeekday(model)).AddHours(hour);
         }
 
-        private int DetermineNextWorkDay(Domain.Entities.ScheduleWeekly model)
+        private int GetNextWeekday(Domain.Entities.ScheduleWeekly model)
         {
-            var currentDayOfWeek = DateTime.Today;
-            var currentDayOfWeekInt = (int)currentDayOfWeek.DayOfWeek;
-            var response = 0;
+            var selectedDays = new bool[7];
+            selectedDays[0] = model.Monday;
+            selectedDays[1] = model.Tuesday;
+            selectedDays[2] = model.Wednesday;
+            selectedDays[3] = model.Thursday;
+            selectedDays[4] = model.Friday;
+            selectedDays[5] = model.Saturday;
+            selectedDays[6] = model.Sunday;
 
-            if (model.Monday)
+            var currentDay = model.StartDate.HasValue ? (int)model.StartDate.Value.DayOfWeek : (int)DateTime.Today.DayOfWeek;
+            var daysTillNextProcess = 1;
+            for (int i = currentDay; i < selectedDays.Length; i++)
             {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Monday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
+                if (!selectedDays[i])
+                {
+                    daysTillNextProcess++;
+                }
+
+                if (i == 6)
+                {
+                    for (int nextWeek = 0; i < selectedDays.Length; i++)
+                    {
+                        if (!selectedDays[nextWeek])
+                        {
+                            daysTillNextProcess++;
+                        }
+                    }
+
+                    if (model.RecurEvery > 1)
+                    {
+                        daysTillNextProcess += (model.RecurEvery - 1) * 7;
+                    }
+                }
             }
 
-            if (model.Tuesday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Tuesday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            if (model.Wednesday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Wednesday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            if (model.Thursday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Thursday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            if (model.Friday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Friday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            if (model.Saturday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Saturday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            if (model.Sunday)
-            {
-                response = GetNextWeekday(currentDayOfWeek, DayOfWeek.Sunday);
-                if (currentDayOfWeekInt >= response)
-                    return response;
-            }
-
-            return response;
-        }
-
-        private int GetNextWeekday(DateTime start, DayOfWeek day)
-        {
-            return ((int)day - (int)start.DayOfWeek + 7) % 7;
+            return daysTillNextProcess;
         }
     }
 }
