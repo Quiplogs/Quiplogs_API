@@ -19,7 +19,7 @@ namespace Quiplogs.Core.UseCases.User
 
         public async Task<bool> Handle(FetchUsersRequest request, IOutputPort<FetchUsersResponse> outputPort)
         {
-            var response = await _userRepository.GetPagedList(request.CompanyId, request.PageNumber, request.PageSize, request.LocationId);
+            var response = await _userRepository.GetPagedList(request.CompanyId, request.PageNumber, request.PageSize, request.FilterParameters, request.LocationId);
             if (response.Success)
             {
                 outputPort.Handle(new FetchUsersResponse(response.PagedResult, true));

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Quiplogs.Infrastructure.Helper;
 using Quiplogs.Infrastructure.SqlContext;
 
 namespace Quiplogs.Infrastructure.Repositories
@@ -63,11 +64,13 @@ namespace Quiplogs.Infrastructure.Repositories
             return new GetAllUsersResponse(mappedUsers, true, null);
         }
 
-        public async Task<PagedUserResponse> GetPagedList(Guid companyId, int pageNumber, int pageSize, Guid? locationId)
+        public async Task<PagedUserResponse> GetPagedList(Guid companyId, int pageNumber, int pageSize, Dictionary<string, string> filterParameters, Guid? locationId)
         {
             var userList = await _userManager.Users
                 .Where(x => x.CompanyId == companyId
                             && (!locationId.HasValue || x.LocationId == locationId.Value))
+                .FilterByString(filterParameters)
+                .OrderByDescending(x => x.Email)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

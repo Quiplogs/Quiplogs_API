@@ -25,7 +25,7 @@ namespace Api.UseCases.User.Fetch
                 return BadRequest(ModelState);
             }
 
-            await _fetchUsersUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.FetchUsersRequest(GetCompanyId(request.CompanyId), request.LocationId, request.PageSize, request.PageNumber), _fetchUsersPresenter);
+            await _fetchUsersUseCase.Handle(new Quiplogs.Core.Dto.Requests.User.FetchUsersRequest(GetCompanyId(request.CompanyId), request.LocationId, request.PageSize, request.PageNumber, request.FilterParameters), _fetchUsersPresenter);
             return _fetchUsersPresenter.ContentResult;
         }
     }

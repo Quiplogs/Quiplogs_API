@@ -24,7 +24,10 @@ namespace Quiplogs.Infrastructure.Helper
             {
                 foreach (var keyValuePair in filterParameters)
                 {
-                    source = source.Where(Filter<T>(keyValuePair.Key, keyValuePair.Value));
+                    if (!string.IsNullOrWhiteSpace(keyValuePair.Value))
+                    {
+                        source = source.Where(Filter<T>(keyValuePair.Key, keyValuePair.Value));
+                    }
                 }
             }
 
