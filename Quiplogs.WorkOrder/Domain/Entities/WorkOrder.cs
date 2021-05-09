@@ -17,6 +17,8 @@ namespace Quiplogs.WorkOrder.Domain.Entities
         public Guid AssetId { get; set; }
         public Asset Asset { get; set; }
         public int Status { get; set; }
+        public int Priority { get; set; }
+        public bool IsPlanned { get; set; }
         public Guid LocationId { get; set; }
         public Location Location { get; set; }
         public List<WorkOrderPart> WorkOrderParts { get; set; }

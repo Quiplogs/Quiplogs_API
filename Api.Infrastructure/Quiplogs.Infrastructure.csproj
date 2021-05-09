@@ -31,8 +31,4 @@
     <ProjectReference Include="..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

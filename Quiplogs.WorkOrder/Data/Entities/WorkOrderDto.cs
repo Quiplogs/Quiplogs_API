@@ -20,7 +20,7 @@ namespace Quiplogs.WorkOrder.Data.Entities
         public decimal HoursWorked { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
-        public decimal MintuesWorked { get; set; }
+        public decimal MinutesWorked { get; set; }
 
         public bool IsDeleted { get; set; }
 

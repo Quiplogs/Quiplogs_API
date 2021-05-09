@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Quiplogs.Core.Data.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Quiplogs.Core.Data.Entities;
-using Quiplogs.Inventory.Data.Entities;
 
 namespace Quiplogs.PlannedMaintenance.Data.Entities
 {
@@ -11,14 +10,10 @@ namespace Quiplogs.PlannedMaintenance.Data.Entities
 
         [ForeignKey("PlannedMaintenanceId")]
         public PlannedMaintenanceDto PlannedMaintenance { get; set; }
-        public Guid TaskId { get; set; }
-
-        [ForeignKey("TaskId")]
-        public TaskDto Task { get; set; }
+        public string Description { get; set; }
 
         [Column(TypeName = "decimal(18, 6)")]
-        public decimal Quantity { get; set; }
-
+        public decimal QuantityRequired { get; set; }
         public string UoM { get; set; }
         public bool IsDeleted { get; set; }
     }
