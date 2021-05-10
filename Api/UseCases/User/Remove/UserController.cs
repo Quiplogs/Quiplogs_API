@@ -20,8 +20,8 @@ namespace Api.UseCases.User.Remove
             _removeUserPresenter = removeUserPresenter;
         }
 
-        [HttpPost("Remove")]
-        public async Task<ActionResult> Remove([FromBody] RemoveUserRequest request)
+        [HttpDelete]
+        public async Task<ActionResult> Remove([FromQuery] RemoveUserRequest request)
         {
             if (!ModelState.IsValid)
             { // re-render the view when validation failed.

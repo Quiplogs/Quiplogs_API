@@ -36,16 +36,19 @@ namespace Quiplogs.Infrastructure.Repositories
         public async Task RemoveBlob(Guid foreignKeyId, string applicationType)
         {
             var model = await _context.BlobEntities.FirstOrDefaultAsync(x => x.ForeignKeyId == foreignKeyId && x.ApplicationType == applicationType);
-           
-            await _blobStorage.DeleteBlobImage(new DeleteFileRequest
-            {
-                Container = model.CompanyId.ToString(),
-                SubContainer = model.ForeignKeyId.ToString(),
-                FileName = model.FileName
-            });
 
-            _context.Remove(model);
-            await _context.SaveChangesAsync();
+            if (model != null)
+            {
+                await _blobStorage.DeleteBlobImage(new DeleteFileRequest
+                {
+                    Container = model.CompanyId.ToString(),
+                    SubContainer = model.ForeignKeyId.ToString(),
+                    FileName = model.FileName
+                });
+
+                _context.Remove(model);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task PersistBlob(Blob model)

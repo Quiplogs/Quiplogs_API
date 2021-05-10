@@ -37,7 +37,7 @@ namespace Quiplogs.Inventory.UseCases.Part
             }
             catch (Exception ex)
             {
-                outputPort.Handle(new RemoveResponse(new Error[] {new Error("BlobException", $"{ex.Message}")}));
+                outputPort.Handle(new RemoveResponse(new Error[] { new Error("BlobException", $"{ex.Message}") }));
                 return false;
             }
         }
