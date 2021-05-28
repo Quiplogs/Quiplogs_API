@@ -46,6 +46,7 @@ namespace Quiplogs.Infrastructure.Repositories
                                         .CustomWhere(predicate)
                                         .CustomInclude(including)
                                         .FilterByString(filterParameters)
+                                        .Where(x => x.CompanyId == companyId)
                                         .ToListAsync();
 
                 var mappedList = _mapper.Map<List<T1>>(modelList);
@@ -67,7 +68,9 @@ namespace Quiplogs.Infrastructure.Repositories
                                         .CustomInclude(including)
                                         .FilterByString(filterParameters)
                                         .Skip((pageNumber - 1) * pageSize)
-                                        .Take(pageSize).ToListAsync();
+                                        .Take(pageSize)
+                                        .Where(x => x.CompanyId == companyId)
+                                        .ToListAsync();
 
                 var mappedList = _mapper.Map<List<T1>>(modelList);
                 var total = await GetTotalRecords(companyId, predicate);
