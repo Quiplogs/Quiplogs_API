@@ -25,13 +25,6 @@ namespace Api.UseCases.WorkOrder.Put
                 return BadRequest(ModelState);
             }
 
-            request.Model.WorkOrderParts.ForEach(workOrderPart =>
-            {
-                workOrderPart.CompanyId = GetCompanyId(request.Model.CompanyId);
-                workOrderPart.Part = null;
-            });
-            request.Model.WorkOrderTasks.ForEach(task => task.CompanyId = GetCompanyId(request.Model.CompanyId));
-
             var result = await _putService.Put(request, GetCompanyId(request.Model.CompanyId));
             return result;
         }

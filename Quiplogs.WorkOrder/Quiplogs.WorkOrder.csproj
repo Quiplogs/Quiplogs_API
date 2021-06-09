@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Api.Core\Quiplogs.Core.csproj" />
     <ProjectReference Include="..\Quiplogs.Assets\Quiplogs.Assets.csproj" />
     <ProjectReference Include="..\Quiplogs.Inventory\Quiplogs.Inventory.csproj" />
+    <ProjectReference Include="..\Quiplogs.Notifications\Quiplogs.Notifications.csproj" />
   </ItemGroup>
 
 </Project>
