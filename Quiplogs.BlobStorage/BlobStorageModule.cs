@@ -6,7 +6,7 @@ namespace Quiplogs.BlobStorage
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<BlobStorage>().As<IBlobStorage>();
+            builder.RegisterType<BlobStorage>().As<IBlobStorage>().InstancePerLifetimeScope();
         }
     }
 }

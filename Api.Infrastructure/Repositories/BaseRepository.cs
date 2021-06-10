@@ -73,7 +73,7 @@ namespace Quiplogs.Infrastructure.Repositories
                                         .ToListAsync();
 
                 var mappedList = _mapper.Map<List<T1>>(modelList);
-                var total = await GetTotalRecords(companyId, predicate);
+                var total = await GetTotalRecords(companyId, predicate, filterParameters);
                 var pagedResult = new PagedResult<T1>(mappedList, total, pageNumber, pageSize);
                 
                 return new BasePagedResponse<T1>(pagedResult, true, null);
@@ -137,7 +137,7 @@ namespace Quiplogs.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        private async Task<int> GetTotalRecords(Guid companyId, Expression<Func<T2, bool>> predicate = null)
+        private async Task<int> GetTotalRecords(Guid companyId, Expression<Func<T2, bool>> predicate = null, Dictionary<string, string> filterParameters = null)
         {
             var cacheKey = $"{typeof(T1).Name}-total-{companyId}";
             var total = await _cache.GetAsnyc<int>(cacheKey);
@@ -147,9 +147,9 @@ namespace Quiplogs.Infrastructure.Repositories
                 await UpdateTotalItems(companyId);
             }
 
-            if (predicate != null)
+            if (predicate != null || filterParameters != null)
             {
-                total = _entities.Where(predicate).Count();
+                total = _entities.Where(predicate).FilterByString(filterParameters).Count();
             }
 
             return total;

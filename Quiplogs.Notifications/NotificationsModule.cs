@@ -1,11 +1,14 @@
 ﻿using Autofac;
+using Quiplogs.Notifications.Interfaces;
+using Quiplogs.Notifications.Services;
 
 namespace Quiplogs.Notifications
 {
     public class NotificationsModule : Module
     {
-        //private readonly IConfiguration _configuration;
-
-        //public NotificationsModule(IConfiguration configuration) => this._configuration = configuration;
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<SendEmailService>().As<ISendEmailService>().InstancePerLifetimeScope();
+        }
     }
 }

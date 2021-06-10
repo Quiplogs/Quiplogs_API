@@ -6,22 +6,30 @@ using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 using Quiplogs.WorkOrder.Data.Entities;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Quiplogs.WorkOrder.Domain.Entities.Notifications;
+using Quiplogs.WorkOrder.Interfaces.Services;
 
 namespace Quiplogs.WorkOrder.UseCases.WorkOrder
 {
     public class PutWorkOrderUseCase : IPutUseCase<Domain.Entities.WorkOrderEntity, WorkOrderDto>
     {
         private readonly IBaseRepository<Domain.Entities.WorkOrderEntity, WorkOrderDto> _baseRepository;
+        private readonly INotificationService _notificationService;
 
-        public PutWorkOrderUseCase(
+        public PutWorkOrderUseCase(INotificationService notificationService,
             IBaseRepository<Domain.Entities.WorkOrderEntity,
                 WorkOrderDto> baseRepository)
         {
             _baseRepository = baseRepository;
+            _notificationService = notificationService;
         }
 
         public async Task<bool> Handle(PutRequest<Domain.Entities.WorkOrderEntity> request, IOutputPort<PutResponse<Domain.Entities.WorkOrderEntity>> outputPort)
         {
+            var technicianHasChanged = false;
+            var initialId = request.Model.Id;
+
             //Set unnecessary models to null & set company Ids
             request.Model.Company = null;
             request.Model.WorkOrderParts.ForEach(workOrderPart =>
@@ -32,13 +40,12 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
             request.Model.WorkOrderTasks.ForEach(task => task.CompanyId = request.Model.CompanyId);
 
             //If exists then check if tech has changed and send mail
-            if (request.Model.Id != Guid.Empty)
+            if (initialId != Guid.Empty)
             {
-                var getResponse = await _baseRepository.GetById(request.Model.Id);
-
+                var getResponse = await _baseRepository.GetById(initialId);
                 if (getResponse.Model.TechnicianId != request.Model.TechnicianId)
                 {
-                    //send mail;
+                    technicianHasChanged = true;
                 }
             }
 
@@ -48,11 +55,18 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 // try send mail
                 try
                 {
+                    if (technicianHasChanged || initialId == Guid.Empty)
+                    {
+                        var getResponse = await _baseRepository.GetById(response.Model.Id,
+                            source =>
+                                source.Include(model => model.Technician));
 
+                        await _notificationService.SendMail(new WorkOrderEmailTemplate(getResponse.Model));
+                    }
                 }
                 catch (Exception ex)
                 {
-
+                    // Log error
                 }
 
                 outputPort.Handle(new PutResponse<Domain.Entities.WorkOrderEntity>(response.Model, true));

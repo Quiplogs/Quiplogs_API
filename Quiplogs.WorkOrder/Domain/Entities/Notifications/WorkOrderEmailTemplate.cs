@@ -5,20 +5,18 @@ namespace Quiplogs.WorkOrder.Domain.Entities.Notifications
 {
     public class WorkOrderEmailTemplate : EmailSendGridTemplate
     {
-        public WorkOrderEmailTemplate(WorkOrderEntity model, WorkOrderEmailSettings emailSettings)
+        public WorkOrderEmailTemplate(WorkOrderEntity model)
         {
-            Tags = new Dictionary<string, string>();
-            Tags.Add("first_name", model.Technician.FirstName);
-            Tags.Add("last_name", model.Technician.LastName);
-            Tags.Add("work_order_reference_number", model.ReferenceNumber);
-            Tags.Add("work_order_link", $"{emailSettings.Domain}{model.Id}");
+            Tags = new Dictionary<string, string>
+            {
+                {"first_name", model.Technician.FirstName},
+                {"last_name", model.Technician.LastName},
+                {"work_order_reference_number", model.ReferenceNumber},
+                {"work_order_link", "{Domain}" + model.Id}
+            };
 
-            TemplateId = emailSettings.TemplateId;
-            FromEmail = emailSettings.FromEmail;
-            FromName = emailSettings.FromName;
-            ToEmail = model.Technician.Email;
+            ToEmailAddress = model.Technician.Email;
             ToName = $"{model.Technician.FirstName} {model.Technician.LastName}";
-            Subject = emailSettings.Subject;
         }
     }
 }
