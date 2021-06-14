@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Quiplogs.Core.Dto.Requests.Generic;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
@@ -28,16 +29,17 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
         public async Task<bool> Handle(PutRequest<Domain.Entities.WorkOrderEntity> request, IOutputPort<PutResponse<Domain.Entities.WorkOrderEntity>> outputPort)
         {
             var technicianHasChanged = false;
-            var initialId = request.Model.Id;
+            var initialId = request.Model?.Id ?? Guid.Empty;
 
             //Set unnecessary models to null & set company Ids
             request.Model.Company = null;
-            request.Model.WorkOrderParts.ForEach(workOrderPart =>
+            request.Model.WorkOrderParts?.ForEach(workOrderPart =>
             {
                 workOrderPart.CompanyId = request.Model.CompanyId;
                 workOrderPart.Part = null;
             });
-            request.Model.WorkOrderTasks.ForEach(task => task.CompanyId = request.Model.CompanyId);
+
+            request.Model.WorkOrderTasks?.ForEach(task => task.CompanyId = request.Model.CompanyId);
 
             //If exists then check if tech has changed and send mail
             if (initialId != Guid.Empty)
