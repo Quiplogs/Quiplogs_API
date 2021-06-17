@@ -28,7 +28,7 @@ namespace Quiplogs.Core.UseCases.Location
         {
             try
             {
-                await _blobRepository.RemoveBlob(request.Id, "location");
+                await _blobRepository.RemoveBlobImage(request.Id, "location");
                 await _baseRepository.Remove(request.Id);
 
                 outputPort.Handle(new RemoveResponse("Successfully removed Blob", true));
