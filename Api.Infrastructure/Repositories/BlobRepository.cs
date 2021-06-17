@@ -33,7 +33,7 @@ namespace Quiplogs.Infrastructure.Repositories
             return modelMapped;
         }
 
-        public async Task RemoveBlob(Guid foreignKeyId, string applicationType)
+        public async Task RemoveBlobImage(Guid foreignKeyId, string applicationType)
         {
             var model = await _context.BlobEntities.FirstOrDefaultAsync(x => x.ForeignKeyId == foreignKeyId && x.ApplicationType == applicationType);
 
@@ -53,30 +53,34 @@ namespace Quiplogs.Infrastructure.Repositories
 
         public async Task PersistBlob(Blob model)
         {
-            //persist to blob storage
-            var persistedBlob = await _blobStorage.UploadImageAsync(new SaveFileRequest
+            if (!string.IsNullOrWhiteSpace(model.FileName) && !string.IsNullOrWhiteSpace(model.MimeType))
             {
-                Container = model.CompanyId.ToString(),
-                SubContainer = model.ForeignKeyId.ToString(),
-                FileName = model.FileName,
-                FileBase64 = model.Base64,
-                MimeType = model.MimeType
-            });
 
-            model.FileUrl = persistedBlob.FileUrl;
+                //persist to blob storage
+                var persistedBlob = await _blobStorage.UploadImageAsync(new SaveFileRequest
+                {
+                    Container = model.CompanyId.ToString(),
+                    SubContainer = model.ForeignKeyId.ToString(),
+                    FileName = model.FileName,
+                    FileBase64 = model.Base64,
+                    MimeType = model.MimeType
+                });
 
-            var modelMapped = _mapper.Map<BlobEntity>(model);
-            if (model.Id == Guid.Empty)
-            {
-                await _context.BlobEntities.AddAsync(modelMapped);
+                model.FileUrl = persistedBlob.FileUrl;
+
+                var modelMapped = _mapper.Map<BlobEntity>(model);
+                if (model.Id == Guid.Empty)
+                {
+                    await _context.BlobEntities.AddAsync(modelMapped);
+                }
+                else
+                {
+                    var entry = _context.BlobEntities.First(e => e.Id == model.Id);
+                    _context.Entry(entry).CurrentValues.SetValues(model);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            else
-            {
-                var entry = _context.BlobEntities.First(e => e.Id == model.Id);
-                _context.Entry(entry).CurrentValues.SetValues(model);
-            }
-
-            await _context.SaveChangesAsync();
         }
     }
 }

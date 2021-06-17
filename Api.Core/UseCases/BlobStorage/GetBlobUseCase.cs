@@ -1,13 +1,10 @@
-﻿using System;
-using Quiplogs.Core.Data.Entities;
-using Quiplogs.Core.Dto.Requests.Generic;
+﻿using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.Dto;
 using Quiplogs.Core.Dto.Responses.Generic;
 using Quiplogs.Core.Interfaces;
 using Quiplogs.Core.Interfaces.Repositories;
-using Quiplogs.Core.Interfaces.UseCases.Generic;
+using System;
 using System.Threading.Tasks;
-using Quiplogs.Core.Domain.Entities;
-using Quiplogs.Core.Dto;
 
 namespace Quiplogs.Core.UseCases.BlobStorage
 {
@@ -25,12 +22,12 @@ namespace Quiplogs.Core.UseCases.BlobStorage
             try
             {
                 var model = await _blobRepository.Get(foreignKeyId, applicationType) ?? new Blob();
-                outputPort.Handle(new GetResponse<Domain.Entities.Blob>(model, true));
+                outputPort.Handle(new GetResponse<Blob>(model, true));
                 return true;
             }
             catch (Exception ex)
             {
-                outputPort.Handle(new GetResponse<Domain.Entities.Blob>(new Error[] { new Error("GetBlob", $"{ex.Message}") }));
+                outputPort.Handle(new GetResponse<Blob>(new Error[] { new Error("GetBlob", $"{ex.Message}") }));
                 return false;
 
             }

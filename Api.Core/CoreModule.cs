@@ -23,7 +23,6 @@ namespace Quiplogs.Core
             builder.RegisterType<PutLocationUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<TechnicianListUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<GetBlobUseCase>().InstancePerLifetimeScope();
-            builder.RegisterType<PutBlobUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<RemoveBlobUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<RemoveLocationUseCase>().InstancePerLifetimeScope();
 

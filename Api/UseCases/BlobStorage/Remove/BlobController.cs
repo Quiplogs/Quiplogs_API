@@ -1,23 +1,24 @@
-﻿using System.Threading.Tasks;
-using Api.Services.Interfaces;
-using Api.UseCases.Generic.Requests;
+﻿using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
-using Quiplogs.Core.Data.Entities;
-using Quiplogs.Core.Domain.Entities;
+using Quiplogs.Core.UseCases.BlobStorage;
+using System;
+using System.Threading.Tasks;
 
 namespace Api.UseCases.BlobStorage.Remove
 {
     public class BlobController : BaseApiController
     {
-        private readonly IRemoveService<Blob, BlobEntity> _removeService;
+        private readonly RemoveBlobUseCase _useCase;
+        private readonly RemovePresenter _presenter;
 
-        public BlobController(IRemoveService<Blob, BlobEntity> removeService)
+        public BlobController(RemoveBlobUseCase useCase, RemovePresenter presenter)
         {
-            _removeService = removeService;
+            _useCase = useCase;
+            _presenter = presenter;
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete([FromQuery] RemoveRequest request)
+        public async Task<ActionResult> Delete([FromQuery] Guid foreignKey, string applicationType)
         {
             if (!ModelState.IsValid)
             {
@@ -25,8 +26,8 @@ namespace Api.UseCases.BlobStorage.Remove
                 return BadRequest(ModelState);
             }
 
-            var result = await _removeService.Put(request);
-            return result;
+            await _useCase.Handle(foreignKey, applicationType, _presenter);
+            return _presenter.ContentResult;
         }
     }
 }

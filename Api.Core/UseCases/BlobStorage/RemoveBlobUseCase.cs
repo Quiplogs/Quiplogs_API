@@ -8,43 +8,34 @@ using Quiplogs.Core.Interfaces.Repositories;
 using Quiplogs.Core.Interfaces.UseCases.Generic;
 using System;
 using System.Threading.Tasks;
+using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.Dto.Responses.Generic;
 
 namespace Quiplogs.Core.UseCases.BlobStorage
 {
-    public class RemoveBlobUseCase : IRemoveUseCase<Domain.Entities.Blob, BlobEntity>
+    public class RemoveBlobUseCase
     {
-        private readonly IBaseRepository<Domain.Entities.Blob, BlobEntity> _baseRepository;
-        private readonly IBlobStorage _blobStorage;
+        private readonly IBlobRepository _blobRepository;
 
-        public RemoveBlobUseCase(IBaseRepository<Domain.Entities.Blob, BlobEntity> baseRepository, IBlobStorage blobStorage)
+        public RemoveBlobUseCase(IBlobRepository blobRepository)
         {
-            _baseRepository = baseRepository;
-            _blobStorage = blobStorage;
+            _blobRepository = blobRepository;
         }
 
-        public async Task<bool> Handle(RemoveRequest request, IOutputPort<RemoveResponse> outputPort)
+        public async Task<bool> Handle(Guid foreignKeyId, string applicationType, IOutputPort<RemoveResponse> outputPort)
         {
             try
             {
-                var getRequest = await _baseRepository.GetById(request.Id);
+                await _blobRepository.RemoveBlobImage(foreignKeyId, applicationType);
 
-                await _blobStorage.DeleteBlobImage(new DeleteFileRequest
-                {
-                    Container = getRequest.Model.CompanyId.ToString(),
-                    SubContainer = getRequest.Model.ForeignKeyId.ToString(),
-                    FileName = getRequest.Model.FileName
-                });
-
-                await _baseRepository.Remove(request.Id);
-
-                outputPort.Handle(new RemoveResponse("Successfully removed Blob", true));
+                outputPort.Handle(new RemoveResponse("Removed Successfully", true));
                 return true;
             }
             catch (Exception ex)
             {
-                outputPort.Handle(new RemoveResponse(new Error[] { new Error("BlobException", $"{ex.Message}") }));
+                outputPort.Handle(new RemoveResponse(new Error[] { new Error("remove_blob_image_error", $"{ex.Message}") }));
                 return false;
+
             }
         }
     }

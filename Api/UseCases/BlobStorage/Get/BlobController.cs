@@ -1,11 +1,9 @@
-﻿using System;
-using Api.Presenters;
-using Api.UseCases.Generic.Requests;
+﻿using Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
 using Quiplogs.Core.Domain.Entities;
 using Quiplogs.Core.UseCases.BlobStorage;
+using System;
 using System.Threading.Tasks;
-using Quiplogs.Core.Dto.Requests.Generic;
 
 namespace Api.UseCases.BlobStorage.Get
 {
