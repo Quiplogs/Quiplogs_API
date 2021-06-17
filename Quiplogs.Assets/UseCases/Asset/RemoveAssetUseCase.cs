@@ -26,7 +26,7 @@ namespace Quiplogs.Assets.UseCases.Asset
         {
             try
             {
-                await _blobRepository.RemoveBlob(request.Id, "asset");
+                await _blobRepository.RemoveBlobImage(request.Id, "asset");
                 await _baseRepository.Remove(request.Id);
 
                 outputPort.Handle(new RemoveResponse("Successfully removed Blob", true));

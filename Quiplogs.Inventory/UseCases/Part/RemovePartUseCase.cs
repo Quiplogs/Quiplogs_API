@@ -29,7 +29,7 @@ namespace Quiplogs.Inventory.UseCases.Part
         {
             try
             {
-                await _blobRepository.RemoveBlob(request.Id, "part");
+                await _blobRepository.RemoveBlobImage(request.Id, "part");
                 await _baseRepository.Remove(request.Id);
 
                 outputPort.Handle(new RemoveResponse("Successfully removed Blob", true));
