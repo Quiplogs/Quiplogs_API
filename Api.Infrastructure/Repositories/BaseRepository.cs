@@ -102,6 +102,24 @@ namespace Quiplogs.Infrastructure.Repositories
             }
         }
 
+        public async Task<BaseModelResponse<T1>> GetByCustomWhere(Expression<Func<T2, bool>> predicate, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null)
+        {
+            try
+            {
+                var model = await _entities.AsNoTracking()
+                    .CustomWhere(predicate)
+                    .CustomInclude(including)
+                    .FirstOrDefaultAsync();
+
+                var mappedModel = _mapper.Map<T1>(model);
+                return new BaseModelResponse<T1>(mappedModel, true, null);
+            }
+            catch (SqlException ex)
+            {
+                return new BaseModelResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_getById, $"Error getting model-({typeof(T1).Name}) by id. {ex.Message}") });
+            }
+        }
+
         public async Task<BaseModelResponse<T1>> Put(T1 model)
         {
             try

@@ -27,6 +27,14 @@ namespace Quiplogs.Inventory.UseCases.Part
 
         public async Task<bool> Handle(PutRequest<Domain.Entities.Part> request, IOutputPort<PutResponse<Domain.Entities.Part>> outputPort)
         {
+            // Check if existing model with same Code
+            var getResponse = await _baseRepository.GetByCustomWhere(where => where.Code.Contains(request.Model.Code));
+            if (getResponse.Success)
+            {
+                outputPort.Handle(new PutResponse<Domain.Entities.Part>(new[] { new Error("exists", $"Part with Code: '{request.Model.Code}' already exists.") }));
+                return false;
+            }
+
             var persistedModel = await _baseRepository.Put(request.Model);
 
             if (persistedModel.Success)

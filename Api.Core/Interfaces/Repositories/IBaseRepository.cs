@@ -20,6 +20,8 @@ namespace Quiplogs.Core.Interfaces.Repositories
 
         Task<BaseModelResponse<T1>> GetById(Guid id, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null);
 
+        Task<BaseModelResponse<T1>> GetByCustomWhere(Expression<Func<T2, bool>> predicate, Func<IQueryable<T2>, IIncludableQueryable<T2, object>> including = null);
+
         Task<BaseModelResponse<T1>> Put(T1 model);
 
         Task Remove(Guid id);
