@@ -111,12 +111,17 @@ namespace Quiplogs.Infrastructure.Repositories
                     .CustomInclude(including)
                     .FirstOrDefaultAsync();
 
+                if (model == null)
+                {
+                    return new BaseModelResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_getById, $"Error getting model-({typeof(T1).Name}).") });
+                }
+
                 var mappedModel = _mapper.Map<T1>(model);
                 return new BaseModelResponse<T1>(mappedModel, true, null);
             }
             catch (SqlException ex)
             {
-                return new BaseModelResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_getById, $"Error getting model-({typeof(T1).Name}) by id. {ex.Message}") });
+                return new BaseModelResponse<T1>(null, false, new[] { new Error(GlobalVariables.error_getById, $"Error getting model-({typeof(T1).Name}). {ex.Message}") });
             }
         }
 

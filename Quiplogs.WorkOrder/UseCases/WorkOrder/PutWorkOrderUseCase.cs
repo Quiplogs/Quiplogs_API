@@ -29,13 +29,21 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
 
         public async Task<bool> Handle(PutRequest<Domain.Entities.WorkOrderEntity> request, IOutputPort<PutResponse<Domain.Entities.WorkOrderEntity>> outputPort)
         {
-            //// Check if existing model with same ReferenceNumber
-            //var getExistingResponse = await _baseRepository.GetByCustomWhere(where => where.ReferenceNumber.Contains(request.Model.ReferenceNumber));
-            //if (getExistingResponse.Success)
-            //{
-            //    outputPort.Handle(new PutResponse<Domain.Entities.WorkOrderEntity>(new[] { new Error("exists", $"Work Order with Reference Number: '{request.Model.ReferenceNumber}' already exists.") }));
-            //    return false;
-            //}
+            // Check if existing model with same ReferenceNumber
+            if (request.Model.Id == Guid.Empty)
+            {
+                var getExistingResponse = await _baseRepository.GetByCustomWhere(where =>
+                    where.ReferenceNumber.Contains(request.Model.ReferenceNumber));
+                if (getExistingResponse.Success)
+                {
+                    outputPort.Handle(new PutResponse<Domain.Entities.WorkOrderEntity>(new[]
+                    {
+                        new Error("exists",
+                            $"Work Order with Reference Number: '{request.Model.ReferenceNumber}' already exists.")
+                    }));
+                    return false;
+                }
+            }
 
             var technicianHasChanged = false;
             var initialId = request.Model?.Id ?? Guid.Empty;

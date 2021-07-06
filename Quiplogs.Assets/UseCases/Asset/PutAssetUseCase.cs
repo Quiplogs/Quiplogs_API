@@ -28,11 +28,16 @@ namespace Quiplogs.Assets.UseCases.Asset
         public async Task<bool> Handle(PutRequest<Domain.Entities.Asset> request, IOutputPort<PutResponse<Domain.Entities.Asset>> outputPort)
         {
             // Check if existing model with same Name
-            var getResponse = await _baseRepository.GetByCustomWhere(where => where.Name.Contains(request.Model.Name));
-            if (getResponse.Success)
+            if (request.Model.Id == Guid.Empty)
             {
-                outputPort.Handle(new PutResponse<Domain.Entities.Asset>(new[] { new Error("exists", $"Asset with Name: '{request.Model.Name}' already exists.") }));
-                return false;
+                var getResponse =
+                    await _baseRepository.GetByCustomWhere(where => where.Name.Contains(request.Model.Name));
+                if (getResponse.Success)
+                {
+                    outputPort.Handle(new PutResponse<Domain.Entities.Asset>(new[]
+                        {new Error("exists", $"Asset with Name: '{request.Model.Name}' already exists.")}));
+                    return false;
+                }
             }
 
             var persistedModel = await _baseRepository.Put(request.Model);

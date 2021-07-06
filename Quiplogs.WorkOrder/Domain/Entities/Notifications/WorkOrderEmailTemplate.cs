@@ -7,7 +7,7 @@ namespace Quiplogs.WorkOrder.Domain.Entities.Notifications
     {
         public WorkOrderEmailTemplate(WorkOrderEntity model)
         {
-            Tags = new Dictionary<string, string>
+            ReplacementTags = new Dictionary<string, string>
             {
                 {"first_name", model.Technician.FirstName},
                 {"last_name", model.Technician.LastName},

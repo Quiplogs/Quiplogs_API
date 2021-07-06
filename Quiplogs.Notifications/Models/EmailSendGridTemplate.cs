@@ -13,6 +13,6 @@ namespace Quiplogs.Notifications.Models
         public string ToName { get; set; }
         public string Subject { get; set; }
         public string Domain { get; set; }
-        public Dictionary<string,string> Tags { get; set; }
+        public Dictionary<string,string> ReplacementTags { get; set; }
     }
 }

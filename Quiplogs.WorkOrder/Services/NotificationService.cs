@@ -29,10 +29,19 @@ namespace Quiplogs.WorkOrder.Services
             email.FromName = workOrderEmailSettings.FromName;
 
             // Set domain variables in tags
-            foreach (var keyValuePair in email.Tags)
+            string domainKey = string.Empty;
+            foreach (var keyValuePair in email.ReplacementTags)
             {
-                keyValuePair.Value.Replace("{Domain}", workOrderEmailSettings.Domain);
+                if (keyValuePair.Value.Contains("{Domain}")) 
+                {
+                    domainKey = keyValuePair.Key;
+                }
             }
+
+            if (!string.IsNullOrWhiteSpace(domainKey))
+            {
+                email.ReplacementTags[domainKey] = email.ReplacementTags[domainKey].Replace("{Domain}", workOrderEmailSettings.Domain);
+            }            
 
             await _emailService.SendMail(email);
         }
