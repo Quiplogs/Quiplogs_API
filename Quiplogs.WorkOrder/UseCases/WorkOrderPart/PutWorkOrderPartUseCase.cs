@@ -29,7 +29,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrderPart
             var response = await _baseRepository.Put(request.Model);
             if (response.Success)
             {
-                var updatedModelResponse = await _baseRepository.GetById(request.Model.Id, including: source => source.Include(model => model.Part));
+                var updatedModelResponse = await _baseRepository.GetById(response.Model.Id, including: source => source.Include(model => model.Part));
                 outputPort.Handle(new PutResponse<Domain.Entities.WorkOrderPart>(updatedModelResponse.Model, true));
                 return true;
             }
