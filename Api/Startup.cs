@@ -70,11 +70,14 @@ namespace Api
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder
-                        .AllowAnyMethod()
-                        .AllowCredentials()
-                        .SetIsOriginAllowed((host) => true)
-                        .AllowAnyHeader());
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200",
+                                                          "http://portal-staging.quiplogs.com",
+                                                          "https://portal-staging.quiplogs.com")
+                                                          .AllowAnyHeader()
+                                                          .AllowAnyMethod();
+                                  });
             });
 
             services.AddControllers()
