@@ -76,7 +76,8 @@ namespace Api
                                                           "http://portal-staging.quiplogs.com",
                                                           "https://portal-staging.quiplogs.com")
                                                           .AllowAnyHeader()
-                                                          .AllowAnyMethod();
+                                                          .AllowAnyMethod()
+                                                          .Build();
                                   });
             });
 
