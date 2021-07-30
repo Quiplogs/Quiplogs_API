@@ -38,8 +38,7 @@ namespace Quiplogs.WorkOrder.UseCases.WorkOrder
                 {
                     outputPort.Handle(new PutResponse<Domain.Entities.WorkOrderEntity>(new[]
                     {
-                        new Error("exists",
-                            $"Work Order with Reference Number: '{request.Model.ReferenceNumber}' already exists.")
+                        new Error("exists", $"Work Order with Reference Number: '{request.Model.ReferenceNumber}' already exists.")
                     }));
                     return false;
                 }

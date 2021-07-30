@@ -4,10 +4,7 @@ using Quiplogs.Core.Interfaces.UseCases;
 
 namespace Api.UseCases.Company.Register
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    public class CompanyController : ControllerBase
+    public class CompanyController : BaseApiController
     {
         private readonly IRegisterCompanyUseCase _registerCompanyWorkOrder;
         private readonly RegisterCompanyPresenter _registerCompanyPresenter;
