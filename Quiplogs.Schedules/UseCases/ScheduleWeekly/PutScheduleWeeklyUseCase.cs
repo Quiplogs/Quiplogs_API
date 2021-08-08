@@ -59,38 +59,48 @@ namespace Quiplogs.Schedules.UseCases.ScheduleWeekly
         private int GetNextWeekday(Domain.Entities.ScheduleWeekly model)
         {
             var selectedDays = new bool[7];
-            selectedDays[0] = model.Monday;
-            selectedDays[1] = model.Tuesday;
-            selectedDays[2] = model.Wednesday;
-            selectedDays[3] = model.Thursday;
-            selectedDays[4] = model.Friday;
-            selectedDays[5] = model.Saturday;
-            selectedDays[6] = model.Sunday;
+            selectedDays[0] = model.Sunday;
+            selectedDays[1] = model.Monday;
+            selectedDays[2] = model.Tuesday;
+            selectedDays[3] = model.Wednesday;
+            selectedDays[4] = model.Thursday;
+            selectedDays[5] = model.Friday;
+            selectedDays[6] = model.Saturday;
 
             var currentDay = model.StartDate.HasValue ? (int)model.StartDate.Value.DayOfWeek : (int)DateTime.Today.DayOfWeek;
-            var daysTillNextProcess = 1;
+            var daysTillNextProcess = 0;
+            var isInCurrentWeek = false;
             for (int i = currentDay; i < selectedDays.Length; i++)
             {
                 if (!selectedDays[i])
                 {
                     daysTillNextProcess++;
                 }
+                else
+                {
+                    isInCurrentWeek = true;
+                    break;
+                }
 
                 if (i == 6)
                 {
-                    for (int nextWeek = 0; i < selectedDays.Length; i++)
+                    for (int nextWeek = 0; nextWeek < selectedDays.Length; nextWeek++)
                     {
                         if (!selectedDays[nextWeek])
                         {
                             daysTillNextProcess++;
                         }
-                    }
-
-                    if (model.RecurEvery > 1)
-                    {
-                        daysTillNextProcess += (model.RecurEvery - 1) * 7;
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
+            }
+
+            if (!isInCurrentWeek && model.RecurEvery > 1)
+            {
+                daysTillNextProcess += model.RecurEvery * 7;
             }
 
             return daysTillNextProcess;
