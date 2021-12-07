@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.0.0" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Core\Quiplogs.Core.csproj" />
+    <ProjectReference Include="..\Quiplogs.Assets\Quiplogs.Assets.csproj" />
+    <ProjectReference Include="..\Quiplogs.Inventory\Quiplogs.Inventory.csproj" />
+  </ItemGroup>
+
+</Project>
