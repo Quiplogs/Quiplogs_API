@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>Quiplogs</Company>
+    <Product>Quiplogs CMMS</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.0.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.0.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Quiplogs.Notifications.Send" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Core\Quiplogs.Core.csproj" />
+    <ProjectReference Include="..\Api.Infrastructure\Quiplogs.Infrastructure.csproj" />
+    <ProjectReference Include="..\Quiplogs.Assets\Quiplogs.Assets.csproj" />
+    <ProjectReference Include="..\Quiplogs.BlobStorage\Quiplogs.BlobStorage.csproj" />
+    <ProjectReference Include="..\Quiplogs.Inventory\Quiplogs.Inventory.csproj" />
+    <ProjectReference Include="..\Quiplogs.PlannedMaintenance\Quiplogs.PlannedMaintenance.csproj" />
+    <ProjectReference Include="..\Quiplogs.WorkOrder\Quiplogs.WorkOrder.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Schedule\Custom\List\" />
+    <Folder Include="UseCases\Schedule\Custom\Put\" />
+    <Folder Include="UseCases\Schedule\Custom\Remove\" />
+    <Folder Include="UseCases\Schedule\Daily\List\" />
+    <Folder Include="UseCases\Schedule\Daily\Remove\" />
+    <Folder Include="UseCases\Schedule\Daily\Put\" />
+    <Folder Include="UseCases\Schedule\Monthly\List\" />
+    <Folder Include="UseCases\Schedule\Monthly\Put\" />
+    <Folder Include="UseCases\Schedule\Monthly\Remove\" />
+    <Folder Include="UseCases\Schedule\Weekly\List\" />
+    <Folder Include="UseCases\Schedule\Weekly\Put\" />
+    <Folder Include="UseCases\Schedule\Weekly\Remove\" />
+    <Folder Include="UseCases\Schedule\Yearly\List\" />
+    <Folder Include="UseCases\Schedule\Yearly\Put\" />
+    <Folder Include="UseCases\Schedule\Yearly\Remove\" />
+  </ItemGroup>
+
+
+</Project>
